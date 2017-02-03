@@ -1,4 +1,4 @@
-# An Introduction to Probability and Statistics                   
+# An Introduction to Probability and Statistics  {#cha-intorps}                 
 
 This chapter has proved to be the hardest to write, by far. The
 trouble is that there is so much to say -- and so many people have

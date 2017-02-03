@@ -1,0 +1,69 @@
+#    IPSUR: Introduction to Probability and Statistics\\ Using R
+#    Copyright (C) 2014 G. Jay Kerns
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#+TITLE:     Introduction to Probability and Statistics Using R
+#+AUTHOR:    G. Jay Kerns
+#+EMAIL:     gkerns@ysu.edu
+#+LANGUAGE:  en
+#+OPTIONS: ':nil *:t -:t ::t <:t H:5 \n:nil ^:{} arch:headline
+#+OPTIONS: author:t c:nil creator:comment d:nil date:t e:t email:nil
+#+OPTIONS: f:nil inline:t num:t p:nil pri:nil stat:t tags:nil
+#+OPTIONS: tasks:t tex:t timestamp:t toc:nil todo:t |:t
+#+SELECT_TAGS: 
+#+PROPERTY: session *R*
+#+PROPERTY: exports results
+#+PROPERTY: results value raw
+#+PROPERTY: cache no
+#+LaTeX_CLASS: scrbook
+#+LaTeX_CLASS_OPTIONS: [captions=tableheading]
+#+LaTeX_CLASS_OPTIONS: [10pt,english,twoside]
+#+LaTeX_HEADER: \input{include/preamble}
+#+LATEX: \input{include/frontmatter}
+#+LATEX: \input{include/preface-second}
+#+CREATOR: Emacs 24.3.1 (Org mode 8.0.7)
+	   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

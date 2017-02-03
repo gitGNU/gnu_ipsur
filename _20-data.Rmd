@@ -1,0 +1,518 @@
+# Data                                                             :appendix:
+:PROPERTIES:
+:tangle: R/17-appendix.R
+:CUSTOM_ID: cha-data
+:END:
+
+This appendix is a reference of sorts regarding some of the data
+structures a statistician is likely to encounter. We discuss their
+salient features and idiosyncrasies.
+
+## Data Structures
+:PROPERTIES:
+:CUSTOM_ID: sec-Data-Structures
+:END: 
+
+### Vectors
+
+See the "Vectors and Assignment" section of /An Introduction to/
+\(\mathsf{R}\). A vector is an ordered sequence of elements, such as
+numbers, characters, or logical values, and there may be =NA='s
+present. We usually make vectors with the assignment operator =<-=.
+
+```{r, echo=TRUE, results=TRUE} 
+x <- c(3, 5, 9)
+```
+
+#+RESULTS:
+
+Vectors are atomic in the sense that if you try to mix and match
+elements of different modes then all elements will be coerced to the
+most convenient common mode.
+
+```{r, echo=TRUE, results=TRUE} 
+y <- c(3, "5", TRUE)
+```
+
+#+RESULTS:
+
+In the example all elements were coerced to /character/ mode. We can
+test whether a given object is a vector with =is.vector= and can
+coerce an object (if possible) to a vector with =as.vector=.
+
+### Matrices and Arrays
+
+See the "Arrays and Matrices" section of /An Introduction to/
+\(\mathsf{R}\). Loosely speaking, a matrix is a vector that has been
+reshaped into rectangular form, and an array is a multidimensional
+matrix. Strictly speaking, it is the other way around: an array is a
+data vector with a dimension attribute (=dim=), and a matrix is the
+special case of an array with only two dimensions. We can construct a
+matrix with the =matrix= function.
+
+```{r, echo=TRUE, results=TRUE} 
+matrix(letters[1:6], nrow = 2, ncol = 3)
+```
+
+#+RESULTS:
+:      [,1] [,2] [,3]
+: [1,] "a"  "c"  "e" 
+: [2,] "b"  "d"  "f"
+
+Notice the order of the matrix entries, which shows how the matrix is
+populated by default. We can change this with the =byrow= argument:
+
+```{r, echo=TRUE, results=TRUE} 
+matrix(letters[1:6], nrow = 2, ncol = 3, byrow = TRUE)
+```
+
+#+RESULTS:
+:      [,1] [,2] [,3]
+: [1,] "a"  "b"  "c" 
+: [2,] "d"  "e"  "f"
+
+We can test whether a given object is a matrix with =is.matrix= and
+can coerce an object (if possible) to a matrix with =as.matrix=. As a
+final example watch what happens when we mix and match types in the
+first argument:
+
+```{r, echo=TRUE, results=TRUE} 
+matrix(c(1,"2",NA, FALSE), nrow = 2, ncol = 3)
+```
+
+#+RESULTS:
+:      [,1] [,2]    [,3]
+: [1,] "1"  NA      "1" 
+: [2,] "2"  "FALSE" "2"
+
+Notice how all of the entries were coerced to character for the final
+result (except =NA=). Also notice how the four values were /recycled/
+to fill up the six entries of the matrix.
+
+The standard arithmetic operations work element-wise with matrices.
+
+```{r, echo=TRUE, results=TRUE} 
+A <- matrix(1:6, 2, 3)
+B <- matrix(2:7, 2, 3)
+A + B
+A # B
+```
+
+#+RESULTS:
+:      [,1] [,2] [,3]
+: [1,]    3    7   11
+: [2,]    5    9   13
+:      [,1] [,2] [,3]
+: [1,]    2   12   30
+: [2,]    6   20   42
+
+If you want the standard definition of matrix multiplication then use
+the =%*%= function. If we were to try =A %*% B= we would get an error
+because the dimensions do not match correctly, but for fun, we could
+transpose =B= to get conformable matrices. The transpose function =t=
+only works for matrices (and data frames).
+
+```{r, echo=TRUE, results=TRUE} 
+try(A # B)     # an error
+A %*% t(B)     # this is alright
+```
+
+#+RESULTS:
+:      [,1] [,2] [,3]
+: [1,]    2   12   30
+: [2,]    6   20   42
+:      [,1] [,2]
+: [1,]   44   53
+: [2,]   56   68
+
+To get the ordinary matrix inverse use the =solve= function: 
+
+```{r, echo=TRUE, results=TRUE} 
+solve(A %*% t(B))     # input matrix must be square
+```
+
+#+RESULTS:
+:           [,1]      [,2]
+: [1,]  2.833333 -2.208333
+: [2,] -2.333333  1.833333
+
+Arrays more general than matrices, and some functions (like transpose)
+do not work for the more general array. Here is what an array looks
+like:
+
+```{r, echo=TRUE, results=TRUE} 
+array(LETTERS[1:24], dim = c(3,4,2))
+```
+
+#+RESULTS:
+#+BEGIN_example
+, , 1
+
+     [,1] [,2] [,3] [,4]
+[1,] "A"  "D"  "G"  "J" 
+[2,] "B"  "E"  "H"  "K" 
+[3,] "C"  "F"  "I"  "L" 
+
+, , 2
+
+     [,1] [,2] [,3] [,4]
+[1,] "M"  "P"  "S"  "V" 
+[2,] "N"  "Q"  "T"  "W" 
+[3,] "O"  "R"  "U"  "X"
+#+END_example
+
+We can test with =is.array= and may coerce with =as.array=.
+
+### Data Frames
+
+A data frame is a rectangular array of information with a special
+status in \(\mathsf{R}\). It is used as the fundamental data structure
+by many of the modeling functions. It is like a matrix in that all of
+the columns must be the same length, but it is more general than a
+matrix in that columns are allowed to have different modes.
+
+```{r, echo=TRUE, results=TRUE} 
+x <- c(1.3, 5.2, 6)
+y <- letters[1:3]
+z <- c(TRUE, FALSE, TRUE)
+A <- data.frame(x, y, z)
+A
+```
+
+#+RESULTS:
+:     x y     z
+: 1 1.3 a  TRUE
+: 2 5.2 b FALSE
+: 3 6.0 c  TRUE
+
+Notice the =names= on the columns of =A=. We can change those with the
+=names= function.
+
+```{r, echo=TRUE, results=TRUE} 
+names(A) <- c("Fred","Mary","Sue")
+A
+```
+
+#+RESULTS:
+:   Fred Mary   Sue
+: 1  1.3    a  TRUE
+: 2  5.2    b FALSE
+: 3  6.0    c  TRUE
+
+Basic command is =data.frame=. You can test with =is.data.frame= and
+you can coerce with =as.data.frame=.
+
+### Lists
+A list is more general than a data frame.
+
+### Tables
+The word "table" has a special meaning in \(\mathsf{R}\). More
+precisely, a contingency table is an object of class =table= which is
+an array.
+
+Suppose you have a contingency table and would like to do descriptive
+or inferential statistics on it. The default form of the table is
+usually inconvenient to use unless we are working with a function
+specially tailored for tables. Here is how to transform your data to a
+more manageable form, namely, the raw data used to make the table.
+
+First, we coerce the table to a data frame with: 
+
+```{r, echo=TRUE, results=TRUE} 
+A <- as.data.frame(Titanic)
+head(A)
+```
+
+#+RESULTS:
+:   Class    Sex   Age Survived Freq
+: 1   1st   Male Child       No    0
+: 2   2nd   Male Child       No    0
+: 3   3rd   Male Child       No   35
+: 4  Crew   Male Child       No    0
+: 5   1st Female Child       No    0
+: 6   2nd Female Child       No    0
+
+Note that there are as many preliminary columns of =A= as there are
+dimensions to the table. The rows of =A= contain every possible
+combination of levels from each of the dimensions. There is also a
+=Freq= column, which shows how many observations there were at that
+particular combination of levels.
+
+The form of =A= is often sufficient for our purposes, but more often
+we need to do more work: we would usually like to repeat each row of
+=A= exactly the number of times shown in the =Freq= column. The
+=reshape= package \cite{reshape} has the function =untable= designed
+for that very purpose:
+
+```{r, echo=TRUE, results=TRUE} 
+B <- with(A, untable(A, Freq))
+head(B)
+```
+
+#+RESULTS:
+:     Class  Sex   Age Survived Freq
+: 3     3rd Male Child       No   35
+: 3.1   3rd Male Child       No   35
+: 3.2   3rd Male Child       No   35
+: 3.3   3rd Male Child       No   35
+: 3.4   3rd Male Child       No   35
+: 3.5   3rd Male Child       No   35
+
+Now, this is more like it. Note that we slipped in a call to the
+=with= function, which was done to make the call to =untable= more
+pretty; we could just as easily have done
+:  untable(TitanicDF, A$Freq)
+
+
+The only fly in the ointment is the lingering =Freq= column which has
+repeated values that do not have any meaning any more. We could just
+ignore it, but it would be better to get rid of the meaningless column
+so that it does not cause trouble later. While we are at it, we could
+clean up the =rownames=, too.
+
+```{r, echo=TRUE, results=TRUE} 
+C <- B[, -5]
+rownames(C) <- 1:dim(C)[1]
+head(C)
+```
+
+#+RESULTS:
+:   Class  Sex   Age Survived
+: 1   3rd Male Child       No
+: 2   3rd Male Child       No
+: 3   3rd Male Child       No
+: 4   3rd Male Child       No
+: 5   3rd Male Child       No
+: 6   3rd Male Child       No
+
+### More about Tables
+Suppose you want to make a table that looks like this:
+
+There are at least two ways to do it.
+
+- Using a matrix:
+  ```{r, echo=TRUE, results=TRUE} 
+  tab <- matrix(1:6, nrow = 2, ncol = 3)
+  rownames(tab) <- c('first', 'second')
+  colnames(tab) <- c('A', 'B', 'C')
+  tab  # Counts
+  ```
+
+  #+RESULTS:
+  :        A B C
+  : first  1 3 5
+  : second 2 4 6
+
+   - note that the columns are filled in consecutively by default. If
+     you want to fill the data in by rows then do =byrow = TRUE= in
+     the =matrix= command.
+
+- Using a dataframe
+  ```{r, echo=TRUE, results=TRUE} 
+  p <- c("milk","tea")
+  g <- c("milk","tea")
+  catgs <- expand.grid(poured = p, guessed = g)
+  cnts <- c(3, 1, 1, 3)
+  D <- cbind(catgs, count = cnts)
+  xtabs(count ~ poured + guessed, data = D)
+  ```
+
+  #+RESULTS:
+  :       guessed
+  : poured milk tea
+  :   milk    3   1
+  :   tea     1   3
+
+   - again, the data are filled in column-wise.
+   - the object is a dataframe
+   - if you want to store it as a table then do =A <- xtabs(count ~
+     poured + guessed, data = D)=
+
+## Importing Data
+:PROPERTIES:
+:CUSTOM_ID: sec-Importing-A-Data
+:END: 
+
+Statistics is the study of data, so the statistician's first step is
+usually to obtain data from somewhere or another and read them into
+\(\mathsf{R}\). In this section we describe some of the most common
+sources of data and how to get data from those sources into a running
+\(\mathsf{R}\) session.
+
+For more information please refer to the \(\mathsf{R}\) /Data
+Import/Export Manual/, \cite{rstatenv} and /An Introduction to/
+\(\mathsf{R}\), \cite{Venables2010}.
+
+### Data in Packages
+
+There are many data sets stored in the =datasets= package
+\cite{datasets} of base \(\mathsf{R}\). To see a list of them all
+issue the command =data(package = "datasets")=. The output is omitted
+here because the list is so long. The names of the data sets are
+listed in the left column. Any data set in that list is already on the
+search path by default, which means that a user can use it immediately
+without any additional work.
+
+There are many other data sets available in the thousands of
+contributed packages. To see the data sets available in those packages
+that are currently loaded into memory issue the single command
+=data()=. If you would like to see all of the data sets that are
+available in all packages that are installed on your computer (but not
+necessarily loaded), issue the command
+
+:  data(package = .packages(all.available = TRUE))
+
+To load the data set =foo= in the contributed package =bar= issue the
+commands =library("bar")= followed by =data(foo)=, or just the single
+command
+
+:  data(foo, package = "bar")
+
+### Text Files
+Many sources of data are simple text files. The entries in the file
+are separated by delimeters such as TABS (tab-delimeted), commas
+(comma separated values, or =.csv=, for short) or even just white
+space (no special name). A lot of data on the Internet are stored with
+text files, and even if they are not, a person can copy-paste
+information from a web page to a text file, save it on the computer,
+and read it into \(\mathsf{R}\).
+
+### Other Software Files
+Often the data set of interest is stored in some other, proprietary,
+format by third-party software such as Minitab, SAS, or SPSS. The
+=foreign= package \cite{foreign} supports import/conversion from many
+of these formats. Please note, however, that data sets from other
+software sometimes have properties with no direct analogue in
+\(\mathsf{R}\). In those cases the conversion process may lose some
+information which will need to be reentered manually from within
+\(\mathsf{R}\). See the /Data Import/Export Manual/.
+
+As an example, suppose the data are stored in the SPSS file =foo.sav=
+which the user has copied to the working directory; it can be imported
+with the commands
+
+```{r, echo=TRUE, eval=FALSE}
+library("foreign")
+read.spss("foo.sav")
+```
+
+See =?read.spss= for the available options to customize the file
+import. Note that the \(\mathsf{R}\) Commander will import many of the
+common file types with a menu driven interface.
+
+### Importing a Data Frame
+
+The basic command is =read.table=.
+
+## Creating New Data Sets
+:PROPERTIES:
+:CUSTOM_ID: sec-Creating-New-Data
+:END: 
+
+Using =c=
+Using =scan=
+Using the \(\mathsf{R}\) Commander.
+
+## Editing Data
+:PROPERTIES:
+:CUSTOM_ID: sec-Editing-Data-Sets
+:END: 
+
+### Editing Data Values
+### Inserting Rows and Columns
+### Deleting Rows and Columns
+### Sorting Data
+
+We can sort a vector with the =sort= function. Normally we have a data
+frame of several columns (variables) and many, many rows
+(observations). The goal is to shuffle the rows so that they are
+ordered by the values of one or more columns. This is done with the
+=order= function.
+
+For example, we may sort all of the rows of the =Puromycin= data (in
+ascending order) by the variable =conc= with the following:
+
+```{r, echo=TRUE, results=TRUE} 
+Tmp <- Puromycin[order(Puromycin$conc), ]
+head(Tmp)
+```
+
+#+RESULTS:
+:    conc rate     state
+: 1  0.02   76   treated
+: 2  0.02   47   treated
+: 13 0.02   67 untreated
+: 14 0.02   51 untreated
+: 3  0.06   97   treated
+: 4  0.06  107   treated
+
+We can accomplish the same thing with the command 
+
+```{r, echo=TRUE, eval=FALSE}
+with(Puromycin, Puromycin[order(conc), ])
+```
+
+We can sort by more than one variable. To sort first by =state= and
+next by =conc= do
+
+```{r, echo=TRUE, eval=FALSE}
+with(Puromycin, Puromycin[order(state, conc), ])
+```
+
+If we would like to sort a numeric variable in descending order then
+we put a minus sign in front of it.
+
+```{r, echo=TRUE, results=TRUE} 
+Tmp <- with(Puromycin, Puromycin[order(-conc), ])
+head(Tmp)
+```
+
+#+RESULTS:
+:    conc rate     state
+: 11 1.10  207   treated
+: 12 1.10  200   treated
+: 23 1.10  160 untreated
+: 9  0.56  191   treated
+: 10 0.56  201   treated
+: 21 0.56  144 untreated
+
+If we would like to sort by a character (or factor) in decreasing
+order then we can use the =xtfrm= function which produces a numeric
+vector in the same order as the character vector.
+
+```{r, echo=TRUE, results=TRUE} 
+Tmp <- with(Puromycin, Puromycin[order(-xtfrm(state)), ])
+head(Tmp)
+```
+
+#+RESULTS:
+:    conc rate     state
+: 13 0.02   67 untreated
+: 14 0.02   51 untreated
+: 15 0.06   84 untreated
+: 16 0.06   86 untreated
+: 17 0.11   98 untreated
+: 18 0.11  115 untreated
+
+## Exporting Data
+:PROPERTIES:
+:CUSTOM_ID: sec-Exporting-a-Data
+:END: 
+
+The basic function is =write.table=. The =MASS= package \cite{MASS}
+also has a =write.matrix= function.
+
+## Reshaping Data
+:PROPERTIES:
+:CUSTOM_ID: sec-Reshaping-a-Data
+:END: 
+
+- Aggregation
+- Convert Tables to data frames and back
+
+=rbind=, =cbind=
+=ab[order(ab[,1]),]=
+=complete.cases=
+=aggregate=
+=stack=
+

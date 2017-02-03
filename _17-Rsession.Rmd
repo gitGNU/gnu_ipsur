@@ -1,0 +1,55 @@
+#+LaTeX: \appendix
+
+
+# R Session Information                                            :appendix:
+:PROPERTIES:
+:tangle: R/17-appendix.R
+:CUSTOM_ID: cha-R-Session-Information
+:END:
+
+If you ever write the \(\mathsf{R}\) help mailing list with a
+question, then you should include your session information in the
+email; it makes the reader's job easier and is requested by the
+Posting Guide. Here is how to do that, and below is what the output
+looks like.
+
+```{r, echo=TRUE, results=TRUE} 
+sessionInfo()
+```
+
+#+RESULTS:
+#+BEGIN_example
+R version 3.0.1 (2013-05-16)
+Platform: i686-pc-linux-gnu (32-bit)
+
+locale:
+[1] C
+
+attached base packages:
+ [1] grid      stats4    splines   tcltk     stats     graphics  grDevices utils    
+ [9] datasets  methods   base     
+
+other attached packages:
+ [1] TeachingDemos_2.9        scatterplot3d_0.3-33     RcmdrPlugin.IPSUR_0.1-8 
+ [4] Rcmdr_1.9-6              car_2.0-18               nnet_7.3-7              
+ [7] qcc_2.2                  MASS_7.3-28              prob_0.9-2              
+[10] lmtest_0.9-31            zoo_1.7-10               Hmisc_3.12-2            
+[13] Formula_1.1-1            HH_2.3-37                colorspace_1.2-2        
+[16] reshape_0.8.4            plyr_1.8                 latticeExtra_0.6-24     
+[19] RColorBrewer_1.0-5       leaps_2.9                multcomp_1.2-19         
+[22] lattice_0.20-15          ggplot2_0.9.3.1          e1071_1.6-1             
+[25] class_7.3-8              distrEx_2.4              distr_2.4               
+[28] SweaveListingUtils_0.6.1 sfsmisc_1.0-24           startupmsg_0.8          
+[31] diagram_1.6.1            shape_1.4.0              combinat_0.0-8          
+[34] coin_1.0-22              modeltools_0.2-19        mvtnorm_0.9-9995        
+[37] survival_2.37-4          boot_1.3-9               aplpack_1.2.7           
+[40] actuar_1.1-6            
+
+loaded via a namespace (and not attached):
+ [1] cluster_1.14.4  dichromat_2.0-0 digest_0.6.3    gtable_0.1.2    labeling_0.2   
+ [6] munsell_0.4.2   proto_0.3-10    reshape2_1.2.2  rpart_4.1-1     scales_0.2.3   
+[11] stringr_0.6.2   tools_3.0.1
+#+END_example
+
+#+LaTeX: \vfill{}
+

@@ -1,0 +1,18 @@
+# History                                                          :appendix:
+:PROPERTIES:
+:tangle: R/17-appendix.R
+:CUSTOM_ID: cha-History
+:END:
+
+| Title:     | Introduction to Probability and Statistics Using \(\mathsf{R}\), Second Edition |
+| Year:      | 2014                                                                            |
+| Authors:   | G. Jay Kerns                                                                    |
+| Publisher: | G. Jay Kerns                                                                    |
+
+| Title:     | Introduction to Probability and Statistics Using \(\mathsf{R}\), First Edition |
+| Year:      | 2010                                                                           |
+| Authors:   | G. Jay Kerns                                                                   |
+| Publisher: | G. Jay Kerns                                                                   |
+
+#+LaTeX: \vfill{}
+

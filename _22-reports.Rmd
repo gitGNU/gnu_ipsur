@@ -1,0 +1,261 @@
+# Writing Reports with \(\mathsf{R}\)                              :appendix:
+:PROPERTIES:
+:tangle: R/17-appendix.R
+:CUSTOM_ID: cha-Writing-Reports-with
+:END:
+
+Perhaps the most important part of a statistician's job once the
+analysis is complete is to communicate the results to others. This is
+usually done with some type of report that is delivered to the client,
+manager, or administrator. Other situations that call for reports
+include term papers, final projects, thesis work, /etc/. This chapter
+is designed to pass along some tips about writing reports once the
+work is completed with \(\mathsf{R}\).
+
+## What to Write
+:PROPERTIES:
+:CUSTOM_ID: sec-What-to-Write
+:END: 
+
+It is possible to summarize this entire appendix with only one
+sentence: /the statistician's goal is to communicate with others/. To
+this end, there are some general guidelines that I give to students
+which are based on an outline originally written and shared with me by
+Dr. G. Andy Chang.
+
+### Basic Outline for a Statistical Report
+1. Executive Summary (a one page description of the study and
+   conclusion)
+1. Introduction 
+   1. What is the question, and why is it important?
+   1. Is the study observational or experimental?
+   1. What are the hypotheses of interest to the researcher?
+   1. What are the types of analyses employed? (one sample \(t\)-test,
+      paired-sample \(t\)-test, ANOVA, chi-square test, regression,
+      ...)
+1. Data Collection 
+   1. Describe how the data were collected in detail.
+   1. Identify all variable types: quantitative, qualitative, ordered
+      or nominal (with levels), discrete, continuous.
+   1. Discuss any limitations of the data collection procedure. Look
+      carefully for any sources of bias.
+1. Summary Information
+   1. Give numeric summaries of all variables of interest.
+      1. Discrete: (relative) frequencies, contingency tables, odds
+         ratios, /etc/.
+      1. Continuous: measures of center, spread, shape.
+   1. Give visual summaries of all variables of interest.
+      1. Side-by-side boxplots, scatterplots, histograms, /etc/.
+   1. Discuss any unusual features of the data (outliers, clusters,
+      granularity, /etc/.)
+   1. Report any missing data and identify any potential problems or
+      bias.
+1. Analysis 
+   1. State any hypotheses employed, and check the assumptions. 
+   1. Report test statistics, /p/-values, and confidence intervals. 
+   1. Interpret the results in the context of the study.
+   1. Attach (labeled) tables and/or graphs and make reference to them
+      in the report as needed.
+1. Conclusion
+   1. Summarize the results of the study. What did you learn?
+   1. Discuss any limitations of the study or inferences.
+   1. Discuss avenues of future research suggested by the study. 
+
+## How to Write It with R
+:PROPERTIES:
+:CUSTOM_ID: sec-How-to-Write
+:END: 
+
+Once the decision has been made what to write, the next task is to
+typeset the information to be shared. To do this the author will need
+to select software to use to write the documents. There are many
+options available, and choosing one over another is sometimes a matter
+of taste. But not all software were created equal, and \(\mathsf{R}\)
+plays better with some applications than it does with others.  In
+short, \(\mathsf{R}\) does great with \LaTeX{} and there are many
+resources available to make writing a document with \(\mathsf{R}\) and
+\LaTeX{} easier. But \LaTeX{} is not for the beginner, and there are
+other word processors which may be acceptable depending on the
+circumstances.
+
+### Microsoft\(\circledR\) Word
+It is a fact of life that Microsoft\(\circledR\) Windows is currently
+the most prevalent desktop operating system on the planet. Those who
+own Windows also typically own some version of Microsoft Office, thus
+Microsoft Word is the default word processor for many, many people.
+
+The standard way to write an \(\mathsf{R}\) report with
+Microsoft\(\circledR\) Word is to generate material with
+\(\mathsf{R}\) and then copy-paste the material at selected places in
+a Word document. An advantage to this approach is that Word is nicely
+designed to make it easy to copy-and-paste from =RGui= to the Word
+document.
+
+A disadvantage to this approach is that the R input/output needs to be
+edited manually by the author to make it readable for others. Another
+disadvantage is that the approach does not work on all operating
+systems (not on Linux, in particular). Yet another disadvantage is
+that Microsoft\(\circledR\) Word is proprietary, and as a result,
+\(\mathsf{R}\) does not communicate with Microsoft\(\circledR\) Word
+as well as it does with other software as we shall soon see.
+
+Nevertheless, if you are going to write a report with Word there are
+some steps that you can take to make the report more amenable to the
+reader.
+
+1. Copy and paste graphs into the document. You can do this by right
+   clicking on the graph and selecting =Copy as bitmap=, or =Copy as
+   metafile=, or one of the other options. Then move the cursor to the
+   document where you want the picture, right-click, and select
+   =Paste=.
+1. Resize (most) pictures so that they take up no more than 1/2
+   page. You may want to put graphs side by side; do this by inserting
+   a table and placing the graphs inside the cells.
+1. Copy selected \(\mathsf{R}\) input and output to the Word
+   document. All code should be separated from the rest of the
+   writing, except when specifically mentioning a function or object
+   in a sentence.
+1. The font of \(\mathsf{R}\) input/output should be Courier New, or
+   some other monowidth font (not Times New Roman or Calibri); the
+   default font size of =12= is usually too big for \(\mathsf{R}\)
+   code and should be reduced to, for example, =10pt=.
+
+It is also possible to communicate with \(\mathsf{R}\) through
+OpenOffice.org, which can export to the proprietary (=.doc=) format.
+
+### OpenOffice.org and \texttt{odfWeave}
+OpenOffice.org (OO.o) is an open source desktop productivity suite
+which mirrors Microsoft\(\circledR\) Office. It is especially nice
+because it works on all operating systems. OO.o can read most document
+formats, and in particular, it will read =.doc= files. The standard
+OO.o file extension for documents is =.odt=, which stands for "open
+document text".
+
+The =odfWeave= package \cite{odfWeave} provides a way to generate an
+=.odt= file with \(\mathsf{R}\) input and output code formatted
+correctly and inserted in the correct places, without any additional
+work. In this way, one does not need to worry about all of the trouble
+of typesetting \(\mathsf{R}\) output. Another advantage of =odfWeave=
+is that it allows you to generate the report dynamically; if the data
+underlying the report change or are updated, then a few clicks (or
+commands) will generate a brand new report.
+
+One disadvantage is that the source =.odt= file is not easy to read,
+because it is difficult to visually distinguish the noweb parts (where
+the \(\mathsf{R}\) code is) from the non-noweb parts. This can be
+fixed by manually changing the font of the noweb sections to, for
+instance, Courier font, size =10pt=. But it is extra work. It would be
+nice if a program would discriminate between the two different
+sections and automatically typeset the respective parts in their
+correct fonts. This is one of the advantages to \LyX{}.
+
+Another advantage of OO.o is that even after you have generated the
+outfile, it is fully editable just like any other =.odt= document. If
+there are errors or formatting problems, they can be fixed at any
+time.
+
+Here are the basic steps to typeset a statistical report with OO.o.
+
+1. Write your report as an =.odt= document in OO.o just as you would
+   any other document. Call this document =infile.odt=, and make sure
+   that it is saved in your working directory.
+1. At the places you would like to insert \(\mathsf{R}\) code in the
+   document, write the code chunks in the following format:
+   \texttt{<\textcompwordmark{}<>\textcompwordmark{}>=}~\\
+   \texttt{x <- rnorm(10)}~\\
+   \texttt{mean(x)}~\\
+   \texttt{@} or write whatever code you want between the symbols
+   \texttt{<\textcompwordmark{}<>\textcompwordmark{}>=} and
+   \texttt{@}.
+1. Open \(\mathsf{R}\) and type the following:
+   ```{r, echo=TRUE, eval=FALSE}
+   library("odfWeave")
+   odfWeave(file = "infile.odt", dest = "outfile.odt")
+   ```
+1. The compiled (=.odt=) file, complete with all of the \(\mathsf{R}\)
+   output automatically inserted in the correct places, will now be
+   the file =outfile.odt= located in the working directory. Open
+   =outfile.odt=, examine it, modify it, and repeat if desired.
+
+There are all sorts of extra things that you can do. For example, the
+\(\mathsf{R}\) commands can be suppressed with the tag
+\texttt{<\textcompwordmark{}<echo = FALSE>\textcompwordmark{}>=}, and
+the \(\mathsf{R}\) output may be hidden with
+\texttt{<\textcompwordmark{}<results =
+hide>\textcompwordmark{}>=}. See the =odfWeave= package documentation
+for details.
+
+### Sweave and \protect\LaTeX{}
+
+This approach is nice because it works for all operating systems. One
+can quite literally typeset /anything/ with \LaTeX{}. All of this
+power comes at a price, however. The writer must learn the \LaTeX{}
+language which is a nontrivial enterprise. Even given the language, if
+there is a single syntax error, or a single delimeter missing in the
+entire document, then the whole thing breaks.
+
+\LaTeX{} can do anything, but it is relatively difficult to learn and
+very grumpy about syntax errors and delimiter matching. There are
+however programs useful for formatting LaTeX.
+
+A disadvantage is that you cannot see the mathematical formulas until
+you run the whole file with \LaTeX{}.
+
+A disadvantage is that figures and tables are relatively difficult.
+
+There are programs to make the process easier: AUC\TeX{}.
+
+dev.copy2eps, also dev.copy2pdf
+
+[[http://www.stat.uni-muenchen.de/~leisch/Sweave/]]
+
+### Sweave and LyX
+This approach is nice because it works for all operating systems. It
+gives you everything from the last section and makes it easier to use
+\LaTeX{}. That being said, it is better to know \LaTeX{} already when
+migrating to \LyX{}, because you understand all of the machinery going
+on under the hood.
+
+Program Listings and the \(\mathsf{R}\) language
+[[http://gregor.gorjanc.googlepages.com/lyx-sweave]]
+
+## Formatting Tables
+:PROPERTIES:
+:CUSTOM_ID: sec-Formatting-Tables
+:END: 
+
+The prettyR package \cite{prettyR}.
+
+The Hmisc package \cite{Hmisc}.
+
+```{r, echo=TRUE, results=TRUE} 
+summary(cbind(Sepal.Length, Sepal.Width) ~ Species, data = iris)
+```
+
+#+RESULTS:
+#+BEGIN_example
+cbind(Sepal.Length, Sepal.Width)    N=150
+
++-------+----------+---+------------+-----------+
+|       |          |N  |Sepal.Length|Sepal.Width|
++-------+----------+---+------------+-----------+
+|Species|setosa    | 50|5.006000    |3.428000   |
+|       |versicolor| 50|5.936000    |2.770000   |
+|       |virginica | 50|6.588000    |2.974000   |
++-------+----------+---+------------+-----------+
+|Overall|          |150|5.843333    |3.057333   |
++-------+----------+---+------------+-----------+
+#+END_example
+
+There is a =method= argument to =summary=, which is set to
+\texttt{method = "response"} by default. There are two other methods
+for summarizing data: =reverse= and =cross=. See =?summary.formula= or
+the [[http://biostat.mc.vanderbilt.edu/twiki/bin/view/Main/StatReport][following document]] from Frank Harrell for more details.
+
+## Other Formats
+:PROPERTIES:
+:CUSTOM_ID: sec-Other-Formats
+:END: 
+
+HTML and prettyR
+R2HTML

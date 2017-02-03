@@ -135,7 +135,7 @@ goal of this chapter is for a person to get up and running, ready for
 the material that follows.  See Section [[#sec-External-Resources]] for links
 to other material which the reader may find useful.
 
-*What do I want them to know?*
+**What do I want them to know?**
 - Where to find \(\mathsf{R}\) to install on a home computer, and a
   few comments to help with the usual hiccups that occur when
   installing something.
@@ -484,13 +484,6 @@ sqrt(as.complex(-1))  # same thing
 typeof((0 + 1i)^2)
 ```
 
-#+RESULTS:
-: [1] NaN
-: [1] 0+1i
-: [1] 0+1i
-: [1] -1+0i
-: [1] "complex"
-
 Note that you can just type =(1i)^2= to get the same answer. The
 =NaN= @@latex:\index{NaN@\texttt{NaN}}@@ stands for "not a number"; it is
 represented internally as =double= @@latex:\index{double}@@.
@@ -514,9 +507,6 @@ a data vector with the =c= function (which is short for
 x <- c(74, 31, 95, 61, 76, 34, 23, 54, 96)
 x
 ```
-
-#+RESULTS:
-: [1] 74 31 95 61 76 34 23 54 96
 
 The elements of a vector are usually coerced by \(\mathsf{R}\) to the
 the most general type of any of the elements, so if you do =c(1, "2")=
@@ -544,19 +534,12 @@ seq(from = 1, to = 5)
 seq(from = 2, by = -0.1, length.out = 4)
 ```
 
-#+RESULTS:
-: [1] 1 2 3 4 5
-: [1] 2.0 1.9 1.8 1.7
-
 Note that we can get the first line much quicker with the colon
 operator.
 
 ```{r, echo=TRUE, results=TRUE} 
 1:5
 ```
-
-#+RESULTS:
-: [1] 1 2 3 4 5
 
 The vector =LETTERS= @@latex:\index{LETTERS@\texttt{LETTERS}}@@ has the 26
 letters of the English alphabet in uppercase and
@@ -576,12 +559,6 @@ x[c(1,3,4,8)]
 x[-c(1,3,4,8)]
 ```
 
-#+RESULTS:
-: [1] 74
-: [1] 31 95 61
-: [1] 74 95 61 54
-: [1] 31 76 34 23 96
-
 Notice that we used the minus sign to specify those elements that we
 do /not/ want.
 
@@ -589,10 +566,6 @@ do /not/ want.
 LETTERS[1:5]
 letters[-(6:24)]
 ```
-
-#+RESULTS:
-: [1] "A" "B" "C" "D" "E"
-: [1] "a" "b" "c" "d" "e" "y" "z"
 
 ### Functions and Expressions
 :PROPERTIES:
@@ -612,13 +585,6 @@ mean(x)      # sample mean
 sd(x)        # sample standard deviation
 ```
 
-#+RESULTS:
-: [1] 15
-: [1] 5
-: [1] 1
-: [1] 3
-: [1] 1.581139
-
 It will not be long before the user starts to wonder how a particular
 function is doing its job, and since \(\mathsf{R}\) is open-source,
 anybody is free to look under the hood of a function to see how things
@@ -635,11 +601,6 @@ would like to see how the =intersect=
 intersect
 ```
 
-#+RESULTS:
-: function (x, ...) 
-: UseMethod("intersect")
-: <environment: namespace:prob>
-
 *If instead# it shows =UseMethod(something)=
 @@latex:\index{UseMethod@\texttt{UseMethod}}@@ then you will need to choose the
 /class/ of the object to be inputted and next look at the /method/
@@ -650,23 +611,12 @@ that will be /dispatched/ to the object. For instance, typing =rev=
 rev
 ```
 
-#+RESULTS:
-: function (x) 
-: UseMethod("rev")
-: <bytecode: 0x8bd24a8>
-: <environment: namespace:base>
-
 The output is telling us that there are multiple methods associated
 with the =rev= function. To see what these are, type
 
 ```{r, echo=TRUE, results=TRUE} 
 methods(rev)
 ```
-
-#+RESULTS:
-: [1] rev.default     rev.dendrogram# rev.likert#     rev.zoo         rev.zooreg#    
-: 
-:    Non-visible functions are asterisked
 
 Now we learn that there are two different =rev(x)= functions, only one
 of which being chosen at each call depending on what =x= is. There is
@@ -678,12 +628,6 @@ the =default= method can be viewed with
 rev.default
 ```
 
-#+RESULTS:
-: function (x) 
-: if (length(x)) x[length(x):1L] else x
-: <bytecode: 0xa32509c>
-: <environment: namespace:base>
-
 *Some functions are hidden# by a /namespace/ (see An Introduction to
 \(\mathsf{R}\) \cite{Venables2010}), and are not visible on the first
 try. For example, if we try to look at the code for =wilcox.test=
@@ -694,15 +638,6 @@ wilcox.test
 methods(wilcox.test)
 ```
 
-#+RESULTS:
-: function (x, ...) 
-: UseMethod("wilcox.test")
-: <bytecode: 0x8957fd0>
-: <environment: namespace:stats>
-: [1] wilcox.test.default# wilcox.test.formula*
-: 
-:    Non-visible functions are asterisked
-
 If we were to try =wilcox.test.default= we would get a "not found"
 error, because it is hidden behind the namespace for the package
 =stats= \cite{stats} (shown in the last line when we tried
@@ -711,7 +646,7 @@ front of the function name with three colons; the command
 =stats:::wilcox.test.default= will show the source code, omitted here
 for brevity.
 
-*If it shows# =.Internal(something)=
+If it shows# =.Internal(something)=
 @@latex:\index{.Internal@\texttt{.Internal}}@@ or =.Primitive(something)=
 @@latex:\index{.Primitive@\texttt{.Primitive}}@@, then it will be necessary to
 download the source code of \(\mathsf{R}\) (which is /not/ a binary
@@ -723,8 +658,6 @@ example is =exp=:
 exp
 ```
 
-#+RESULTS:
-: function (x)  .Primitive("exp")
 
 Be warned that most of the =.Internal= functions are written in other
 computer languages which the beginner may not understand, at least
@@ -1052,17 +985,9 @@ in the United States and Puerto Rico. Let us take a look at the data:
 str(precip)
 ```
 
-#+RESULTS:
-:  Named num [1:70] 67 54.7 7 48.5 14 17.2 20.7 13 43.4 40.2 ...
-:  - attr(*, "names")= chr [1:70] "Mobile" "Juneau" "Phoenix" "Little Rock" ...
-
 ```{r, echo=TRUE, results=TRUE}  
 precip[1:4]
 ```
-
-#+RESULTS:
-:      Mobile      Juneau     Phoenix Little Rock 
-:        67.0        54.7         7.0        48.5
 
 The output shows that =precip= is a numeric vector which has been
 /named/, that is, each value has a name associated with it (which can
@@ -1082,10 +1007,6 @@ package \cite{datasets} (which ships with base \(\mathsf{R}\)). See
 ```{r, echo=TRUE, results=TRUE}  
 str(rivers)
 ```
-
-#+RESULTS:
-:  num [1:141] 735 320 325 392 524 ...
-
 The output says that =rivers= is a numeric vector of length 141, and
 the first few values are 735, 320, 325, /etc/. These data are
 definitely quantitative and it appears that the measurements have been
@@ -1105,10 +1026,6 @@ the 1975 World Almanac. Let us take a look at the data:
 ```{r, echo=TRUE, results=TRUE}  
 str(discoveries)
 ```
-
-#+RESULTS:
-:  Time-Series [1:100] from 1860 to 1959: 5 3 0 2 0 3 2 3 6 1 ...
-
 # +END_exampletoo
 
 The output is telling us that =discoveries= is a /time series/ (see
@@ -1169,8 +1086,7 @@ shape with perhaps some extreme values on the far right of the
 display. The third graph strip charts =discoveries= data which are
 literally a textbook example of a right skewed distribution.
 
-#+NAME: stripcharts
-#+BEGIN_SRC R :exports results :results graphics :file fig/datadesc-stripcharts.ps
+```{r, echo=FALSE} 
 par(mfrow = c(3,1)) # 3 plots: 3 rows, 1 column
 stripchart(precip, xlab="rainfall", cex.lab = cexlab)
 stripchart(rivers, method="jitter", xlab="length", cex.lab = cexlab)
@@ -1226,8 +1142,7 @@ title from being displayed -- it would have said "Histogram of
 (the default), and the plot on the right is a relative frequency
 histogram (=freq = FALSE=).
 
-#+NAME: histograms
-#+BEGIN_SRC R :exports results :results graphics :file fig/datadesc-histograms.ps
+```{r, echo=FALSE}
 par(mfrow = c(1,2))
 hist(precip, main = "", cex.lab = cexlab)
 hist(precip, freq = FALSE, main = "", cex.lab = cexlab)
@@ -1237,8 +1152,7 @@ par(mfrow = c(1,1))
 #+NAME: fig-histograms
 #+CAPTION[(Relative) frequency histograms of the =precip= data]: \small (Relative) frequency histograms of the =precip= data.
 #+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: histograms
-[[file:fig/datadesc-histograms.ps]]
+
 
 # +END_exampletoo
 
@@ -1259,8 +1173,7 @@ distribution. Watch what happens when we change the bins slightly
 (with the =breaks= argument to =hist=). See Figure [[fig-histograms-bins]]
 which was produced by the following code.
 
-#+NAME: histograms-bins
-#+BEGIN_SRC R :exports results :results graphics silent :file fig/datadesc-histograms-bins.ps
+```{r, echo=FALSE} silent :file fig/datadesc-histograms-bins.ps
 par(mfrow = c(1,3))
 hist(precip, breaks = 10, main = "", cex.lab = cexlab)
 hist(precip, breaks = 25, main = "", cex.lab = cexlab)
@@ -1271,8 +1184,7 @@ par(mfrow = c(1,1))
 #+NAME: fig-histograms-bins
 #+CAPTION[More histograms of the =precip= data]: \small More histograms of the =precip= data.
 #+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: histograms-bins
-[[file:fig/datadesc-histograms-bins.ps]]
+
 
 The leftmost graph (with =breaks = 10=) shows that the distribution is
 not balanced at all. There are two humps: a big one in the middle and
@@ -1314,29 +1226,6 @@ packages!aplpack@\texttt{aplpack}}@@ package\cite{aplpack}.
 ```{r, echo=TRUE, results=TRUE}  
 stem.leaf(UKDriverDeaths, depth = FALSE)
 ```
-
-#+RESULTS:
-#+begin_example
-1 | 2: represents 120
- leaf unit: 10
-            n: 192
-   10 | 57
-   11 | 136678
-   12 | 123889
-   13 | 0255666888899
-   14 | 00001222344444555556667788889
-   15 | 0000111112222223444455555566677779
-   16 | 01222333444445555555678888889
-   17 | 11233344566667799
-   18 | 00011235568
-   19 | 01234455667799
-   20 | 0000113557788899
-   21 | 145599
-   22 | 013467
-   23 | 9
-   24 | 7
-HI: 2654
-#+END_example
 
 The display shows a more or less balanced mound-shaped distribution,
 with one or maybe two humps, a big one and a smaller one just to its
@@ -1383,26 +1272,21 @@ plot(LakeHuron, type = "h")
 The plots show an overall decreasing trend to the observations, and
 there appears to be some seasonal variation that increases over time.
 
-#+NAME: indpl-lakehuron
-#+BEGIN_SRC R :exports results :results graphics silent :file fig/datadesc-indpl-lakehuron.ps
+```{r, echo=FALSE}
 par(mfrow = c(3,1))
 plot(LakeHuron, cex.lab = cexlab)
 plot(LakeHuron, type = "p", cex.lab = cexlab)
 plot(LakeHuron, type = "h", cex.lab = cexlab)
 par(mfrow = c(1,1))
 ```
-
-#+NAME: fig-indpl-lakehuron
 #+CAPTION[Index plots of the =LakeHuron= data]: \small Index plots of the =LakeHuron= data.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: indpl-lakehuron
-[[file:fig/datadesc-indpl-lakehuron.ps]]
+
 
 #### Density estimates						       :TODO:
 
 The default method uses a Gaussian kernel density estimate.
 
-#+BEGIN_SRC R :eval never
+```{r, echo=TRUE, eval=FALSE}
 # The Old Faithful geyser data
 d <- density(faithful$eruptions, bw = "sj")
 d
@@ -1468,9 +1352,6 @@ gives the two letter postal abbreviations for all 50 states.
 str(state.abb)
 ```
 
-#+RESULTS:
-:  chr [1:50] "AL" "AK" "AZ" "AR" "CA" "CO" "CT" "DE" "FL" "GA" "HI" ...
-
 These would be ID data. The =state.name= @@latex:\index{Data
 sets!state.name@\texttt{state.name}}@@ vector lists all of the complete
 names and those data would also be ID.
@@ -1490,11 +1371,6 @@ North Central, or West. See =?state.region=.
 str(state.region)
 state.region[1:5]
 ```
-
-#+RESULTS:
-:  Factor w/ 4 levels "Northeast","South",..: 2 4 4 2 4 4 1 2 2 2 ...
-: [1] South West  West  South West 
-: Levels: Northeast South North Central West
 
 The =str= @@latex:\index{str@\texttt{str}}@@ output shows that =state.region= is
 already stored internally as a factor and it lists a couple of the
@@ -1523,48 +1399,18 @@ set= @@latex:\index{Active data set@\texttt{Active data set}}@@ you can do
 =Statistics= \(\triangleright\) =Summaries= \(\triangleright\) =Active
 Dataset=.
 
-#+BEGIN_SRC R :exports code :results silent 
-Tbl <- table(state.division)
-```
-
 ```{r, echo=TRUE, results=TRUE}  
+Tbl <- table(state.division)
 Tbl
 ```
-
-#+RESULTS:
-: state.division
-:        New England    Middle Atlantic     South Atlantic East South Central 
-:                  6                  3                  8                  4 
-: West South Central East North Central West North Central           Mountain 
-:                  4                  5                  7                  8 
-:            Pacific 
-:                  5
 
 ```{r, echo=TRUE, results=TRUE}  
 Tbl/sum(Tbl)      # relative frequencies
 ```
 
-#+RESULTS:
-: state.division
-:        New England    Middle Atlantic     South Atlantic East South Central 
-:               0.12               0.06               0.16               0.08 
-: West South Central East North Central West North Central           Mountain 
-:               0.08               0.10               0.14               0.16 
-:            Pacific 
-:               0.10
-
 ```{r, echo=TRUE, results=TRUE}  
 prop.table(Tbl)   # same thing
 ```
-
-#+RESULTS:
-: state.division
-:        New England    Middle Atlantic     South Atlantic East South Central 
-:               0.12               0.06               0.16               0.08 
-: West South Central East North Central West North Central           Mountain 
-:               0.08               0.10               0.14               0.16 
-:            Pacific 
-:               0.10
 
 #### Bar Graphs
 :PROPERTIES:
@@ -1605,19 +1451,16 @@ by 20% which makes them easier to read. See =?par=
 @@latex:\index{par@\texttt{par}}@@ for a detailed list of additional
 plot parameters.
 
-#+NAME: bar-gr-stateregion
-#+BEGIN_SRC R :exports results :results graphics silent :file fig/datadesc-bar-gr-stateregion.ps
+
+```{r, echo=FALSE}
 par(mfrow = c(2,1)) # 2 plots: 2 rows, 1 column
 barplot(table(state.region), cex.names = 1.2)
 barplot(prop.table(table(state.region)), cex.names = 1.2)
 par(mfrow = c(1,1)) # back to normal
 ```
 
-#+NAME: fig-bar-gr-stateregion
 #+CAPTION[Bar graphs of the =state.region= data]: \small The top graph is a frequency barplot made with =table= and the bottom is a relative frequency barplot made with =prop.table=.
-#+ATTR_LaTeX: :width 1.0\textwidth :placement [ht!]
-#+RESULTS: bar-gr-stateregion
-[[file:fig/datadesc-bar-gr-stateregion.ps]]
+
 
 # +END_exampletoo
 
@@ -1648,16 +1491,14 @@ packages!RcmdrPlugin.IPSUR@\texttt{RcmdrPlugin.IPSUR}}@@ package
 packages!qcc@\texttt{qcc}}@@ package \cite{qcc}. See Figure
 [[fig-Pareto-chart]]. The code follows.
 
-#+NAME: Pareto-chart
-#+BEGIN_SRC R :exports both :results graphics silent :file fig/datadesc-Pareto-chart.ps
+
+```{r}
 pareto.chart(table(state.division), ylab="Frequency", cex.lab = cexlab)
 ```
 
-#+NAME: fig-Pareto-chart
+
 #+CAPTION[Pareto chart of the =state.division= data]: \small Pareto chart of the =state.division= data.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: Pareto-chart
-[[file:fig/datadesc-Pareto-chart.ps]]
+
 
 # +END_exampletoo
 
@@ -1677,17 +1518,13 @@ was produced by the following code.
 
 # +BEGIN_exampletoo
 
-#+NAME: dot-charts
-#+BEGIN_SRC R :exports both :results graphics :file fig/datadesc-dot-charts.ps
+```{r}
 x <- table(state.region)
 dotchart(as.vector(x), labels = names(x), cex.lab = cexlab)
 ```
 
-#+NAME: fig-dot-charts
+
 #+CAPTION[Dot chart of the \texttt{state.region} data]: \small Dot chart of the \texttt{state.region} data.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: dot-charts
-[[file:fig/datadesc-dot-charts.ps]]
 
 See Figure [[fig-dot-charts]]. Compare it to Figure
 [[fig-bar-gr-stateregion]].
@@ -1727,9 +1564,6 @@ y <- (x < 7.3)
 y
 ```
 
-#+RESULTS:
-: [1]  TRUE  TRUE  TRUE FALSE FALSE
-
 Many functions in \(\mathsf{R}\) have options that the user may or may
 not want to activate in the function call. For example, the
 =stem.leaf= function has the =depths= argument which is =TRUE= by
@@ -1743,8 +1577,6 @@ We can swap =TRUE= with =FALSE= with the exclamation point =!=.
 !y
 ```
 
-#+RESULTS:
-: [1] FALSE FALSE FALSE  TRUE  TRUE
 
 ### Missing Data
 :PROPERTIES:
@@ -1766,8 +1598,6 @@ y <- c(5, NA, 1, 2, 2)
 x + y
 ```
 
-#+RESULTS:
-: [1]  8 NA NA  6  9
 
 Some functions have a =na.rm= argument which when =TRUE= will ignore
 missing data as if they were not there (such as =mean=, =var=, =sd=,
@@ -1778,9 +1608,6 @@ sum(x)
 sum(x, na.rm = TRUE)
 ```
 
-#+RESULTS:
-: [1] NA
-: [1] 21
 
 Other functions do not have a =na.rm= argument and will return =NA= or
 an error if the argument has \texttt{NA}s. In those cases we can find
@@ -1792,10 +1619,6 @@ is.na(x)
 z <- x[!is.na(x)]
 sum(z)
 ```
-
-#+RESULTS:
-: [1] FALSE FALSE  TRUE FALSE FALSE
-: [1] 21
 
 The analogue of =is.na= for rectangular data sets (or data frames) is
 the =complete.cases= function. See Appendix [[#sec-Editing-Data-Sets]].
@@ -1896,35 +1719,9 @@ Yellowstone National Park. Do not be frightened by the complicated
 information at the left of the display for now; we will learn how to
 interpret it in Section [[#sec-Exploratory-Data-Analysis]].
 
-<<exa-stemleaf-multiple-lines-stem>>
 ```{r, echo=TRUE, results=TRUE}
 with(faithful, stem.leaf(eruptions))
 ```
-
-#+RESULTS:
-#+begin_example
-1 | 2: represents 1.2
- leaf unit: 0.1
-            n: 272
-   12     s | 667777777777
-   51    1. | 888888888888888888888888888899999999999
-   71    2# | 00000000000011111111
-   87     t | 2222222222333333
-   92     f | 44444
-   94     s | 66
-   97    2. | 889
-   98    3# | 0
-  102     t | 3333
-  108     f | 445555
-  118     s | 6666677777
-  (16)   3. | 8888888889999999
-  138    4# | 0000000000000000111111111111111
-  107     t | 22222222222233333333333333333
-   78     f | 44444444444445555555555555555555555
-   43     s | 6666666666677777777777
-   21    4. | 88888888888899999
-    4    5# | 0001
-#+END_example
 
 There are definitely two clusters of data here; an upper cluster and a
 lower cluster.
@@ -2306,10 +2103,6 @@ skewness(discoveries)
 2*sqrt(6/length(discoveries))
 ```
 
-#+RESULTS:
-: [1] 1.2076
-: [1] 0.4898979
-
 The data are definitely skewed to the right. Let us check the sample
 excess kurtosis of the =UKDriverDeaths= data:
 
@@ -2317,10 +2110,6 @@ excess kurtosis of the =UKDriverDeaths= data:
 kurtosis(UKDriverDeaths)
 4*sqrt(6/length(UKDriverDeaths))
 ```
-
-#+RESULTS:
-: [1] 0.07133848
-: [1] 0.7071068
 
 so that the =UKDriverDeaths= data appear to be mesokurtic, or at least
 not substantially leptokurtic.
@@ -2396,33 +2185,11 @@ not be what you expected. There are several reasons for this:
   well. Depending on the choice of the digit, =stem.leaf= may drop
   digits from the data or round the values in unexpected ways.
 
-
-<<ite-stemplot-rivers>> Let us take a look at the =rivers= data set
+Let us take a look at the =rivers= data set.
 
 ```{r, echo=TRUE, results=TRUE}  
 stem.leaf(rivers)
 ```
-
-#+RESULTS:
-#+BEGIN_example
-1 | 2: represents 120
- leaf unit: 10
-            n: 141
-    1     1 | 3
-   29     2 | 0111133334555556666778888899
-   64     3 | 00000111122223333455555666677888999
-  (18)    4 | 011222233344566679
-   59     5 | 000222234467
-   47     6 | 0000112235789
-   34     7 | 12233368
-   26     8 | 04579
-   21     9 | 0008
-   17    10 | 035
-   14    11 | 07
-   12    12 | 047
-    9    13 | 0
-HI: 1450 1459 1770 1885 2315 2348 2533 3710
-#+END_example
 
 The stem-and-leaf display shows a right-skewed shape to the =rivers=
 data distribution. Notice that the last digit of each of the data
@@ -2446,26 +2213,6 @@ Next let us see what the =precip= data look like.
 ```{r, echo=TRUE, results=TRUE}  
 stem.leaf(precip)
 ```
-
-#+RESULTS:
-#+BEGIN_example
-1 | 2: represents 12
- leaf unit: 1
-            n: 70
-LO: 7 7.2 7.8 7.8
-    8    1# | 1344
-   13    1. | 55677
-   16    2# | 024
-   18    2. | 59
-   28    3# | 0000111234
-  (15)   3. | 555566677788899
-   27    4# | 0000122222334
-   14    4. | 56688899
-    6    5# | 44
-    4    5. | 699
-HI: 67
-#+END_example
-
 Here is an example of split stems, with two lines per stem. The final
 digit of each datum has been dropped for the display. The data appear
 to be left skewed with four extreme values to the left and one extreme
@@ -2584,18 +2331,12 @@ We will look for potential outliers in the =rivers= data.
 boxplot.stats(rivers)$out
 ```
 
-#+RESULTS:
-:  [1] 1459 1450 1243 2348 3710 2315 2533 1306 1270 1885 1770
-
 We may change the =coef= argument to 3 (it is 1.5 by default) to
 identify suspected outliers.
 
 ```{r, echo=TRUE, results=TRUE}  
 boxplot.stats(rivers, coef = 3)$out
 ```
-
-#+RESULTS:
-: [1] 2348 3710 2315 2533 1885
 
 # +END_exampletoo
 
@@ -2644,7 +2385,7 @@ is an observation, and each column is a variable.
 Suppose we have two vectors =x= and =y= and we want to make a data
 frame out of them.
 
-#+BEGIN_SRC R :exports code :results silent
+```{r}
 x <- 5:8
 y <- letters[3:6]
 A <- data.frame(v1 = x, v2 = y)
@@ -2672,13 +2413,6 @@ A[ , 1]
 A[ , 2]
 ```
 
-#+RESULTS:
-:   v1 v2
-: 3  7  e
-: [1] 5 6 7 8
-: [1] c d e f
-: Levels: c d e f
-
 There are several things happening above. Notice that =A[3, ]= gave a
 data frame (with the same entries as the third row of =A=) yet =A[ ,
 1]= is a numeric vector. =A[ ,2]= is a factor vector because the
@@ -2692,14 +2426,6 @@ columns by way of the dollar sign.
 names(A)
 A['v1']
 ```
-
-#+RESULTS:
-: [1] "v1" "v2"
-:   v1
-: 1  5
-: 2  6
-: 3  7
-: 4  8
 
 The above is identical to =A[ ,1]=. 
 
@@ -2762,7 +2488,7 @@ Multivariate Data Display
 - =plot(state.region, state.division)= 
 - =barplot(table(state.division,state.region), legend.text=TRUE)=
 
-#+BEGIN_SRC R :eval never
+```{r, eval=FALSE}
 require(graphics)
 mosaicplot(HairEyeColor)
 x <- apply(HairEyeColor, c(1, 2), sum)
@@ -2834,16 +2560,11 @@ or the =Statistics= \(\triangleright\) =Summaries= \(\triangleright\)
 xyplot(Petal.Width ~ Petal.Length, data = iris, group = Species)
 ```
 
-#+NAME: xyplot-group
-#+BEGIN_SRC R :exports results :results graphics silent :file fig/datadesc-xyplot-group.ps
+```{r, echo=FALSE}
 print(xyplot(Petal.Width ~ Petal.Length, data = iris, group = Species))
 ```
 
-#+NAME: fig-xyplot-group
 #+CAPTION[Scatterplot of Petal width versus length in the =iris= data]: \small Scatterplot of Petal width versus length in the =iris= data.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: xyplot-group
-[[file:fig/datadesc-xyplot-group.ps]]
 
 - Scatterplot matrices
   - splom( ~ cbind(GNP.deflator,GNP,Unemployed,Armed.Forces,Population,Year,Employed),  data = longley) 
@@ -2912,15 +2633,11 @@ bwplot(~weight | feed, data = chickwts)
 ```
 
 #+NAME: bwplot
-#+BEGIN_SRC R :exports results :results graphics silent :file fig/datadesc-bwplot.ps
+```{r, echo=FALSE}
 print(bwplot(~weight | feed, data = chickwts))
 ```
 
-#+NAME: fig-bwplot
 #+CAPTION[Boxplots of =weight= by =feed= type in the =chickwts= data]: \small Boxplots of =weight= by =feed= type in the =chickwts= data.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: bwplot
-[[file:fig/datadesc-bwplot.ps]]
 
 #### Histograms
 
@@ -2928,16 +2645,13 @@ print(bwplot(~weight | feed, data = chickwts))
 histogram(~age | education, data = infert)
 ```
 
-#+NAME: histograms-lattice
-#+BEGIN_SRC R :exports results :results graphics :file fig/datadesc-histograms-lattice.ps
+
+```{r, echo=FALSE}
 print(histogram(~age | education, data = infert))
 ```
 
-#+NAME: fig-histograms-lattice
 #+CAPTION[Histograms of =age= by =education= level]: \small Histograms of =age= by =education= level from the =infert= data.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: histograms-lattice
-[[file:fig/datadesc-histograms-lattice.ps]]
+
 
 #### Scatterplots
 
@@ -2945,16 +2659,12 @@ print(histogram(~age | education, data = infert))
 xyplot(Petal.Length ~ Petal.Width | Species, data = iris)
 ```
 
-#+NAME: xyplot
-#+BEGIN_SRC R :exports results :results graphics :file fig/datadesc-xyplot.ps
+```{r, echo=FALSE}
 print(xyplot(Petal.Length ~ Petal.Width | Species, data = iris))
 ```
 
-#+NAME: fig-xyplot
 #+CAPTION[An =xyplot= of =Petal.Length= versus =Petal.Width= by =Species=]: \small An =xyplot= of =Petal.Length= versus =Petal.Width= by =Species= in the =iris= data.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: xyplot
-[[file:fig/datadesc-xyplot.ps]]
+
 
 #### Coplots
 
@@ -2962,16 +2672,12 @@ print(xyplot(Petal.Length ~ Petal.Width | Species, data = iris))
 coplot(conc ~ uptake | Type # Treatment, data = CO2)
 ```
 
-#+NAME: coplot
-#+BEGIN_SRC R :exports results :results graphics :file fig/datadesc-coplot.ps
+```{r, echo=FALSE}
 print(coplot(conc ~ uptake | Type # Treatment, data = CO2))
 ```
 
-#+NAME: fig-coplot
 #+CAPTION[A =coplot= of =conc= versus =uptake= by =Type= and =Treatment=]: \small A =coplot= of =conc= versus =uptake= by =Type= and =Treatment=.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: coplot
-[[file:fig/datadesc-coplot.ps]]
+
 
 #+LaTeX: \newpage{}
 
@@ -2979,13 +2685,13 @@ print(coplot(conc ~ uptake | Type # Treatment, data = CO2))
 
 Getting your labels to look right
 
-#+BEGIN_SRC R :eval never
+```{r, eval=FALSE}
 library(ggplot2)
 a <- qplot(state.division, geom = "bar")
 a + opts(axis.text.x = theme_text(angle = -90, hjust = 0))
 ```
 
-#+BEGIN_SRC R :eval never
+```{r, eval=FALSE}
 hist(precip, freq = FALSE)
 lines(density(precip))
 qplot(precip, geom = "density")
@@ -2995,14 +2701,15 @@ m + geom_histogram(aes(y = ..density..)) + geom_density()
 ```
 
 ## Exercises
-#+LaTeX: \setcounter{thm}{0}
+ #+LaTeX: \setcounter{thm}{0}
 
 Open \(\mathsf{R}\) and issue the following commands at the command
 line to get started. Note that you need to have the
 =RcmdrPlugin.IPSUR= package \cite{RcmdrPlugin.IPSUR} installed, and
 for some exercises you need the =e1071= package \cite{e1071}.
 
-#+BEGIN_SRC R :exports code :results silent
+
+```{r, echo=TRUE, results='hide'}
 library("RcmdrPlugin.IPSUR")
 data(RcmdrTestDrive)
 attach(RcmdrTestDrive)
@@ -3173,7 +2880,7 @@ period, /etc/.
 - what we mean by 'random variables', and where they come from
 
 #+NAME: diagram
-#+BEGIN_SRC R :exports results :results graphics :file fig/prob-diagram.ps
+```{r, echo=FALSE} :file fig/prob-diagram.ps
 require(diagram)
 par(mex = 0.2, cex = 0.5)
 openplotmat(frame.plot=TRUE)
@@ -3565,7 +3272,7 @@ S[c(2,4), ]
 and so forth. We may also extract rows that satisfy a logical
 expression using the =subset= function, for instance
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 S <- cards() 
 ``` 
 
@@ -3670,7 +3377,7 @@ x)=, which would give a single result, =TRUE=. The reason is that the
 answers are different in the case that =y= has repeated
 values. Compare:
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 x <- 1:10 
 y <- c(3,3,7) 
 ``` 
@@ -3760,7 +3467,7 @@ that summarizes the pertinent information about these operations.
 
 Some examples follow. 
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 S <- cards() 
 A <- subset(S, suit == "Heart") 
 B <- subset(S, rank %in% 7:9)
@@ -4447,7 +4154,7 @@ playing cards. Let's denote the probability space associated with the
 experiment as =S=, and let the subsets =A= and =B= be defined by the
 following:
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 S <- cards(makespace = TRUE) 
 A <- subset(S, suit == "Heart") 
 B <- subset(S, rank %in% 7:9)
@@ -4714,13 +4421,13 @@ and lastly, each of the 3 walls has 31 lighting possibilities (=rep =
 TRUE=, =ord = TRUE=). These three numbers can be calculated quickly
 with
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 n <- c(11,7,31) 
 k <- c(3,4,3) 
 r <- c(FALSE,FALSE,TRUE) 
 ``` 
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 x <- nsamp(n, k, rep = r, ord = TRUE) 
 ``` 
 
@@ -4835,7 +4542,7 @@ probabilities:
 # +END_exampletoo
 
 #+NAME: birthday
-#+BEGIN_SRC R :exports results :results graphics :file fig/prob-birthday.ps
+```{r, echo=FALSE} :file fig/prob-birthday.ps
 g <- Vectorize(pbirthday.ipsur)
 plot(1:50, g(1:50), xlab = "Number of people in room", ylab = "Prob(at least one match)")
 remove(g)
@@ -5001,7 +4708,7 @@ head(S)                            #  first few rows
 
 Next we define the events
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 A <- subset(S, X1 == X2)
 B <- subset(S, X1 + X2 >= 8)
 ```
@@ -5169,7 +4876,7 @@ It is easier for us this time because our urn is a vector instead of a
 associated with the outcomes (rank and suit) but presently we have
 only one dimension (color).
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 L <- rep(c("red","green"), times = c(7,3))
 M <- urnsamples(L, size = 3, replace = FALSE, ordered = TRUE)
 N <- probspace(M)
@@ -5852,7 +5559,7 @@ variable inside the function, and it will be added as a column to the
 data frame. As an example, let us roll a 4-sided die three times, and
 let us define the random variable \(U=X1-X2+X3\).
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 S <- rolldie(3, nsides = 4, makespace = TRUE) 
 S <- addrv(S, U = X1-X2+X3) 
 ``` 
@@ -6184,7 +5891,7 @@ by defining a vector =x= containing the support of \(X\), and a vector
 =f= to contain the values of \(f_{X}\) at the respective outcomes in
 =x=:
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 x <- c(0,1,2,3)
 f <- c(1/8, 3/8, 3/8, 1/8)
 ```
@@ -6510,7 +6217,7 @@ shown in Figure [[fig-binom-cdf-base]].
 # +END_exampletoo
 
 #+NAME: binom-cdf-base
-#+BEGIN_SRC R :exports results :results graphics :file fig/discdist-binom-cdf-base.ps
+```{r, echo=FALSE} :file fig/discdist-binom-cdf-base.ps
 plot(0, xlim = c(-1.2, 4.2), ylim = c(-0.04, 1.04), type = "n", xlab = "number of successes", ylab = "cumulative probability")
 abline(h = c(0,1), lty = 2, col = "grey")
 lines(stepfun(0:3, pbinom(-1:3, size = 3, prob = 0.5)), verticals = FALSE, do.p = FALSE)
@@ -6566,7 +6273,7 @@ function (introduced in Section [[#sub-Normal-Quantiles-QF]]). See
 Figure [[fig-binom-plot-distr]] for an example.
 
 #+NAME: binom-plot-distr
-#+BEGIN_SRC R :exports results :results graphics :file fig/discdist-binom-plot-distr.ps
+```{r, echo=FALSE} :file fig/discdist-binom-plot-distr.ps
 X <- Binom(size = 3, prob = 1/2)
 plot(X, cex = 0.2)
 ```
@@ -9175,7 +8882,7 @@ f_{V}(v)=\frac{6-|v-7|}{36},\quad v=2,\,3,\ldots,12.
 \end{equation}
 
 #+NAME: max-and-sum-two-dice
-#+BEGIN_SRC R :exports results :results graphics :file fig/multdist-max-and-sum-two-dice.ps
+```{r, echo=FALSE} :file fig/multdist-max-and-sum-two-dice.ps
 A <- rolldie(2, makespace = TRUE)
 A <- addrv(A, max, name = "U")
 A <- addrv(A, sum, name = "V", invars = c("X1", "X2"))
@@ -9203,7 +8910,7 @@ one, big matrix of pairs of values \((u,v)\). The result is shown in
 Table [[fig-max-sum-two-dice-joint]].
 
 #+NAME: max-sum-two-dice-joint
-#+BEGIN_SRC R :exports results :results graphics :file fig/multdist-max-sum-two-dice-joint.ps
+```{r, echo=FALSE} :file fig/multdist-max-sum-two-dice-joint.ps
 labs <- with(A, paste("(", U, ",", V, ")", sep = ""))
 p3 <- ggplot(A, aes(x = X1, y = X2, label = labs))
 p3 + geom_text(size = 6) + xlab("First roll") + ylab("Second roll") + 
@@ -10038,7 +9745,7 @@ We chose the standard bivariate normal,
 to display.
 
 #+NAME: mvnorm-pdf
-#+BEGIN_SRC R :exports results :results graphics :file fig/multdist-mvnorm-pdf.ps
+```{r, echo=FALSE} :file fig/multdist-mvnorm-pdf.ps
 x <- y <- seq(from = -3, to = 3, length.out = 30)
 f <- function(x,y) dmvnorm(cbind(x,y), mean = c(0,0), sigma = diag(2))
 z <- outer(x, y, FUN = f)
@@ -10490,7 +10197,7 @@ cloud(probs ~ X1 + X2, data = S, type = c("p","h"), lwd = 2,
 ```
 
 #+NAME: multinom-pmf2
-#+BEGIN_SRC R :exports results :results graphics :file fig/multdist-multinom-pmf2.ps
+```{r, echo=FALSE} :file fig/multdist-multinom-pmf2.ps
 print(cloud(probs ~ X1 + X2, data = S, type = c("p","h"), lwd = 2, 
             pch = 16, cex = 1.5), screen = list(z = 15, x = -70))
 ```
@@ -11135,7 +10842,7 @@ simulated sampling distributions, much more so than, say, SPSS or SAS.
 
 ### The Interquartile Range
 
-#+BEGIN_SRC R :exports code :results silent 
+```{r, echo=TRUE, results='hide'} 
 iqrs <- replicate(100, IQR(rnorm(100)))
 ```
 
@@ -11170,7 +10877,7 @@ hist(iqrs, breaks = 20)
 
 ### The Median Absolute Deviation
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 mads <- replicate(100, mad(rnorm(100)))
 ```
 
@@ -11373,7 +11080,7 @@ biggest? We can answer this question with a plot of
 # +END_exampletoo
 
 #+NAME: capture-recapture
-#+BEGIN_SRC R :exports results :results graphics :file fig/estimate-capture-recapture.ps
+```{r, echo=FALSE} :file fig/estimate-capture-recapture.ps
 heights = rep(0, 16)
 for (j in 7:15) heights[j] <- dhyper(3, m = 7, n = j - 7, k = 4)
 plot(6:15, heights[6:15], pch = 16, cex = 1.5, xlab = "number of fish in pond", ylab = "Likelihood")
@@ -11433,7 +11140,7 @@ quantity is a function of \(p\), called the /likelihood function/
 in Figure [[fig-fishing-part-two]].
 
 #+NAME: fishing-part-two
-#+BEGIN_SRC R :exports results :results graphics :file fig/estimate-fishing-part-two.ps
+```{r, echo=FALSE} :file fig/estimate-fishing-part-two.ps
 curve(x^5*(1-x)^2, 0, 1, xlab = "p", ylab = "L(p)")
 curve(x^4*(1-x)^3, 0, 1, add = TRUE)
 curve(x^3*(1-x)^4, 0, 1, add = TRUE)
@@ -11486,7 +11193,7 @@ for this example. Other examples are not so easy, however, and we
 should be careful to be cognizant of this extra step.
 
 #+NAME: species-mle
-#+BEGIN_SRC R :exports results :results graphics :file fig/estimate-species-mle.ps
+```{r, echo=FALSE} :file fig/estimate-species-mle.ps
 dat <- rbinom(27, size = 1, prob = 0.3)
 like <- function(x){
 r <- 1
@@ -11705,7 +11412,7 @@ Example [[exa-normal-MLE-both]] that
 above. Let us check whether this is plausible numerically. The
 negative log-likelihood function is
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 minuslogL <- function(mu, sigma2){
   -sum(dnorm(x, mean = mu, sd = sqrt(sigma2), log = TRUE))
 }
@@ -12309,7 +12016,7 @@ sample estimates:
 0.4166667
 #+END_example
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 A <- as.data.frame(Titanic)
 B <- with(A, untable(A, Freq))
 ```
@@ -13367,7 +13074,7 @@ W = 0.9281, p-value = 0.3603
 #+END_example
 
 and
-#+BEGIN_SRC R :exports code :results silent 
+```{r, echo=TRUE, results='hide'} 
 temp <- lm(weight ~ feed, data = chickwts)
 ```
 and 
@@ -13624,7 +13331,7 @@ circumstances that the data show /heteroscedasticity/. There are
 methods to address it, but they fall outside the realm of SLR.
 
 #+NAME: philosophy
-#+BEGIN_SRC R :exports results :results graphics :file fig/slr-philosophy.ps
+```{r, echo=FALSE} :file fig/slr-philosophy.ps
 plot(c(0,5), c(0,6.5), type = "n", xlab="x", ylab="y")
 abline(h = 0, v = 0, col = "gray60")
 abline(a = 2.5, b = 0.5, lwd = 2)
@@ -13806,7 +13513,7 @@ Here we go. \(\mathsf{R}\) will calculate the linear regression line
 with the =lm= function. We will store the result in an object which we
 will call =cars.lm=. Here is how it works:
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 cars.lm <- lm(dist ~ speed, data = cars)
 ```
 
@@ -14245,7 +13952,7 @@ at which we want the predictions made, and store the \(x_{0}\) values
 in a data frame whose variable is labeled with the correct name. /This
 is important/.
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 new <- data.frame(speed = c(5, 6, 21))
 ```
 
@@ -15254,7 +14961,7 @@ shown on the same display. The diagnostic plots for the =cars= data
 are shown in Figure [[fig-Diagnostic-plots-cars]]:
 
 #+NAME: Diagnostic-plots-cars
-#+BEGIN_SRC R :exports results :results graphics :file fig/slr-Diagnostic-plots-cars.ps
+```{r, echo=FALSE} :file fig/slr-Diagnostic-plots-cars.ps
 par(mfrow = c(2,2))
 plot(cars.lm)
 par(mfrow = c(1,1))
@@ -15767,7 +15474,7 @@ independent variables in the data frame =new=, which has two columns
 (one for each independent variable) and three rows (we shall make
 predictions at three different locations).
 
-#+BEGIN_SRC R :exports code :results silent 
+```{r, echo=TRUE, results='hide'} 
 new <- data.frame(Girth = c(9.1, 11.6, 12.5), Height = c(69, 74, 87))
 ```
 
@@ -15999,7 +15706,7 @@ need to specify values of the independent variables in the data frame
 =new= as we did in Section [[#sub-slr-interval-est-regline]] (which we
 repeat here for illustration).
 
-#+BEGIN_SRC R :exports code :results silent 
+```{r, echo=TRUE, results='hide'} 
 new <- data.frame(Girth = c(9.1, 11.6, 12.5), Height = c(69, 74, 87))
 ```
 
@@ -16768,7 +16475,7 @@ like to try a reduced model which contains nothing but =Girth= and
 \end{align*}
 We fit the reduced model with =lm= and store the results:
 
-#+BEGIN_SRC R :exports code :results silent
+```{r, echo=TRUE, results='hide'}
 treesreduced.lm <- lm(Volume ~ -1 + Girth + I(Girth^2), data = trees)
 ```
 
@@ -17288,7 +16995,7 @@ resamples of size 25. We will calculate the sample mean of each of the
 resamples, and will study the data distribution of the 1000 values of
 \(\overline{x}\).
 
-#+BEGIN_SRC R :exports code :results silent 
+```{r, echo=TRUE, results='hide'} 
 srs <- rnorm(25, mean = 3)
 resamps <- replicate(1000, sample(srs, 25, TRUE), simplify = FALSE)
 xbarstar <- sapply(resamps, mean, simplify = TRUE)
@@ -17297,17 +17004,15 @@ xbarstar <- sapply(resamps, mean, simplify = TRUE)
 A histogram of the 1000 values of \(\overline{x}\) is shown in Figure
 [[fig-Bootstrap-se-mean]], and was produced by the following code.
 
-#+NAME: Bootstrap-se-mean
-#+BEGIN_SRC R :exports both :results graphics :file fig/resamp-Bootstrap-se-mean.ps
+
+```{r}
 hist(xbarstar, breaks = 40, prob = TRUE)
 curve(dnorm(x, 3, 0.2), add = TRUE) # overlay true normal density
 ```
 
-#+NAME: fig-Bootstrap-se-mean
+
 #+CAPTION[Bootstrapping the standard error of the mean, simulated data]: \small The original data were 25 observations generated from a \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=1)\) distribution. We next resampled to get 1000 resamples, each of size 25, and calculated the sample mean for each resample. A histogram of the 1000 values of \(\overline{x}\) is shown above. Also shown (with a solid line) is the true sampling distribution of \(\overline{X}\), which is a \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=0.2)\) distribution. Note that the histogram is centered at the sample mean of the original data, while the true sampling distribution is centered at the true value of \(\mu=3\). The shape and spread of the histogram is similar to the shape and spread of the true sampling distribution.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: Bootstrap-se-mean
-[[file:fig/resamp-Bootstrap-se-mean.ps]]
+
 
 We have overlain what we know to be the true sampling distribution of
 \(\overline{X}\), namely, a
@@ -17326,11 +17031,6 @@ mean(xbarstar)
 mean(srs)
 mean(xbarstar) - mean(srs)
 ```
-
-#+RESULTS:
-: [1] 3.05643
-: [1] 3.05766
-: [1] -0.001229869
 
 # +END_exampletoo
 

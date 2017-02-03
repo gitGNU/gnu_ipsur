@@ -1,10 +1,5 @@
-# An Introduction to Probability and Statistics                     :introps:
-:PROPERTIES:
-:tangle: R/01-introps.R
-:END:
-#+LaTeX: \pagenumbering{arabic}
+# An Introduction to Probability and Statistics                   
 
-#+LaTeX: \noindent 
 This chapter has proved to be the hardest to write, by far. The
 trouble is that there is so much to say -- and so many people have
 already said it so much better than I could. When I get something I
@@ -57,10 +52,5 @@ is how I was trained, with the conspicuous exception of Sections
 [[#sec-Bayes-Rule]] and [[#sec-Conditional-Distributions]]. I plan to add more
 bayesian material in later editions of this book.
 
-#+LaTeX: \newpage{}
 
-## Exercises
-#+LaTeX: \setcounter{thm}{0}
-
-#+INCLUDE: "include/prelim.R" src R
 

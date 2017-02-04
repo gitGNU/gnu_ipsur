@@ -1,12 +1,9 @@
-# Simple Linear Regression                                              :slr:
-:PROPERTIES:
-:tangle: R/11-slr.R
-:CUSTOM_ID: cha-simple-linear-regression
-:END:
+# Simple Linear Regression {#cha-simple-linear-regression}
+
 
 ```{r, echo=FALSE, eval=FALSE}
 #    IPSUR: Introduction to Probability and Statistics Using R
-#    Copyright (C) 2014  G. Jay Kerns
+#    Copyright (C) 2017  G. Jay Kerns
 #
 #    Chapter: Simple Linear Regression
 #
@@ -33,15 +30,15 @@ library(HH)
 library(lmtest)
 ```
 
-*What do I want them to know?*
+**What do I want them to know?**
 
-- basic philosophy of SLR and the regression assumptions
-- point and interval estimation of the model parameters, and how to
+* basic philosophy of SLR and the regression assumptions
+* point and interval estimation of the model parameters, and how to
   use it to make predictions
-- point and interval estimation of future observations from the model
-- regression diagnostics, including \( R^{2} \) and basic residual
+* point and interval estimation of future observations from the model
+* regression diagnostics, including \( R^{2} \) and basic residual
   analysis
-- the concept of influential versus outlying observations, and how to
+* the concept of influential versus outlying observations, and how to
   tell the difference
 
 ## Basic Philosophy
@@ -54,9 +51,9 @@ not random (so we will write \(x\)), but \(Y\) is random. We believe
 that \(Y\) depends in /some/ way on \(x\). Some typical examples of \(
 (x,Y) \) pairs are
 
-- \( x = \) study time and \( Y = \) score on a test.
-- \( x = \) height and \( Y = \) weight.
-- \( x = \) smoking frequency and \( Y = \) age of first heart attack.
+* \( x = \) study time and \( Y = \) score on a test.
+* \( x = \) height and \( Y = \) weight.
+* \( x = \) smoking frequency and \( Y = \) age of first heart attack.
 
 Given information about the relationship between \(x\) and \(Y\), we
 would like to /predict/ future values of \(Y\) for particular values
@@ -73,11 +70,12 @@ predictions, especially about the future."
 
 But we should be able to say more than that. To focus our efforts we
 impose some structure on the functional form of \(\mu\). For instance,
-- if \(\mu(x)=\beta_{0}+\beta_{1}x\), we try to estimate \( \beta_{0}
+
+* if \(\mu(x)=\beta_{0}+\beta_{1}x\), we try to estimate \( \beta_{0}
   \) and \( \beta_{1} \).
-- if \( \mu(x) = \beta_{0} + \beta_{1}x + \beta_{2}x^{2} \), we try to
+* if \( \mu(x) = \beta_{0} + \beta_{1}x + \beta_{2}x^{2} \), we try to
   estimate \(\beta_{0}\), \(\beta_{1}\), and \(\beta_{2}\).
-- if \( \mu(x) = \beta_{0} \mathrm{e}^{\beta_{1}x} \), we try to
+* if \( \mu(x) = \beta_{0} \mathrm{e}^{\beta_{1}x} \), we try to
   estimate \(\beta_{0}\) and \(\beta_{1}\).
 
 This helps us in the sense that we concentrate on the estimation of
@@ -169,34 +167,24 @@ segments(4,4.5, 4 + dnorm(0,0,0.5),4.5, lty = 2, col = "gray")
 
 #+NAME: fig-philosophy
 #+CAPTION[Philosophical foundations of SLR]: \small Philosophical foundations of SLR.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: philosophy
-[[file:fig/slr-philosophy.ps]]
+
 
 
 # +BEGIN_exampletoo
 <<exa-Speed-and-Stopping>> *Speed and stopping distance of cars.# We
 will use the data frame \texttt{cars} @@latex:\index{Data
-sets!cars@\texttt{cars}}@@ from the =datasets= package
-\cite{datasets}. It has two variables: =speed= and =dist=. We can take
+sets!cars@\texttt{cars}}@@ from the `datasets` package
+\cite{datasets}. It has two variables: `speed` and `dist`. We can take
 a look at some of the values in the data frame:
 ```{r, echo=TRUE, results=TRUE} 
 head(cars)
 ```
 
-#+RESULTS:
-:   speed dist
-: 1     4    2
-: 2     4   10
-: 3     7    4
-: 4     7   22
-: 5     8   16
-: 6     9   10
 
-The =speed= represents how fast the car was going (\(x\)) in miles per
-hour and =dist= (\(Y\)) measures how far it took the car to stop, in
-feet. We can make a simple scatterplot of the data with the =qplot=
-command in the =ggplot2= package \cite{ggplot2}.
+The `speed` represents how fast the car was going (\(x\)) in miles per
+hour and `dist` (\(Y\)) measures how far it took the car to stop, in
+feet. We can make a simple scatterplot of the data with the `qplot`
+command in the `ggplot2` package \cite{ggplot2}.
 
 #+NAME: carscatter
 #+BEGIN_SRC R :exports both :results graphics :file fig/slr-carscatter.ps
@@ -204,10 +192,8 @@ plot(dist ~ speed, data = cars)
 ```
 
 #+NAME: fig-carscatter
-#+CAPTION[Scatterplot of =dist= versus =speed= for the =cars= data]: \small A scatterplot of =dist= versus =speed= for the =cars= data.  There is clearly an upward trend to the plot which is approximately linear. 
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: carscatter
-[[file:fig/slr-carscatter.ps]]
+#+CAPTION[Scatterplot of `dist` versus `speed` for the `cars` data]: \small A scatterplot of `dist` versus `speed` for the `cars` data.  There is clearly an upward trend to the plot which is approximately linear. 
+
 
 You can see the output in Figure [[fig-Scatter-cars]], which was produced by the
 following code.
@@ -331,37 +317,33 @@ tmpcoef <- round(as.numeric(coef(lm(dist ~ speed, cars))), 2)
 ```
 
 Here we go. \(\mathsf{R}\) will calculate the linear regression line
-with the =lm= function. We will store the result in an object which we
-will call =cars.lm=. Here is how it works:
+with the `lm` function. We will store the result in an object which we
+will call `cars.lm`. Here is how it works:
 
 ```{r, echo=TRUE, results='hide'}
 cars.lm <- lm(dist ~ speed, data = cars)
 ```
 
-The first part of the input to the =lm= function, =dist ~ speed=, is a
-/model formula/, read like this: =dist= is described (or modeled) by
-=speed=. The =data = cars= argument tells \(\mathsf{R}\) where to look
+The first part of the input to the `lm` function, `dist ~ speed`, is a
+/model formula/, read like this: `dist` is described (or modeled) by
+`speed`. The `data = cars` argument tells \(\mathsf{R}\) where to look
 for the variables quoted in the model formula. The output object
-=cars.lm= contains a multitude of information. Let's first take a look
+`cars.lm` contains a multitude of information. Let's first take a look
 at the coefficients of the fitted regression line, which are extracted
-by the =coef= function (alternatively, we could just type =cars.lm= to
+by the `coef` function (alternatively, we could just type `cars.lm` to
 see the same thing):
 
 ```{r, echo=TRUE, results=TRUE} 
 coef(cars.lm)
 ```
 
-#+RESULTS:
-: (Intercept)       speed 
-:  -17.579095    3.932409
-
 The parameter estimates \( b_{0} \) and \( b_{1} \) for the intercept
 and slope, respectively, are shown above. 
 
 It is good practice to visually inspect the data with the regression
 line added to the plot. To do this we first scatterplot the original
-data and then follow with a call to the =abline= function. The inputs
-to =abline= are the coefficients of =cars.lm=; see Figure
+data and then follow with a call to the `abline` function. The inputs
+to `abline` are the coefficients of `cars.lm`; see Figure
 [[fig-Scatter-cars-regline]].
 
 #+NAME: carline
@@ -372,20 +354,18 @@ ggplot(cars, aes(x = speed, y = dist)) +
 ```
 
 #+NAME: fig-carline
-#+CAPTION[Scatterplot with added regression line for the =cars= data]: \small A scatterplot with an added regression line for the =cars= data.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: carline
-[[file:fig/slr-carline.ps]]
+#+CAPTION[Scatterplot with added regression line for the `cars` data]: \small A scatterplot with an added regression line for the `cars` data.
+
 
 To calculate points on the regression line we may simply plug the
 desired \(x\) value(s) into \( \hat{\mu} \), either by hand, or with
-the =predict= function. The inputs to =predict= are the fitted linear
-model object, =cars.lm=, and the desired \(x\) value(s) represented by
+the `predict` function. The inputs to `predict` are the fitted linear
+model object, `cars.lm`, and the desired \(x\) value(s) represented by
 a data frame. See the example below.
 
 # +BEGIN_exampletoo
 <<exa-regline-cars-interpret>> Using the regression line for the
-=cars= data:
+`cars` data:
 1. What is the meaning of \( \mu(60) = \beta_{0} + \beta_{1}(8) \)?
    This represents the average stopping distance (in feet) for a car
    going 8 mph.
@@ -434,15 +414,12 @@ distance of a future car traveling 8 mph.
 
 Note that we actually have observed data for a car traveling 8 mph;
 its stopping distance was 16 ft as listed in the fifth row of the
-=cars= data (which we saw in Example [[exa-Speed-and-Stopping]]).
+`cars` data (which we saw in Example [[exa-Speed-and-Stopping]]).
 
 ```{r, echo=TRUE, results=TRUE}
 cars[5, ]
 ```
 
-#+RESULTS:
-:   speed dist
-: 5     8   16
 
 There is a special name for estimates \( \hat{\mu}(x_{0}) \) when \(
 x_{0} \) matches an observed value \(x_{i}\) from the data set. They
@@ -468,21 +445,17 @@ with a good deal of caution.
 
 The fitted values are automatically computed as a byproduct of the
 model fitting procedure and are already stored as a component of the
-=cars.lm= object. We may access them with the =fitted= function (we
+`cars.lm` object. We may access them with the `fitted` function (we
 only show the first five entries):
 
 ```{r, echo=TRUE, results=TRUE} 
 fitted(cars.lm)[1:5]
 ```
 
-#+RESULTS:
-:         1         2         3         4         5 
-: -1.849460 -1.849460  9.947766  9.947766 13.880175
-
 Predictions at \(x\) values that are not necessarily part of the
-original data are done with the =predict= function. The first argument
-is the original =cars.lm= object and the second argument =newdata=
-accepts a dataframe (in the same form that was used to fit =cars.lm=)
+original data are done with the `predict` function. The first argument
+is the original `cars.lm` object and the second argument `newdata`
+accepts a dataframe (in the same form that was used to fit `cars.lm`)
 that contains the locations at which we are seeking predictions. Let
 us predict the average stopping distances of cars traveling 6 mph, 8
 mph, and 21 mph:
@@ -490,10 +463,6 @@ mph, and 21 mph:
 ```{r, echo=TRUE, results=TRUE} 
 predict(cars.lm, newdata = data.frame(speed = c(6, 8, 21)))
 ```
-
-#+RESULTS:
-:         1         2         3 
-:  6.015358 13.880175 65.001489
 
 Note that there were no observed cars that traveled 6 mph or 21
 mph. Also note that our estimate for a car traveling 8 mph matches the
@@ -531,16 +500,13 @@ encounter is the lowercase \(s^{2}\) or the bulky \(MSE\).
 
 #### How to do it with \(\mathsf{R}\)
 
-The residuals for the model may be obtained with the =residuals=
+The residuals for the model may be obtained with the `residuals`
 function; we only show the first few entries in the interest of space:
 
 ```{r, echo=TRUE, results=TRUE} 
 residuals(cars.lm)[1:5]
 ```
 
-#+RESULTS:
-:         1         2         3         4         5 
-:  3.849460 11.849460 -5.947766 12.052234  2.119825
 
 ```{r, echo=FALSE, include=FALSE}
 tmpred <- round(as.numeric(predict(cars.lm, newdata = data.frame(speed = 8))), 2)
@@ -551,26 +517,23 @@ In the last section, we calculated the fitted value for \(x=8\) and
 found it to be approximately \( \hat{\mu}(8) \approx\) SRC_R[:eval no-export]{tmpred}
 13.88. Now, it turns out that there was only one recorded observation
 at \(x = 8\), and we have seen this value in the output of
-=head(cars)= in Example [[exa-Speed-and-Stopping]]; it was \(\mathtt{dist}
+`head(cars)` in Example [[exa-Speed-and-Stopping]]; it was \(\mathtt{dist}
 = 16\) ft for a car with \( \mathtt{speed} = 8 \) mph. Therefore, the
 residual should be \(E = Y - \hat{Y}\) which is \(E \approx 16 - \)
 SRC_R[:eval no-export]{tmpred} 13.88. Now take a look at the last entry of
-=residuals(cars.lm)=, above. It is not a coincidence.
+`residuals(cars.lm)`, above. It is not a coincidence.
 
-The estimate \(S\) for \(\sigma\) is called the =Residual standard
-error= and for the =cars= data is shown a few lines up on the
-=summary(cars.lm)= output (see How to do it with \(\mathsf{R}\) in
+The estimate \(S\) for \(\sigma\) is called the `Residual standard error` and for the `cars` data is shown a few lines up on the
+`summary(cars.lm)` output (see How to do it with \(\mathsf{R}\) in
 Section [[#sub-slr-interval-est-params]]). We may read it from there to be \(
 S\approx\) SRC_R[:eval no-export]{tmps} 15.38, or we can access it directly from the
-=summary= object.
+`summary` object.
 
 ```{r, echo=TRUE, results=TRUE}
 carsumry <- summary(cars.lm)
 carsumry$sigma
 ```
 
-#+RESULTS:
-: [1] 15.37959
 
 ### Interval Estimates of the Parameters
 :PROPERTIES:
@@ -646,35 +609,13 @@ A <- matrix(as.numeric(round(carsumry$coef, 3)), nrow = 2)
 B <- round(confint(cars.lm), 3)
 ```
 
-Let us take a look at the output from =summary(cars.lm)=:
+Let us take a look at the output from `summary(cars.lm)`:
 
 ```{r, echo=TRUE, results=TRUE} 
 summary(cars.lm)
 ```
 
-#+RESULTS:
-#+BEGIN_example
-
-Call:
-lm(formula = dist ~ speed, data = cars)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--29.069  -9.525  -2.272   9.215  43.201 
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept) -17.5791     6.7584  -2.601   0.0123 #  
-speed         3.9324     0.4155   9.464 1.49e-12 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 15.38 on 48 degrees of freedom
-Multiple R-squared:  0.6511,	Adjusted R-squared:  0.6438 
-F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12
-#+END_example
-
-In the =Coefficients= section we find the parameter estimates and
+In the `Coefficients` section we find the parameter estimates and
 their respective standard errors in the second and third columns; the
 other columns are discussed in Section [[#sec-Model-Utility-SLR]]. If we
 wanted, say, a 95% confidence interval for \(\beta_{1}\) we could use
@@ -682,16 +623,11 @@ wanted, say, a 95% confidence interval for \(\beta_{1}\) we could use
 0.416 together with a \( \mathsf{t}_{0.025}(\mathtt{df}=23) \)
 critical value to calculate \( b_{1} \pm
 \mathsf{t}_{0.025}(\mathtt{df} = 23) \cdot S_{b_{1}} \).  Or, we could
-use the =confint= function.
+use the `confint` function.
 
 ```{r, echo=TRUE, results=TRUE} 
 confint(cars.lm)
 ```
-
-#+RESULTS:
-:                  2.5 %    97.5 %
-: (Intercept) -31.167850 -3.990340
-: speed         3.096964  4.767853
 
 With 95% confidence, the random interval SRC_R[:eval no-export]{B[2,1]} 3.097 to
 SRC_R[:eval no-export]{B[2,2]} 4.768 covers the parameter \(\beta_{1}\).
@@ -757,9 +693,9 @@ beginning of the section.
 #### How to do it with \(\mathsf{R}\)
 
 Confidence and prediction intervals are calculated in \(\mathsf{R}\)
-with the =predict= @@latex:\index{predict@\texttt{predict}}@@ function, which we
+with the `predict` @@latex:\index{predict@\texttt{predict}}@@ function, which we
 encountered in Section [[#sub-slr-point-est-regline]]. There we neglected to
-take advantage of its additional =interval= argument. The general
+take advantage of its additional `interval` argument. The general
 syntax follows.
 
 # +BEGIN_exampletoo
@@ -767,7 +703,7 @@ syntax follows.
 We will find confidence and prediction intervals for the stopping
 distance of a car travelling 5, 6, and 21 mph (note from the graph
 that there are no collected data for these speeds). We have computed
-=cars.lm= earlier, and we will use this for input to the =predict=
+`cars.lm` earlier, and we will use this for input to the `predict`
 function. Also, we need to tell \(\mathsf{R}\) the values of \(x_{0}\)
 at which we want the predictions made, and store the \(x_{0}\) values
 in a data frame whose variable is labeled with the correct name. /This
@@ -784,17 +720,11 @@ intervals are given by
 predict(cars.lm, newdata = new, interval = "confidence")
 ```
 
-#+RESULTS:
-:         fit       lwr      upr
-: 1  2.082949 -7.644150 11.81005
-: 2  6.015358 -2.973341 15.00406
-: 3 65.001489 58.597384 71.40559
+
 
 #+BEGIN_SRC R :exports none :results output pp 
 carsCI <- round(predict(cars.lm, newdata = new, interval = "confidence"), 2)
 ```
-
-#+RESULTS:
 
 Prediction intervals are given by
 
@@ -802,26 +732,20 @@ Prediction intervals are given by
 predict(cars.lm, newdata = new, interval = "prediction")
 ```
 
-#+RESULTS:
-:         fit       lwr      upr
-: 1  2.082949 -30.33359 34.49948
-: 2  6.015358 -26.18731 38.21803
-: 3 65.001489  33.42257 96.58040
 
 ```{r, echo=FALSE, include=FALSE}
 carsPI <- round(predict(cars.lm, newdata = new, interval = "prediction"), 2)
 ```
 
-# +END_exampletoo
 
 
-The type of interval is dictated by the =interval= argument (which is
-=none= by default), and the default confidence level is 95\% (which
-can be changed with the =level= argument).
+The type of interval is dictated by the `interval` argument (which is
+`none` by default), and the default confidence level is 95\% (which
+can be changed with the `level` argument).
 
 # +BEGIN_exampletoo
 
-Using the =cars= data,
+Using the `cars` data,
 1. Report a point estimate of and a 95% confidence interval for the
    mean stopping distance for a car travelling 5 mph.  The fitted
    value for \(x = 5\) is SRC_R[:eval no-export]{carsCI[1, 1]} 2.08, so a point
@@ -850,7 +774,7 @@ standard deviations in Equations \eqref{eq-SLR-conf-int-formula} and
 to see a picture to drive the point home.
 
 We may plot the confidence and prediction intervals with one fell
-swoop using the =ci.plot= function from the =HH= package
+swoop using the `ci.plot` function from the `HH` package
 \cite{HH}. The graph is displayed in Figure [[fig-carscipi]].
 
 ```{r, echo=TRUE, eval=FALSE}
@@ -870,10 +794,8 @@ print(ci.plot(cars.lm))
 ```
 
 #+NAME: fig-carscipi
-#+CAPTION[Scatterplot with confidence/prediction bands for the =cars= data]: \small A scatterplot with confidence/prediction bands for the =cars= data.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: carscipi
-[[file:fig/slr-carscipi.ps]]
+#+CAPTION[Scatterplot with confidence/prediction bands for the `cars` data]: \small A scatterplot with confidence/prediction bands for the `cars` data.
+
 
 ## Model Utility and Inference
 :PROPERTIES:
@@ -916,43 +838,19 @@ alternative \(H_{1}:\beta_{0}\neq0\) with the statistic
 
 #### How to do it with \(\mathsf{R}\)
 
-Let us take another look at the output from =summary(cars.lm)=:
+Let us take another look at the output from `summary(cars.lm)`:
 
 ```{r, echo=TRUE, results=TRUE} 
 summary(cars.lm)
 ```
 
-#+RESULTS:
-#+BEGIN_example
-null device 
-          1
-
-Call:
-lm(formula = dist ~ speed, data = cars)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--29.069  -9.525  -2.272   9.215  43.201 
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept) -17.5791     6.7584  -2.601   0.0123 #  
-speed         3.9324     0.4155   9.464 1.49e-12 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 15.38 on 48 degrees of freedom
-Multiple R-squared:  0.6511,	Adjusted R-squared:  0.6438 
-F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12
-#+END_example
-
-In the =Coefficients= section we find the \(t\) statistics and the
+In the `Coefficients` section we find the \(t\) statistics and the
 \(p\)-values associated with the tests that the respective parameters
 are zero in the fourth and fifth columns. Since the \(p\)-values are
 (much) less than 0.05, we conclude that there is strong evidence that
 the parameters \(\beta_{1}\neq0\) and \(\beta_{0}\neq0\), and as such,
 we say that there is a statistically significant linear relationship
-between =dist= and =speed=.
+between `dist` and `speed`.
 
 ### Simple Coefficient of Determination
 
@@ -1032,22 +930,13 @@ negative, then \(r=-\sqrt{r^{2}}\).
 
 The primary method to display partitioned sums of squared errors is
 with an /ANOVA table/. The command in \(\mathsf{R}\) to produce such a
-table is =anova=. The input to =anova= is the result of an =lm= call
-which for the =cars= data is =cars.lm=.
+table is `anova`. The input to `anova` is the result of an `lm` call
+which for the `cars` data is `cars.lm`.
 
 ```{r, echo=TRUE, results=TRUE} 
 anova(cars.lm)
 ```
 
-#+RESULTS:
-: Analysis of Variance Table
-: 
-: Response: dist
-:           Df Sum Sq Mean Sq F value   Pr(>F)    
-: speed      1  21186 21185.5  89.567 1.49e-12 ***
-: Residuals 48  11354   236.5                     
-: ---
-: Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 The output gives
 \[
@@ -1055,30 +944,24 @@ r^{2}=1-\frac{SSE}{SSR+SSE}=1-\frac{11353.5}{21185.5+11353.5}\approx0.65.
 \]
 
 The interpretation should be: "The linear regression line accounts for
-approximately 65% of the variation of =dist= as explained by =speed=".
+approximately 65% of the variation of `dist` as explained by `speed`".
 
-The value of \(r^{2}\) is stored in the =r.squared= component of
-=summary(cars.lm)=, which we called =carsumry=.
+The value of \(r^{2}\) is stored in the `r.squared` component of
+`summary(cars.lm)`, which we called `carsumry`.
 
 ```{r, echo=TRUE, results=TRUE} 
 carsumry$r.squared
 ```
 
-#+RESULTS:
-: [1] 0.6510794
-
 We already knew this. We saw it in the next to the last line of the
-=summary(cars.lm)= output where it was called =Multiple
-R-squared=. Listed right beside it is the =Adjusted R-squared= which
-we will discuss in Chapter [[#cha-multiple-linear-regression]].  For the =cars=
+`summary(cars.lm)` output where it was called `Multiple R-squared`. Listed right beside it is the `Adjusted R-squared` which
+we will discuss in Chapter [[#cha-multiple-linear-regression]].  For the `cars`
 data, we find \(r\) to be
 
 ```{r, echo=TRUE, results=TRUE} 
 sqrt(carsumry$r.squared)
 ```
 
-#+RESULTS:
-: [1] 0.8068949
 
 We choose the principal square root because the slope of the
 regression line is positive.
@@ -1126,22 +1009,13 @@ study in Chapter [[#cha-multiple-linear-regression]]. See Section
 #### How to do it with \(\mathsf{R}\)
 
 The overall \(F\) statistic and \(p\)-value are displayed in the
-bottom line of the =summary(cars.lm)= output. It is also shown in the
-final columns of =anova(cars.lm)=:
+bottom line of the `summary(cars.lm)` output. It is also shown in the
+final columns of `anova(cars.lm)`:
 
 ```{r, echo=TRUE, results=TRUE} 
 anova(cars.lm)
 ```
 
-#+RESULTS:
-: Analysis of Variance Table
-: 
-: Response: dist
-:           Df Sum Sq Mean Sq F value   Pr(>F)    
-: speed      1  21186 21185.5  89.567 1.49e-12 ***
-: Residuals 48  11354   236.5                     
-: ---
-: Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ```{r, echo=FALSE, include=FALSE}
 tmpf <- round(as.numeric(carsumry$fstatistic[1]), 2)
@@ -1151,11 +1025,11 @@ Here we see that the \(F\) statistic is SRC_R[:eval no-export]{tmpf} 89.57 with 
 \(p\)-value very close to zero. The conclusion: there is very strong
 evidence that \(H_{0}:\beta_{1} = 0 \) is false, that is, there is
 strong evidence that \( \beta_{1} \neq 0 \). Moreover, we conclude
-that the regression relationship between =dist= and =speed= is
+that the regression relationship between `dist` and `speed` is
 significant.
 
 Note that the value of the \(F\) statistic is the same as the
-Student's \(t\) statistic for =speed= squared.
+Student's \(t\) statistic for `speed` squared.
 
 ## Residual Analysis
 :PROPERTIES:
@@ -1190,7 +1064,7 @@ first examine a histogram in Figure [[fig-Normal-q-q-plot-cars]]. There we see
 that the distribution of the residuals appears to be mound shaped, for
 the most part. We can plot the order statistics of the sample versus
 quantiles from a \(\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=1)\)
-distribution with the command =plot(cars.lm, which = 2)=, and the
+distribution with the command `plot(cars.lm, which = 2)`, and the
 results are in Figure [[fig-Normal-q-q-plot-cars]]. If the assumption of
 normality were true, then we would expect points randomly scattered
 about the dotted straight line displayed in the figure. In this case,
@@ -1206,10 +1080,7 @@ plot(cars.lm, which = 2)
 ```
 
 #+NAME: fig-Normal-q-q-plot-cars
-#+CAPTION[Normal q-q plot of the residuals for the =cars= data]: \small Used for checking the normality assumption. Look out for any curvature or substantial departures from the straight line; hopefully the dots hug the line closely.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: Normal-q-q-plot-cars
-[[file:fig/slr-Normal-q-q-plot-cars.ps]]
+#+CAPTION[Normal q-q plot of the residuals for the `cars` data]: \small Used for checking the normality assumption. Look out for any curvature or substantial departures from the straight line; hopefully the dots hug the line closely.
 
 #### Testing the Normality Assumption
 
@@ -1228,8 +1099,8 @@ W=\frac{\left(\sum_{i=1}^{n}a_{i}E_{(i)}\right)^{2}}{\sum_{j=1}^{n}E_{j}^{2}},
 where the \(E_{(i)}\) are the ordered residuals and the \(a_{i}\) are
 constants derived from the order statistics of a sample of size \(n\)
 from a normal distribution. See Section [[#sub-Shapiro-Wilk-Normality-Test]].
-We perform the Shapiro-Wilk test below, using the =shapiro.test=
-function from the =stats= package \cite{stats}. The hypotheses are \[
+We perform the Shapiro-Wilk test below, using the `shapiro.test`
+function from the `stats` package \cite{stats}. The hypotheses are \[
 H_{0}:\mbox{ the residuals are normally distributed } \] versus \[
 H_{1}:\mbox{ the residuals are not normally distributed.}  \] The
 results from \(\mathsf{R}\) are
@@ -1237,13 +1108,6 @@ results from \(\mathsf{R}\) are
 ```{r, echo=TRUE, results=TRUE} 
 shapiro.test(residuals(cars.lm))
 ```
-
-#+RESULTS:
-: 
-: 	Shapiro-Wilk normality test
-: 
-: data:  residuals(cars.lm)
-: W = 0.9451, p-value = 0.02152
 
 For these data we would reject the assumption of normality of the
 residuals at the \(\alpha=0.05\) significance level, but do not lose
@@ -1299,10 +1163,8 @@ plot(cars.lm, which = 3)
 ```
 
 #+NAME: fig-std-resids-fitted-cars
-#+CAPTION[Plot of standardized residuals against the fitted values for the =cars= data]: \small Used for checking the constant variance assumption. Watch out for any fanning out (or in) of the dots; hopefully they fall in a constant band.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: std-resids-fitted-cars
-[[file:fig/slr-std-resids-fitted-cars.ps]]
+#+CAPTION[Plot of standardized residuals against the fitted values for the `cars` data]: \small Used for checking the constant variance assumption. Watch out for any fanning out (or in) of the dots; hopefully they fall in a constant band.
+
 
 #### Testing the Constant Variance Assumption
 
@@ -1325,18 +1187,13 @@ BP=n\sum_{i=1}^{n}\hat{W}_{i}^{2}\div\sum_{i=1}^{n}W_{i}^{2}.
 We reject the null hypothesis if \(BP\) is too large, which happens
 when the explained variation i the new model is large relative to the
 unexplained variation in the original model.  We do it in
-\(\mathsf{R}\) with the =bptest= function from the =lmtest= package
+\(\mathsf{R}\) with the `bptest` function from the `lmtest` package
 \cite{lmtest}.
+
 ```{r, echo=TRUE, results=TRUE}
 bptest(cars.lm)
 ```
 
-#+RESULTS:
-: 
-: 	studentized Breusch-Pagan test
-: 
-: data:  cars.lm
-: BP = 3.2149, df = 1, p-value = 0.07297
 
 For these data we would not reject the null hypothesis at the
 \(\alpha=0.05\) level. There is relatively weak evidence against the
@@ -1373,10 +1230,8 @@ plot(cars.lm, which = 1)
 ```
 
 #+NAME: fig-resids-fitted-cars
-#+CAPTION[Plot of the residuals versus the fitted values for the =cars= data]: \small Used for checking the independence assumption. Watch out for any patterns or structure; hopefully the points are randomly scattered on the plot.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: resids-fitted-cars
-[[file:fig/slr-resids-fitted-cars.ps]]
+#+CAPTION[Plot of the residuals versus the fitted values for the `cars` data]: \small Used for checking the independence assumption. Watch out for any patterns or structure; hopefully the points are randomly scattered on the plot.
+
 
 #### Testing the Independence Assumption
 
@@ -1388,7 +1243,7 @@ D=\frac{\sum_{i=2}^{n}(E_{i}-E_{i-1})^{2}}{\sum_{j=1}^{n}E_{j}^{2}}.
 \end{equation}
 Exact critical values are difficult to obtain, but \(\mathsf{R}\) will
 calculate the /p-value/ to great accuracy. It is performed with the
-=dwtest= function from the =lmtest= package \cite{lmtest}. We will
+`dwtest` function from the `lmtest` package \cite{lmtest}. We will
 conduct a two sided test that the correlation is not zero, which is
 not the default (the default is to test that the autocorrelation is
 positive).
@@ -1396,14 +1251,6 @@ positive).
 ```{r, echo=TRUE, results=TRUE} 
 dwtest(cars.lm, alternative = "two.sided")
 ```
-
-#+RESULTS:
-: 
-: 	Durbin-Watson test
-: 
-: data:  cars.lm
-: DW = 1.6762, p-value = 0.1904
-: alternative hypothesis: true autocorrelation is not 0
 
 In this case we do not reject the null hypothesis at the
 \(\alpha=0.05\) significance level; there is very little evidence of
@@ -1417,14 +1264,14 @@ There are many measures at the statistician's disposal, and we mention
 specific steps one can take to improve the model under certain types
 of violation.
 
-- Mean response is not linear :: We can directly modify the model to
+* Mean response is not linear :: We can directly modify the model to
      better approximate the mean response. In particular, perhaps a
      polynomial regression function of the form \[ \mu(x) =
      \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} \] would be
      appropriate. Alternatively, we could have a function of the form
      \[ \mu(x)=\beta_{0}\mathrm{e}^{\beta_{1}x}.  \] Models like these
      are studied in nonlinear regression courses.
-- Error variance is not constant :: Sometimes a transformation of the
+* Error variance is not constant :: Sometimes a transformation of the
      dependent variable will take care of the problem. There is a
      large class of them called /Box-Cox transformations/. They take
      the form
@@ -1440,11 +1287,11 @@ of violation.
      Y\\ \lambda=-1,\quad & Y^{\ast}= 1/Y \end{alignat*}@@
      Alternatively, we can use the method of /weighted least
      squares/. This is studied in more detail in later classes.
-- Error distribution is not normal :: The same transformations for
+* Error distribution is not normal :: The same transformations for
      stabilizing the variance are equally appropriate for smoothing
      the residuals to a more Gaussian form. In fact, often we will
      kill two birds with one stone.
-- Errors are not independent :: There is a large class of
+* Errors are not independent :: There is a large class of
      autoregressive models to be used in this situation which occupy
      the latter part of Chapter [[#cha-Time-Series]].
 
@@ -1455,11 +1302,12 @@ of violation.
 
 There are two types of observations with which we must be especially
 careful:
-- Influential observations :: are those that have a substantial effect
+
+* Influential observations :: are those that have a substantial effect
      on our estimates, predictions, or inferences. A small change in
      an influential observation is followed by a large change in the
      parameter estimates or inferences.
-- Outlying observations :: are those that fall fall far from the rest
+* Outlying observations :: are those that fall fall far from the rest
      of the data. They may be indicating a lack of fit for our
      regression model, or they may just be a mistake or typographical
      error that should be corrected. Regardless, special attention
@@ -1545,17 +1393,14 @@ and use his/her best judgement, in every case.
 
 #### How to do it with \(\mathsf{R}\)
 
-We can calculate the standardized residuals with the =rstandard=
-function. The input is the =lm= object, which is =cars.lm=.
+We can calculate the standardized residuals with the `rstandard`
+function. The input is the `lm` object, which is `cars.lm`.
 
 ```{r, echo=TRUE, results=TRUE} 
 sres <- rstandard(cars.lm)
 sres[1:5]
 ```
 
-#+RESULTS:
-:          1          2          3          4          5 
-:  0.2660415  0.8189327 -0.4013462  0.8132663  0.1421624
 
 We can find out which observations have studentized residuals larger
 than two with the command
@@ -1564,22 +1409,16 @@ than two with the command
 sres[which(abs(sres) > 2)]
 ```
 
-#+RESULTS:
-:       23       35       49 
-: 2.795166 2.027818 2.919060
 
 In this case, we see that observations 23, 35, and 49 are potential
 outliers with respect to their \(y\)-value.  We can compute the
-studentized deleted residuals with =rstudent=:
+studentized deleted residuals with `rstudent`:
 
 ```{r, echo=TRUE, results=TRUE} 
 sdelres <- rstudent(cars.lm)
 sdelres[1:5]
 ```
 
-#+RESULTS:
-:          1          2          3          4          5 
-:  0.2634500  0.8160784 -0.3978115  0.8103526  0.1407033
 
 We should compare these values with critical values from a
 \(\mathsf{t}(\mathtt{df}=n-3)\) distribution, which in this case is
@@ -1591,12 +1430,8 @@ t0.005 <- qt(0.005, df = 47, lower.tail = FALSE)
 sdelres[which(abs(sdelres) > t0.005)]
 ```
 
-#+RESULTS:
-:       23       49 
-: 3.022829 3.184993
-
 This means that observations 23 and 49 have a large studentized
-deleted residual. The leverages can be found with the =hatvalues=
+deleted residual. The leverages can be found with the `hatvalues`
 function:
 
 ```{r, echo=TRUE, results=TRUE} 
@@ -1604,9 +1439,6 @@ leverage <- hatvalues(cars.lm)
 leverage[which(leverage > 4/50)]
 ```
 
-#+RESULTS:
-:          1          2         50 
-: 0.11486131 0.11486131 0.08727007
 
 Here we see that observations 1, 2, and 50 have leverages bigger than
 double their mean value. These observations would be considered
@@ -1644,24 +1476,16 @@ increase or decrease as a result of including the observation. If the
 those regression coefficients. We label observations as suspicious if
 their \(DFBETAS\) have magnitude greater 1 for small data or
 \(2/\sqrt{n}\) for large data sets.  We can calculate the \(DFBETAS\)
-with the =dfbetas= function (some output has been omitted):
+with the `dfbetas` function (some output has been omitted):
 
 ```{r, echo=TRUE, results=TRUE} 
 dfb <- dfbetas(cars.lm)
 head(dfb)
 ```
 
-#+RESULTS:
-:   (Intercept)       speed
-: 1  0.09440188 -0.08624563
-: 2  0.29242487 -0.26715961
-: 3 -0.10749794  0.09369281
-: 4  0.21897614 -0.19085472
-: 5  0.03407516 -0.02901384
-: 6 -0.11100703  0.09174024
 
 We see that the inclusion of the first observation slightly increases
-the =Intercept= and slightly decreases the coefficient on =speed=.
+the `Intercept` and slightly decreases the coefficient on `speed`.
 
 We can measure the influence that an observation has on its fitted
 value with \(DFFITS\). These are calculated by deleting an
@@ -1673,16 +1497,12 @@ standardizing. The formula is
 The value represents the number of standard deviations of
 \(\hat{Y_{i}}\) that the fitted value \(\hat{Y_{i}}\) increases or
 decreases with the inclusion of the \(i^{\textrm{th}}\)
-observation. We can compute them with the =dffits= function.
+observation. We can compute them with the `dffits` function.
 
 ```{r, echo=TRUE, results=TRUE}
 dff <- dffits(cars.lm)
 dff[1:5]
 ```
-
-#+RESULTS:
-:           1           2           3           4           5 
-:  0.09490289  0.29397684 -0.11039550  0.22487854  0.03553887
 
 A rule of thumb is to flag observations whose \(DFFIT\) exceeds one in
 absolute value, but there are none of those in this data set.
@@ -1714,7 +1534,7 @@ defining formula and is, in the author's opinion, more transparent.
 
 #### How to do it with \(\mathsf{R}\)
 
-We can calculate the Cook's Distances with the =cooks.distance=
+We can calculate the Cook's Distances with the `cooks.distance`
 function.
 
 ```{r, echo=TRUE, results=TRUE} 
@@ -1722,12 +1542,9 @@ cooksD <- cooks.distance(cars.lm)
 cooksD[1:4]
 ```
 
-#+RESULTS:
-:           1           2           3           4 
-: 0.004592312 0.043513991 0.006202350 0.025467338
 
 We can look at a plot of the Cook's distances with the command
-=plot(cars.lm, which = 4)=.
+`plot(cars.lm, which = 4)`.
 
 #+NAME: Cooks-distance-cars
 #+BEGIN_SRC R :exports both :results graphics :file fig/slr-Cooks-distance-cars.ps
@@ -1735,10 +1552,8 @@ plot(cars.lm, which = 4)
 ```
 
 #+NAME: fig-Cooks-distance-cars
-#+CAPTION[Cook's distances for the =cars= data]: \small Used for checking for influential and/our outlying observations. Values with large Cook's distance merit further investigation.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: Cooks-distance-cars
-[[file:fig/slr-Cooks-distance-cars.ps]]
+#+CAPTION[Cook's distances for the `cars` data]: \small Used for checking for influential and/our outlying observations. Values with large Cook's distance merit further investigation.
+
 
 Observations with the largest Cook's D values are labeled, hence we
 see that observations 23, 39, and 49 are suspicious. However, we need
@@ -1750,8 +1565,6 @@ F0.50 <- qf(0.5, df1 = 2, df2 = 48)
 any(cooksD > F0.50)
 ```
 
-#+RESULTS:
-: [1] FALSE
 
 We see that with this data set there are no observations with extreme
 Cook's distance, after all.
@@ -1760,7 +1573,7 @@ Cook's distance, after all.
 
 We can display the result of diagnostic checking all at once in one
 table, with potentially influential points displayed. We do it with
-the command =influence.measures(cars.lm)=:
+the command `influence.measures(cars.lm)`:
 
 ```{r, echo=TRUE, eval=FALSE}
 influence.measures(cars.lm)
@@ -1777,8 +1590,8 @@ We can also look at all diagnostic plots at once with the commands
 plot(cars.lm)
 ```
 
-The =par= command is used so that \(2\times 2 = 4\) plots will be
-shown on the same display. The diagnostic plots for the =cars= data
+The `par` command is used so that \(2\times 2 = 4\) plots will be
+shown on the same display. The diagnostic plots for the `cars` data
 are shown in Figure [[fig-Diagnostic-plots-cars]]:
 
 #+NAME: Diagnostic-plots-cars
@@ -1789,10 +1602,8 @@ par(mfrow = c(1,1))
 ```
 
 #+NAME: fig-Diagnostic-plots-cars
-#+CAPTION[Diagnostic plots for the =cars= data]: \small Diagnostic plots for the =cars= data.
-#+ATTR_LaTeX: :width 0.9\textwidth :placement [ht!]
-#+RESULTS: Diagnostic-plots-cars
-[[file:fig/slr-Diagnostic-plots-cars.ps]]
+#+CAPTION[Diagnostic plots for the `cars` data]: \small Diagnostic plots for the `cars` data.
+
 
 We have discussed all of the plots except the last, which is possibly
 the most interesting. It shows Residuals vs. Leverage, which will
@@ -1803,9 +1614,9 @@ low/moderate leverage (they are on the right side of the plot, just
 above the horizontal line). Observation 49 has a large residual with a
 comparatively large leverage.
 
-We can identify the observations with the =identify= command; it
+We can identify the observations with the `identify` command; it
 allows us to display the observation number of dots on the
-plot. First, we plot the graph, then we call =identify=:
+plot. First, we plot the graph, then we call `identify`:
 
 ```{r, echo=TRUE, eval=FALSE}
 plot(cars.lm, which = 5)          # std'd resids vs lev plot

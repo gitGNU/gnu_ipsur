@@ -124,12 +124,15 @@ equivalent to the more lengthy
 Y_{i}=\beta_{0}+\beta_{1}x_{1i}+\beta_{2}x_{2i}+\cdots+\beta_{p}x_{pi}+\epsilon_{i},\quad i=1,2,\ldots,n.
 \end{equation}
 
+\bigskip
+
 ```{example, name="Girth, Height, and Volume for Black Cherry trees"}
 \index{Data sets!trees@\texttt{trees}} Measurements were made of the
 girth, height, and volume of timber in 31 felled black cherry
 trees. Note that girth is the diameter of the tree (in inches)
 measured at 4 ft 6 in above the ground. The variables are
 ```
+
 
 1. `Girth`: tree diameter in inches (denoted \(x_{1}\))
 2. `Height`: tree height in feet (\(x_{2}\)).
@@ -197,7 +200,7 @@ Another way to do it is with the `scatterplot3d` function in the
 `scatterplot3d` package [@scatterplot3d]. The code follows, and
 the result is shown in Figure \@ref(fig:3D-scatterplot-trees).
 
-```{r, label="3D-scatterplot-trees",fig.cap='(ref:3D-sctterplot-trees)'}
+```{r, label="3D-scatterplot-trees",fig.cap='(ref:3D-scatterplot-trees)'}
 s3d <- with(trees, scatterplot3d(Girth, Height, Volume, pch = 16, 
                                  highlight.3d = TRUE, angle = 60))
 fit <- lm(Volume ~ Girth + Height, data = trees)
@@ -247,7 +250,7 @@ equations" \index{normal equations}
 \end{equation}
 
 In the case that \(\mathbf{X}^{\mathrm{T}}\mathbf{X}\) is
-invertible[fn:fn-invert], we may solve the equation for \(\upbeta\) to
+invertible[^1], we may solve the equation for \(\upbeta\) to
 get the maximum likelihood estimator of \(\upbeta\) which we denote by
 \(\mathbf{b}\):
 \begin{equation}
@@ -255,7 +258,7 @@ get the maximum likelihood estimator of \(\upbeta\) which we denote by
 \mathbf{b}=\left(\mathbf{X}^{\mathrm{T}}\mathbf{X}\right)^{-1}\mathbf{X}^{\mathrm{T}}\mathbf{Y}.
 \end{equation}
 
-[fn:fn-invert] We can find solutions of the normal equations even when
+[^1]: We can find solutions of the normal equations even when
 \(\mathbf{X}^{\mathrm{T}}\mathbf{X}\) is not of full rank, but the
 topic falls outside the scope of this book. The interested reader can
 consult an advanced text such as Rao [@Rao1999].
@@ -363,6 +366,7 @@ which is just a fancy way to write
 \hat{Y}(x_{10},x_{20})=b_{0}+b_{1}x_{10}+b_{2}x_{20}.
 \end{equation}
  
+\bigskip
 
 ```{example}
 If we wanted to predict the average volume of black cherry trees that
@@ -424,8 +428,8 @@ treesFIT <- round(predict(trees.lm, newdata = new), 1)
 ```
 
 
-```{example}
-Using the `trees` data,
+**Example.** Using the `trees` data,
+
 1. Report a point estimate of the mean `Volume` of a tree of `Girth`
    9.1 in and `Height` 69 ft.  The fitted value for \(x_{1}=9.1\) and
    \(x_{2} = 69\) is `r treesFIT[1]`, so a point estimate
@@ -435,7 +439,7 @@ Using the `trees` data,
    ft.  The fitted value for \(x_{1} = 12.5\) and \(x_{2} = 87\) is
    `r treesFIT[3]`, so a point prediction for the `Volume`
    is `r treesFIT[3]` cubic feet.
-```
+
 
 ### Mean Square Error and Standard Error {#sub-mlr-mse-se}
 
@@ -532,10 +536,10 @@ intervals for \(\beta_{i}\) with an interval that looks like
 \begin{equation}
 b_{i}\pm\mathsf{t}_{\alpha/2}(\mathtt{df}=n-p-1)S_{b_{i}}.
 \end{equation}
-The degrees of freedom for the Student's \(t\) distribution[fn:fn-tdf]
+The degrees of freedom for the Student's \(t\) distribution[^2]
 are the same as the denominator of \(S^{2}\).
 
-[fn:fn-tdf] We are taking great leaps over the mathematical
+[^2]: We are taking great leaps over the mathematical
 details. In particular, we have yet to show that \(s^{2}\) has a
 chi-square distribution and we have not even come close to showing
 that \(b_{i}\) and \(s_{b_{i}}\) are independent. But these are
@@ -568,7 +572,7 @@ predict values of future observations, but how good are our estimates?
 We need confidence and prediction intervals to gauge their accuracy,
 and lucky for us the formulas look similar to the ones we saw in SLR.
 
-In Equation \eqref{eq-mlr-single-yhat-matrix} we wrote $Y(\mathbf{x}_0)=\mathbf{x}_0^{\mathrm{T}}\mathbf{b}$, and
+In Equation \eqref{eq-mlr-single-yhat-matrix} we wrote $\hat{Y}(\mathbf{x}_0)=\mathbf{x}_0^{\mathrm{T}}\mathbf{b}$, and
 in Equation \eqref{eq-distn-b-mlr} we saw that
 \begin{equation}
 \mathbf{b}\sim\mathsf{mvnorm}\left(\mathtt{mean} = \upbeta,\,\mathtt{sigma}=\sigma^{2}\left(\mathbf{X}^{\mathrm{T}}\mathbf{X}\right)^{-1}\right).
@@ -632,8 +636,7 @@ As before, the interval type is decided by the `interval` argument and
 the default confidence level is 95% (which can be changed with the
 `level` argument).
 
-```{example}
-Using the `trees` data, 
+**Example.** Using the `trees` data,
 
 1. Report a 95% confidence interval for the mean `Volume` of a tree of
    `Girth` 9.1 in and `Height` 69 ft. The 95% CI is given by
@@ -647,7 +650,7 @@ Using the `trees` data,
    the hypothetical `Volume` of a tree of `Girth` 12.5 in and `Height`
    87 ft would lie somewhere between `r treesCI[3, 2]` 
    cubic feet and `r treesCI[3,3]` feet.
-```
+
 
 ## Model Utility and Inference {#sec-model-utility-and-mlr}
 
@@ -722,7 +725,7 @@ treesumry$r.squared
 treesumry$adj.r.squared
 ```
 
-High values of \(R^{2}\) and \( \overline{R}^2 \) such as these
+High values of \(R^{2}\) and $\overline{R}^2$ such as these
 indicate that the model fits very well, which agrees with what we saw
 in Figure \@ref(fig:3D-scatterplot-trees).
 
@@ -777,17 +780,16 @@ that there is a significant relationship between \(Y\) and \(x_{i}\)
 *in the regression model* \(Y\sim(x_{1},\ldots,x_{p})\). This last
 part of the sentence is very important because the significance of the
 variable \(x_{i}\) sometimes depends on the presence of other
-independent variables in the model[fn:fn-multic].
+independent variables in the model[^3].
 
-[fn:fn-multic] In other words, a variable might be highly significant
+[^3]: In other words, a variable might be highly significant
 one moment but then fail to be significant when another variable is
 added to the model. When this happens it often indicates a problem
 with the explanatory variables, such as *multicollinearity*. See
 Section \ref{sub-Multicollinearity}.
 
 To test the hypothesis we go to find the sampling distribution of \(
-b_{i} \), the estimator of the corresponding parameter \( \beta_{i}
-\), when the null hypothesis is true. We saw in Section \@ref(sub-mlr-interval-est-params) that
+b_{i} \), the estimator of the corresponding parameter \(\beta_{i}\), when the null hypothesis is true. We saw in Section \@ref(sub-mlr-interval-est-params) that
 \begin{equation}
 T_{i}=\frac{b_{i}-\beta_{i}}{S_{b_{i}}}
 \end{equation}
@@ -844,7 +846,7 @@ everything indeed is the same. In fact, it is still called a "linear
 regression model", since the mean response \(\mu\) is linear *in the
 parameters* \(\beta_{0}\), \(\beta_{1}\), and \(\beta_{2}\).
 
-*However, there is one important difference.# When we introduce the
+*However, there is one important difference.* When we introduce the
 squared variable in the model we inadvertently also introduce strong
 dependence between the terms which can cause significant numerical
 problems when it comes time to calculate the parameter
@@ -852,9 +854,9 @@ estimates. Therefore, we should usually rescale the independent
 variable to have mean zero (and even variance one if we wish) *before*
 fitting the model. That is, we replace the \(x_{i}\)'s with
 \(x_{i}-\overline{x}\) (or \((x_{i}-\overline{x})/s\)) before fitting
-the model[fn:fn-ortho].
+the model[^4].
 
-[fn:fn-ortho] Rescaling the data gets the job done but a better way to
+[^4]: Rescaling the data gets the job done but a better way to
 avoid the multicollinearity introduced by the higher order terms is
 with *orthogonal polynomials*, whose coefficients are chosen just
 right so that the polynomials are not correlated with each other. This
@@ -882,6 +884,8 @@ There are multiple ways to fit a quadratic model to the variables
    See `?poly` and `?cars` for more information. Note that we can
    recover the approach in 2 with `poly(Girth, degree = 2, raw =
    TRUE)`.
+
+\bigskip
 
 ```{example}
 We will fit the quadratic model to the `trees` data and display the
@@ -935,7 +939,7 @@ were previously. Notice that it was not necessary to rescale the
 `Girth` prediction data before input to the `predict` function; the
 model did the rescaling for us automatically.
 
-#+BEGIN_rem
+**Remark.**
 We have mentioned on several occasions that it is important to rescale
 the explanatory variables for polynomial regression. Watch what
 happens if we ignore this advice:
@@ -957,7 +961,7 @@ In Example \@ref(ex:mlr-trees-poly-no-rescale) of Section \@ref(sec-partial-f-st
 
 **Note:** The `trees` data do not have any qualitative explanatory
 variables, so we will construct one for illustrative
-purposes[fn:fn-binning].  We will leave the `Girth` variable alone,
+purposes[^5].  We will leave the `Girth` variable alone,
 but we will replace the variable `Height` by a new variable `Tall`
 which indicates whether or not the cherry tree is taller than a
 certain threshold (which for the sake of argument will be the sample
@@ -976,7 +980,7 @@ trees$Tall[1:5]
 Note that `Tall` is automatically generated to be a factor with the
 labels in the correct order. See `?cut` for more.
 
-[fn:fn-binning] This procedure of replacing a continuous variable by a
+[^5]: This procedure of replacing a continuous variable by a
 discrete/qualitative one is called *binning*, and is almost *never*
 the right thing to do. We are in a bind at this point, however,
 because we have invested this chapter in the `trees` data and I do not
@@ -1032,10 +1036,10 @@ From the output we see that all parameter estimates are statistically
 significant and we conclude that the mean response differs for trees
 with `Tall = yes` and trees with `Tall = no`.
 
-#+BEGIN_rem
+**Remark.**
 We were somewhat disingenuous when we defined the dummy variable
 `Tallyes` because, in truth, R defines `Tallyes`
-automatically without input from the user[fn:fn-contrast]. Indeed, the
+automatically without input from the user[^6]. Indeed, the
 author fit the model beforehand and wrote the discussion afterward
 with the knowledge of what R would do so that the output
 the reader saw would match what (s)he had previously read. The way
@@ -1043,25 +1047,25 @@ that R handles factors internally is part of a much
 larger topic concerning *contrasts*, which falls outside the scope of
 this book. The interested reader should see Neter et al
 [@Neter1996] or Fox [@Fox1997] for more.
-#+END_rem
 
-[fn:fn-contrast] That is, R by default handles contrasts
+
+[^6]: That is, R by default handles contrasts
 according to its internal settings which may be customized by the user
 for fine control. Given that we will not investigate contrasts further
 in this book it does not serve the discussion to delve into those
 settings, either. The interested reader should check `?contrasts` for
 details.
 
-#+BEGIN_rem
+**Remark.** 
 In general, if an explanatory variable `foo` is qualitative with \(n\)
 levels `bar1`, `bar2`, ..., `barn` then R will by default
 automatically define \(n-1\) indicator variables in the following way:
 \begin{eqnarray*} \mathtt{foobar2} & = & \begin{cases} 1, & \mbox{if }\mathtt{foo}=\mathtt{"bar2"},\\ 0, & \mbox{otherwise.}\end{cases},\,\ldots,\,\mathtt{foobarn}=\begin{cases} 1, & \mbox{if }\mathtt{foo}=\mathtt{"barn"},\\ 0, & \mbox{otherwise.}\end{cases} \end{eqnarray*}
-The level =bar1= is represented by
+The level `bar1` is represented by
 \(\mathtt{foobar2}=\cdots=\mathtt{foobarn}=0\). We just need to make
 sure that `foo` is stored as a factor and R will take
 care of the rest.
-#+END_rem
+
 
 ### Graphing the Regression Lines
 
@@ -1159,7 +1163,9 @@ complete model. The way to test whether the improvement is significant
 is to compute `lm` objects both for the complete model and the reduced
 model then compare the answers with the `anova` function.
 
-```{example, name="mlr-trees-poly-no-rescale"}
+\bigskip
+
+```{example, name="The Trees data"}
 For the `trees` data, let us fit a polynomial regression model and for
 the sake of argument we will ignore our own good advice and fail to
 rescale the explanatory variables.
@@ -1225,7 +1231,7 @@ multiple linear regression, too, but there are some slight changes
 that we need to make for the multivariate case. We list these below,
 and apply them to the trees example.
 
-* Shapiro-Wilk, Breusch-Pagan, Durbin-Watson: :: unchanged from SLR,
+* **Shapiro-Wilk, Breusch-Pagan, Durbin-Watson:** unchanged from SLR,
      but we are now equipped to talk about the Shapiro-Wilk test
      statistic for the residuals. It is defined by the formula
      \begin{equation}
@@ -1241,7 +1247,7 @@ and apply them to the trees example.
      covariance matrix, respectively, of the order statistics from an
      \(\mathsf{mvnorm}\left(\mathtt{mean}=\mathbf{0},\,\mathtt{sigma}=\mathbf{I}\right)\)
      distribution.
-* Leverages: :: are defined to be the diagonal entries of the hat
+* **Leverages:** are defined to be the diagonal entries of the hat
                 matrix \(\mathbf{H}\) (which is why we called them
                 \(h_{ii}\) in Section
                 \@ref(sub-mlr-point-est-regsurface)). The sum of the
@@ -1252,11 +1258,11 @@ and apply them to the trees example.
                 leverages bigger than 0.5 to indicate high leverage,
                 while values between 0.3 and 0.5 indicate moderate
                 leverage.
-* Standardized residuals: :: unchanged. Considered extreme if
+* **Standardized residuals:** unchanged. Considered extreme if
      \(|R_{i}|>2\).
-* Studentized residuals: :: compared to a
+* **Studentized residuals:** compared to a
      \(\mathsf{t}(\mathtt{df}=n-p-2)\) distribution.
-* DFBETAS: :: The formula is generalized to
+* **DFBETAS:** The formula is generalized to
    \begin{equation}
    (DFBETAS)_{j(i)}=\frac{b_{j}-b_{j(i)}}{S_{(i)}\sqrt{c_{jj}}},\quad j=0,\ldots p,\ i=1,\ldots,n,
    \end{equation}
@@ -1264,9 +1270,9 @@ and apply them to the trees example.
    \((\mathbf{X}^{\mathrm{T}}\mathbf{X})^{-1}\). Values
    larger than one for small data sets or \(2/\sqrt{n}\)
    for large data sets should be investigated.
-* DFFITS: :: unchanged. Larger than one in absolute value is
+* **DFFITS:** unchanged. Larger than one in absolute value is
              considered extreme.
-* Cook's D: :: compared to an \(\mathsf{f}(\mathtt{df1} = p +
+* **Cook's D:** compared to an \(\mathsf{f}(\mathtt{df1} = p +
                1,\,\mathtt{df2} = n - p - 1)\)
                distribution. Observations falling higher than the
                50\(^{\textrm{th}}\) percentile are extreme.  Note that
@@ -1438,8 +1444,7 @@ AIC = -2\ln L + 2(p + 1)
 ## Exercises
 
 
-**Exercise.**
-<<xca-anova-equality>> Use Equations \eqref{eq-mlr-sse-matrix},
+**Exercise.** Use Equations \eqref{eq-mlr-sse-matrix},
 \eqref{eq-mlr-ssto-matrix}, and \eqref{eq-mlr-ssr-matrix} to prove the
 Anova Equality: \[ SSTO = SSE + SSR.\]
 

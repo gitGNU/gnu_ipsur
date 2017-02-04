@@ -2,7 +2,7 @@
 
 ```{r, echo=FALSE, eval=FALSE}
 #    IPSUR: Introduction to Probability and Statistics Using R
-#    Copyright (C) 2014  G. Jay Kerns
+#    Copyright (C) 2017 G. Jay Kerns
 #
 #    Chapter: Data Description
 #

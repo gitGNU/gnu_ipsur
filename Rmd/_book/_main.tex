@@ -997,7 +997,7 @@ would like to see how the \texttt{intersect}
 ##     y <- as.vector(y)
 ##     unique(y[match(as.vector(x), y, 0L)])
 ## }
-## <bytecode: 0x349a230>
+## <bytecode: 0x4109230>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -1016,7 +1016,7 @@ instance, typing \texttt{rev} \index{rev@\texttt{rev}} says
 \begin{verbatim}
 ## function (x) 
 ## UseMethod("rev")
-## <bytecode: 0x2bfce40>
+## <bytecode: 0x386be40>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -1049,7 +1049,7 @@ does. For example, the \texttt{default} method can be viewed with
 \begin{verbatim}
 ## function (x) 
 ## if (length(x)) x[length(x):1L] else x
-## <bytecode: 0x3125768>
+## <bytecode: 0x3d94768>
 ## <environment: namespace:base>
 \end{verbatim}
 
@@ -1068,7 +1068,7 @@ example, if we try to look at the code for \texttt{wilcox.test}
 \begin{verbatim}
 ## function (x, ...) 
 ## UseMethod("wilcox.test")
-## <bytecode: 0x2adadf0>
+## <bytecode: 0x3749df0>
 ## <environment: namespace:stats>
 \end{verbatim}
 
@@ -2186,10 +2186,9 @@ into the above categories. The value is either \texttt{TRUE} or
 Many functions in R have options that the user may or may not want to
 activate in the function call. For example, the \texttt{stem.leaf}
 function has the \texttt{depths} argument which is \texttt{TRUE} by
-default. We saw in Section {[}{[}\#sub-Quantitative-Data{]}{]} how to
-turn the option off, simply enter
-\texttt{stem.leaf(x,\ depths\ =\ FALSE)} and they will not be shown on
-the display.
+default. We saw in Section \ref{sub-quantitative-data} how to turn the
+option off, simply enter \texttt{stem.leaf(x,\ depths\ =\ FALSE)} and
+they will not be shown on the display.
 
 We can swap \texttt{TRUE} with \texttt{FALSE} with the exclamation point
 \texttt{!}.
@@ -2887,12 +2886,12 @@ There are many bells and whistles associated with stemplots, and the
 \item
   \textbf{Trim Outliers:} Some data sets have observations that fall far
   from the bulk of the other data (in a sense made more precise in
-  Section {[}{[}\#sub-Outliers{]}{]}). These extreme observations often
-  obscure the underlying structure to the data and are best left out of
-  the data display. The \texttt{trim.outliers} argument (which is
-  \texttt{TRUE} by default) will separate the extreme observations from
-  the others and graph the stemplot without them; they are listed at the
-  bottom (respectively, top) of the stemplot with the label \texttt{HI}
+  Section \ref{sub-outliers}). These extreme observations often obscure
+  the underlying structure to the data and are best left out of the data
+  display. The \texttt{trim.outliers} argument (which is \texttt{TRUE}
+  by default) will separate the extreme observations from the others and
+  graph the stemplot without them; they are listed at the bottom
+  (respectively, top) of the stemplot with the label \texttt{HI}
   (respectively \texttt{LO}).
 \item
   \textbf{Split Stems:} The standard stemplot has only one line per
@@ -3390,7 +3389,7 @@ Multivariate Data Display
   Scatterplot matrix. used for displaying pairwise scatterplots
   simultaneously. Again, look for linear association and correlation.
 \item
-  3D Scatterplot. See Figure {[}{[}fig-3D-scatterplot-trees{]}{]}
+  3D Scatterplot. See Figure \ref{fig:3D-scatterplot-trees}
 \item
   \texttt{plot(state.region,\ state.division)}
 \item
@@ -3454,7 +3453,7 @@ I am thinking here about the \texttt{Statistics} \(\triangleright\)
 \item
   Notches: extend to \(1.58\cdot(h_{U}-h_{L})/\sqrt{n}\). The idea is to
   give roughly a 95\% confidence interval for the difference in two
-  medians. See Chapter {[}{[}\#cha-Hypothesis-Testing{]}{]}.
+  medians. See Chapter \ref{cha-hypothesis-testing}.
 \item
   Stripcharts
 \item

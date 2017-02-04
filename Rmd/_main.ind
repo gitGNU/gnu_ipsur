@@ -1,0 +1,35 @@
+\begin{theindex}
+
+  \item Data sets
+    \subitem \texttt{trees}, \hyperpage{6}
+
+  \indexspace
+
+  \item fitted values, \hyperpage{11}
+
+  \indexspace
+
+  \item hat matrix, \hyperpage{11}
+
+  \indexspace
+
+  \item likelihood function, \hyperpage{8}
+  \item \texttt{lm}, \hyperpage{10}
+
+  \indexspace
+
+  \item maximum likelihood, \hyperpage{9}
+  \item model
+    \subitem multiple linear regression, \hyperpage{6}
+  \item model matrix, \hyperpage{6}
+  \item \texttt{model.matrix}, \hyperpage{10}
+
+  \indexspace
+
+  \item normal equations, \hyperpage{9}
+
+  \indexspace
+
+  \item response vector, \hyperpage{6}
+
+\end{theindex}

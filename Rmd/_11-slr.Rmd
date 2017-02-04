@@ -1028,8 +1028,9 @@ on one side or the other of the line. The points on the upper end of
 the plot also appear begin to stray from the line. We would say there
 is some evidence that the residuals are not perfectly normal.
 
-```{r,label="normal-q-q-plot-cars",fig.cap='(ref:cap-normal-q-q-plot-cars)'}
-plot(cars.lm, which = 2)
+```{r,label="normal-q-q-plot-cars",fig.cap='(ref:cap-normal-q-q-plot-cars)',message=FALSE}
+library(RcmdrMisc)
+qqPlot(cars.lm)
 ```
 
 (ref:cap-normal-q-q-plot-cars) \small Used for checking the normality assumption. Look out for any curvature or substantial departures from the straight line; hopefully the dots hug the line closely.
@@ -1532,7 +1533,7 @@ plot(cars.lm)
 
 The `par` command is used so that \(2\times 2 = 4\) plots will be
 shown on the same display. The diagnostic plots for the `cars` data
-are shown in Figure \@ref(fig:diagnostic-plots-cars):
+are shown in Figure \@ref(fig:diagnostic-plots-cars).
 
 
 ```{r, label="diagnostic-plots-cars",fig.cap='(ref:cap-diagnostic-plots-cars)'}

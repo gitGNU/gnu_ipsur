@@ -37,7 +37,7 @@ Inferential statistics does more. There is an inference associated
 with the data set, a conclusion drawn about the population from which
 the data originated.
 
-I would like to mention that there are two schools of thought of
+There are two schools of thought regarding
 statistics: frequentist and bayesian. The difference between the
 schools is related to how the two groups interpret the underlying
 probability (see Section \@ref(sec-interpreting-probabilities)). The frequentist
@@ -49,5 +49,4 @@ more attention and at an increasing rate.
 
 This book is devoted mostly to the frequentist viewpoint because that
 is how I was trained, with the conspicuous exception of Sections
-\@ref(sec-bayes-rule) and \@ref(sec-conditional-distributions). I plan to add more
-bayesian material in later editions of this book. \@ref(fig:stripcharts)
+\@ref(sec-bayes-rule) and \@ref(sec-conditional-distributions). 

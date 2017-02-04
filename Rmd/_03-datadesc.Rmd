@@ -24,24 +24,11 @@
 
 ```{r, echo=FALSE, include=FALSE}
 # Preliminary code to load before start
-# clear everything to start
-rm(list = ls())
-# initial customizations
-seed <- 42
-set.seed(seed)
-options(width = 60)
-options(useFancyQuotes = FALSE)
-ps.options(horizontal = FALSE, width = 7, height = 7, paper = "special")
-cexlab <- 1.5
-
 # This chapter's package dependencies
 library(aplpack)
 library(qcc)
 library(e1071)
 library(lattice)
-library(ggplot2)
-library(knitr)
-opts_chunk$set(comment=NA)
 ```
 
 In this chapter we introduce the different types of data that a
@@ -1719,26 +1706,6 @@ print(coplot(conc ~ uptake | Type * Treatment, data = CO2))
 ```
 
 (ref:cap-coplot) \small A `coplot` of `conc` versus `uptake` by `Type` and `Treatment`.
-
-
-## Some Remarks about Plotting
-
-Getting your labels to look right
-
-```{r, eval=FALSE}
-library(ggplot2)
-a <- qplot(state.division, geom = "bar")
-a + opts(axis.text.x = theme_text(angle = -90, hjust = 0))
-```
-
-```{r, eval=FALSE}
-hist(precip, freq = FALSE)
-lines(density(precip))
-qplot(precip, geom = "density")
-m <- ggplot(as.data.frame(precip), aes(x = precip))
-m + geom_histogram()
-m + geom_histogram(aes(y = ..density..)) + geom_density()
-```
 
 ## Exercises
 

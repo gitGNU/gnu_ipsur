@@ -35,7 +35,6 @@ options(useFancyQuotes = FALSE)
 ps.options(horizontal = FALSE, width = 7, height = 7, paper = "special")
 cexlab <- 1.5
 
-library(ggplot2)
 library(scatterplot3d)
 library(lattice)
 ```
@@ -826,7 +825,7 @@ assumption was reasonable. Sometimes, however, plots of the data
 suggest that the linear model is incomplete and should be modified.
 
 ```{r, label="scatterplot-volume-girth-trees",fig.cap='(ref:cap-scatterplot-volume-girth-trees)'}
-qplot(Girth, Volume, data = trees)
+plot(Volume ~ Girth, data = trees)
 ```
 
 (ref:cap-scatterplot-volume-girth-trees) \small Scatterplot of `Volume` versus `Girth` for the `trees` data.
@@ -907,8 +906,8 @@ quadratic function using the `lines` function, which adds a line to
 the plot tracing the estimated mean response.
 
 ```{r, label="fitting-the-quadratic",fig.cap='(ref:cap-fitting-the-quadratic)'}
-a <- ggplot(trees, aes(scale(Girth), Volume))
-a + stat_smooth(method = lm, formula = y ~ poly(x, 2)) + geom_point()
+plot(Volume ~ scale(Girth), data = trees)
+lines(fitted(treesquad.lm) ~ scale(Girth), data = trees)
 ```
 
 (ref:cap-fitting-the-quadratic) \small A quadratic model for the `trees` data.

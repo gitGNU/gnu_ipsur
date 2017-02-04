@@ -148,14 +148,12 @@ which is made with the `splom` function in the `lattice` package
 [@lattice] as shown below. The plot is shown in Figure
 \@ref(fig:splom-trees).
 
-#+NAME: splom-trees
-#+BEGIN_SRC R :exports both :results graphics :file fig/mlr-splom-trees.ps
+
+```{r, label="splom-trees", fig.cap='(ref:cap-splom-trees)'}
 splom(trees)
 ```
 
-#+NAME: fig-splom-trees
-#+CAPTION[Scatterplot matrix of `trees` data]: \small A scatterplot matrix of the `trees` data.
-
+(ref:cap-splom-trees) \small A scatterplot matrix of the `trees` data.
 
 The dependent (response) variable `Volume` is listed in the first row
 of the scatterplot matrix. Moving from left to right, we see an
@@ -168,7 +166,6 @@ Y=\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}+\epsilon,
 in which case the quantity
 \(\mu(x_{1},x_{2})=\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}\) would
 represent the mean value of \(Y\) at the point \((x_{1},x_{2})\).
-# +END_exampletoo
 
 ### What does it mean?
 
@@ -200,15 +197,13 @@ Another way to do it is with the `scatterplot3d` function in the
 `scatterplot3d` package [@scatterplot3d]. The code follows, and
 the result is shown in Figure \@ref(fig:3D-scatterplot-trees).
 
-#+NAME: 3D-scatterplot-trees
-#+BEGIN_SRC R :exports both :results graphics :file fig/mlr-3D-scatterplot-trees.ps
+```{r, label="3D-scatterplot-trees",fig.cap='(ref:3D-sctterplot-trees)'}
 s3d <- with(trees, scatterplot3d(Girth, Height, Volume, pch = 16, 
                                  highlight.3d = TRUE, angle = 60))
 fit <- lm(Volume ~ Girth + Height, data = trees)
 ```
 
-#+NAME: fig-3D-scatterplot-trees
-#+CAPTION[3D scatterplot with regression plane for the `trees` data]: \small A 3D scatterplot with regression plane for the `trees` data.
+(ref:cap-3D-scatterplot-trees) \small A 3D scatterplot with regression plane for the `trees` data.
 
 Looking at the graph we see that the data points fall close to a plane
 in three dimensional space. (The plot looks remarkably good. In the
@@ -368,11 +363,13 @@ which is just a fancy way to write
 \hat{Y}(x_{10},x_{20})=b_{0}+b_{1}x_{10}+b_{2}x_{20}.
 \end{equation}
  
-# +BEGIN_exampletoo
 
+```{example}
 If we wanted to predict the average volume of black cherry trees that
 have `Girth = 15` in and are `Height = 77` ft tall then we would use
 the estimate
+```
+
 \begin{alignat*}{1}
 \hat{\mu}(15,\,77)= & -58+4.7(15)+0.3(77),\\
 \approx & 35.6\mbox{\,\ ft}^{3}.
@@ -381,7 +378,7 @@ the estimate
 We would use the same estimate \(\hat{Y}=35.6\) to predict the
 measured `Volume` of another black cherry tree -- yet to be observed
 -- that has `Girth = 15` in and is `Height = 77` ft tall.
-# +END_exampletoo
+
 
 #### How to do it with R
 
@@ -426,8 +423,8 @@ predict(trees.lm, newdata = new)
 treesFIT <- round(predict(trees.lm, newdata = new), 1)
 ```
 
-# +BEGIN_exampletoo
 
+```{example}
 Using the `trees` data,
 1. Report a point estimate of the mean `Volume` of a tree of `Girth`
    9.1 in and `Height` 69 ft.  The fitted value for \(x_{1}=9.1\) and
@@ -438,7 +435,7 @@ Using the `trees` data,
    ft.  The fitted value for \(x_{1} = 12.5\) and \(x_{2} = 87\) is
    `r treesFIT[3]`, so a point prediction for the `Volume`
    is `r treesFIT[3]` cubic feet.
-# +END_exampletoo
+```
 
 ### Mean Square Error and Standard Error {#sub-mlr-mse-se}
 
@@ -636,8 +633,7 @@ As before, the interval type is decided by the `interval` argument and
 the default confidence level is 95% (which can be changed with the
 `level` argument).
 
-# +BEGIN_exampletoo
-
+```{example}
 Using the `trees` data, 
 
 1. Report a 95% confidence interval for the mean `Volume` of a tree of
@@ -652,8 +648,7 @@ Using the `trees` data,
    the hypothetical `Volume` of a tree of `Girth` 12.5 in and `Height`
    87 ft would lie somewhere between `r treesCI[3, 2]` 
    cubic feet and `r treesCI[3,3]` feet.
-
-# +END_exampletoo
+```
 
 ## Model Utility and Inference {#sec-model-utility-and-mlr}
 
@@ -829,14 +824,11 @@ we assumed \(\mu(x_{1},x_{2}) = \beta_{0}+\beta_{1}x_{1} +
 assumption was reasonable. Sometimes, however, plots of the data
 suggest that the linear model is incomplete and should be modified.
 
-#+NAME: Scatterplot-Volume-Girth-trees
-#+BEGIN_SRC R :exports both :results graphics :file fig/mlr-Scatterplot-Volume-Girth-trees.ps
+```{r, label="scatterplot-volume-girth-trees",fig.cap='(ref:cap-scatterplot-volume-girth-trees)'}
 qplot(Girth, Volume, data = trees)
 ```
 
-#+NAME: fig-Scatterplot-Volume-Girth-trees
-#+CAPTION[Scatterplot of `Volume` versus `Girth` for the `trees` data]: \small Scatterplot of `Volume` versus `Girth` for the `trees` data.
-
+(ref:cap-scatterplot-volume-girth-trees) \small Scatterplot of `Volume` versus `Girth` for the `trees` data.
 
 For example, let us examine a scatterplot of `Volume` versus `Girth` a
 little more closely. See Figure
@@ -892,12 +884,12 @@ There are multiple ways to fit a quadratic model to the variables
    recover the approach in 2 with `poly(Girth, degree = 2, raw =
    TRUE)`.
 
-# +BEGIN_exampletoo
-
+```{example}
 We will fit the quadratic model to the `trees` data and display the
 results with `summary`, being careful to rescale the data before
 fitting the model. We may rescale the `Girth` variable to have zero
 mean and unit variance on-the-fly with the `scale` function.
+```
 
 ```{r, echo=TRUE} 
 treesquad.lm <- lm(Volume ~ scale(Girth) + I(scale(Girth)^2), data = trees)
@@ -911,37 +903,28 @@ evidence that both `Girth` and `Girth^2` are significantly related to
 quadratic function using the `lines` function, which adds a line to
 the plot tracing the estimated mean response.
 
-#+NAME: Fitting-the-Quadratic
-#+BEGIN_SRC R :exports both :results graphics :file fig/mlr-Fitting-the-Quadratic.ps
+```{r, label="fitting-the-quadratic",fig.cap='(ref:cap-fitting-the-quadratic)'}
 a <- ggplot(trees, aes(scale(Girth), Volume))
 a + stat_smooth(method = lm, formula = y ~ poly(x, 2)) + geom_point()
 ```
 
-#+NAME: fig-Fitting-the-Quadratic
-#+CAPTION[Quadratic model for the `trees` data]: \small A quadratic model for the `trees` data.
+(ref:cap-fitting-the-quadratic) \small A quadratic model for the `trees` data.
 
+The plot is shown in Figure \@ref(fig:fitting-the-quadratic). Pay
+attention to the scale on the \(x\)-axis: it is on the scale of the
+transformed `Girth` data and not on the original scale.
 
-The plot is shown in Figure \@ref(fig:fitting-the-quadratic). Pay attention to
-the scale on the \(x\)-axis: it is on the scale of the transformed
-`Girth` data and not on the original scale.
-
-# +END_exampletoo
-
-
-
-#+BEGIN_rem
-When a model includes a quadratic term for an independent variable, it
-is customary to also include the linear term in the model. The
-principle is called *parsimony*. More generally, if the researcher
-decides to include \(x^{m}\) as a term in the model, then (s)he should
-also include all lower order terms \(x\), \(x^{2}\), ...,\(x^{m-1}\)
-in the model.
-#+END_rem
+**Remark.** When a model includes a quadratic term for an independent
+variable, it is customary to also include the linear term in the
+model. The principle is called *parsimony*. More generally, if the
+researcher decides to include \(x^{m}\) as a term in the model, then
+(s)he should also include all lower order terms \(x\), \(x^{2}\),
+...,\(x^{m-1}\) in the model.
 
 We do estimation/prediction the same way that we did in Section
-\@ref(sub-mlr-point-est-regsurface), except we do not need a `Height` column
-in the dataframe =new= since the variable is not included in the
-quadratic model.
+\@ref(sub-mlr-point-est-regsurface), except we do not need a `Height`
+column in the dataframe =new= since the variable is not included in
+the quadratic model.
 
 ```{r, echo=TRUE} 
 new <- data.frame(Girth = c(9.1, 11.6, 12.5))
@@ -1086,8 +1069,7 @@ care of the rest.
 We can see a plot of the two regression lines with the following
 mouthful of code.
 
-#+NAME: dummy-variable-trees
-#+BEGIN_SRC R :exports both :results graphics :file fig/mlr-dummy-variable-trees.ps
+```{r, label="dummy-variable-trees", fig.cap='(ref:cap-dummy-variable-trees)'}
 treesTall <- split(trees, trees$Tall)
 treesTall[["yes"]]$Fit <- predict(treesdummy.lm, treesTall[["yes"]])
 treesTall[["no"]]$Fit <- predict(treesdummy.lm, treesTall[["no"]])
@@ -1098,9 +1080,7 @@ lines(Fit ~ Girth, data = treesTall[["yes"]])
 lines(Fit ~ Girth, data = treesTall[["no"]])
 ```
 
-#+NAME: fig-dummy-variable-trees
-#+CAPTION[A dummy variable model for the `trees` data]: \small A dummy variable model for the `trees` data.
-
+(ref:cap-dummy-variable-trees) \small A dummy variable model for the `trees` data.
 
 It may look intimidating but there is reason to the madness. First we
 `split` the `trees` data into two pieces, with groups determined by
@@ -1180,11 +1160,11 @@ complete model. The way to test whether the improvement is significant
 is to compute `lm` objects both for the complete model and the reduced
 model then compare the answers with the `anova` function.
 
-# +BEGIN_exampletoo
-<<exa-mlr-trees-poly-no-rescale>> For the `trees` data, let us fit a
-polynomial regression model and for the sake of argument we will
-ignore our own good advice and fail to rescale the explanatory
-variables.
+```{example, name="mlr-trees-poly-no-rescale"}
+For the `trees` data, let us fit a polynomial regression model and for
+the sake of argument we will ignore our own good advice and fail to
+rescale the explanatory variables.
+```
 
 ```{r, echo=TRUE} 
 treesfull.lm <- lm(Volume ~ Girth + I(Girth^2) + Height + 
@@ -1226,7 +1206,6 @@ treesreduced2.lm <- lm(Volume ~ Girth + I(Girth^2) + Height,
 anova(treesreduced2.lm, treesfull.lm)
 ```
 
-
 In this case, the improvement to the reduced model that is
 attributable to `Height^2` is not significant, so we can delete
 `Height^2` from the model with a clear conscience. We notice that the
@@ -1236,7 +1215,7 @@ test of `Height^2` at the beginning of this example. In fact, the
 *p-values* are *exactly* the same. Perhaps now we gain some insight
 into the true meaning of the univariate tests.
 
-# +END_exampletoo
+
 
 ## Residual Analysis and Diagnostic Tools {#sec-residual-analysis-mlr}
 

@@ -63,7 +63,7 @@ On Microsoft Windows, click the `R-x.y.z.exe` installer to start
 installation. When it asks for "Customized startup options", specify
 `Yes`. In the next window, be sure to select the SDI (single document
 interface) option; this is useful later when we discuss three
-dimensional plots with the `rgl` package \cite{rgl}.
+dimensional plots with the `rgl` package [@rgl].
 
 #### Installing R on a USB drive (Windows)
 
@@ -125,7 +125,7 @@ simply choose one or more to install.
 No matter how many packages are installed onto the system, each one
 must first be loaded for use with the
 `library` \index{library@\texttt{library}} function. For instance, the
-`foreign` package \cite{foreign} contains all sorts of functions
+`foreign` package [@foreign] contains all sorts of functions
 needed to import data sets into R from other software
 such as SPSS, SAS, *etc*. But none of those functions will be
 available until the command `library("foreign")` is issued.
@@ -212,12 +212,12 @@ I have used and enjoyed.
      take this code, copy-and-paste it to a text file, then re-run it
      again at a later time without the R Commander's
      assistance. It is well suited for the introductory level. `Rcmdr`
-     \cite{Rcmdr} also allows for user-contributed "Plugins" which are
+     [@Rcmdr] also allows for user-contributed "Plugins" which are
      separate packages on `CRAN` that add extra functionality to the
      `Rcmdr` package. The plugins are typically named with the prefix
      `RcmdrPlugin` to make them easy to identify in the `CRAN` package
      list. One such plugin is the `RcmdrPlugin.IPSUR` package
-     \cite{RcmdrPlugin.IPSUR} which accompanies this text.
+     [@RcmdrPlugin.IPSUR] which accompanies this text.
 
 ## Basic R Operations and Concepts {#sec-Basic-R-Operations}
 
@@ -297,7 +297,7 @@ familiar:
 * double: real numbers (rational and irrational); these numbers are
              not represented exactly (save integers or fractions with
              a denominator that is a power of 2, see
-             \cite{Venables2010}).
+              @Venables2010 ).
 * character: elements that are wrapped with pairs of `"` or ';
 * logical: includes `TRUE`, `FALSE`, and `NA` (which are reserved
               words); the `NA` \index{NA@\texttt{NA}} stands
@@ -418,7 +418,7 @@ It will not be long before the user starts to wonder how a particular
 function is doing its job, and since R is open-source,
 anybody is free to look under the hood of a function to see how things
 are calculated. For detailed instructions see the article "Accessing
-the Sources" by Uwe Ligges \cite{Ligges2006}. In short:
+the Sources" by Uwe Ligges [@Ligges2006]. In short:
 
 **Type the name of the function** without any parentheses or
 arguments. If you are lucky then the code for the entire function will
@@ -458,7 +458,7 @@ rev.default
 ```
 
 **Some functions are hidden by a namespace** (see An Introduction to
-R \cite{Venables2010}), and are not visible on the first
+R @Venables2010), and are not visible on the first
 try. For example, if we try to look at the code for `wilcox.test`
 \index{wilcox.test@\texttt{wilcox.test}} (see Chapter \@ref(cha-Nonparametric-Statistics)) we get the following:
 
@@ -469,7 +469,7 @@ methods(wilcox.test)
 
 If we were to try `wilcox.test.default` we would get a "not found"
 error, because it is hidden behind the namespace for the package
-`stats` \cite{stats} (shown in the last line when we tried
+`stats` [@stats] (shown in the last line when we tried
 `wilcox.test`). In cases like these we prefix the package name to the
 front of the function name with three colons; the command
 `stats:::wilcox.test.default` will show the source code, omitted here
@@ -480,7 +480,7 @@ If it shows `.Internal(something)`
 \index{.Primitive@\texttt{.Primitive}}, then it will be necessary to
 download the source code of R (which is *not* a binary
 version with an `.exe` extension) and search inside the code
-there. See Ligges \cite{Ligges2006} for more discussion on this. An
+there. See Ligges [@Ligges2006] for more discussion on this. An
 example is `exp`:
 
 ```{r, echo=TRUE, results=TRUE} 

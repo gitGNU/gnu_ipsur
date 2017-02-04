@@ -1,0 +1,8 @@
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+    after_body: backmatter.tex
+  latex_engine: pdflatex
+  citation_package: biblatex
+  keep_tex: yes
+

@@ -1,4 +1,4 @@
-# An Introduction to Probability and Statistics  {#cha-intorps}
+# An Introduction to Probability and Statistics  {#cha-introps}
 
 This chapter has proved to be the hardest to write, by far. The
 trouble is that there is so much to say -- and so many people have
@@ -50,5 +50,4 @@ more attention and at an increasing rate.
 This book is devoted mostly to the frequentist viewpoint because that
 is how I was trained, with the conspicuous exception of Sections
 {#sec-bayes-rule} and {#sec-conditional-distributions}. I plan to add more
-bayesian material in later editions of this book.
-
+bayesian material in later editions of this book. \@ref(fig:stripcharts)

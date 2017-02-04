@@ -40,7 +40,7 @@ the data originated.
 I would like to mention that there are two schools of thought of
 statistics: frequentist and bayesian. The difference between the
 schools is related to how the two groups interpret the underlying
-probability (see Section {#sec-interpreting-probabilities}). The frequentist
+probability (see Section \@ref(sec-interpreting-probabilities)). The frequentist
 school gained a lot of ground among statisticians due in large part to
 the work of Fisher, Neyman, and Pearson in the early twentieth
 century. That dominance lasted until inexpensive computing power
@@ -49,5 +49,5 @@ more attention and at an increasing rate.
 
 This book is devoted mostly to the frequentist viewpoint because that
 is how I was trained, with the conspicuous exception of Sections
-{#sec-bayes-rule} and {#sec-conditional-distributions}. I plan to add more
+\@ref(sec-bayes-rule) and \@ref(sec-conditional-distributions). I plan to add more
 bayesian material in later editions of this book. \@ref(fig:stripcharts)

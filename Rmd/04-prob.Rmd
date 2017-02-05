@@ -61,7 +61,7 @@ period, *etc*.
 * what we mean by 'random variables', and where they come from
 
 
-```{r, echo=FALSE, label="diagram", fig.cap='(ref:cap-dagram)'}
+```{r, echo=FALSE, label="diagram", fig.cap='(ref:cap-diagram)'}
 require(diagram)
 par(mex = 0.2, cex = 0.5)
 openplotmat(frame.plot=TRUE)
@@ -304,7 +304,7 @@ every possible way that the experiment can conclude.
 
 Note that the urn does not need to contain numbers; we could have just
 as easily taken our urn to be `x = c("Red","Blue","Green")`. But,
-there is an *important# point to mention before proceeding. Astute
+there is an *important* point to mention before proceeding. Astute
 readers will notice that in our example, the balls in the urn were
 *distinguishable* in the sense that each had a unique label to
 distinguish it from the others in the urn. A natural question would
@@ -523,7 +523,6 @@ thankfully, because the `prob` functions have been carefully defined
 to match the usual `base` package definition in the case that the
 arguments are vectors.
 
-#+END_note
 
 ## Model Assignment {#sec-interpreting-probabilities}
 
@@ -594,8 +593,8 @@ and the number of Heads observed. Then a good approximation to
 \begin{equation} 
 \mathbb{P}(\mbox{Heads})\approx\frac{\mbox{number of observed Heads}}{\mbox{total number of flips}}.
 \end{equation}
-The mathematical underpinning of this approach is the celebrated *Law
-of Large Numbers# which may be loosely described as follows. Let \(E\)
+The mathematical underpinning of this approach is the celebrated 
+*Law of Large Numbers* which may be loosely described as follows. Let \(E\)
 be a random experiment in which the event \(A\) either does or does
 not occur. Perform the experiment repeatedly, in an identical manner,
 in such a way that the successive experiments do not influence each
@@ -1043,7 +1042,7 @@ answer under the equally likely model. This is the subject of Section
 #### How to do it with R
 
 Probabilities are calculated in the `prob` package [@prob] with
-the `prob` function.
+the `Prob` function.
 
 Consider the experiment of drawing a card from a standard deck of
 playing cards. Let's denote the probability space associated with the
@@ -1069,11 +1068,11 @@ Prob(S, suit == "Heart")
 ``` 
 
 We also find `Prob(B) = 0.23` (listed here approximately, but
-12/52 actually). Internally, the `prob` function operates by summing
+12/52 actually). Internally, the `Prob` function operates by summing
 the `probs` column of its argument. It will find subsets on-the-fly if
 desired.
 
-We have as yet glossed over the details. More specifically, `prob` has
+We have as yet glossed over the details. More specifically, `Prob` has
 three arguments: `x`, which is a probability space (or a subset of
 one), `event`, which is a logical expression used to define a subset,
 and `given`, which is described in Section \@ref(sec-conditional-probability).
@@ -1149,6 +1148,8 @@ prepared to build? **Answer:** \(2 \cdot 3 \cdot 4 \cdot 4 \cdot 10 = 960\)
 Imagine a bag with \(n\) distinguishable balls inside. Now shake up
 the bag and select \(k\) balls at random. How many possible sequences
 might we observe?
+
+\bigskip
 
 ```{proposition}
 The number of ways in which one may select an ordered sample of \(k\)
@@ -1230,7 +1231,7 @@ many choices does Fred have? **Answer:** \({5 \choose 2}=10\).
 
 ```{example}
 Place 3 six-sided dice into a cup. Next, shake the cup well and pour
-out the dice. How many distinct rolls are possible? *Answer:*
+out the dice. How many distinct rolls are possible? **Answer:**
 \((6-1+3)!/[(6-1)!3!]={8 \choose 5}=56\).
 ```
 
@@ -1255,7 +1256,7 @@ the space. The arguments are `n`, the number of (distinguishable)
 objects in the urn, `k`, the sample size, and `replace`, `ordered`, as
 above.
 
-(ref:tab-sampling-k-from-n)
+(#tab-sampling-k-from-n)
 
 |                   | `ordered = TRUE`    | `ordered = FALSE`           |
 |-------------------+---------------------+-----------------------------|
@@ -1468,6 +1469,8 @@ situations we write
 \mathbb{P}(B\vert A^{c})=4/51.  
 \]
 
+\bigskip
+
 ```{definition}
 The conditional probability of \(B\) given \(A\), denoted
 \(\mathbb{P}(B|A)\), is defined by
@@ -1525,14 +1528,14 @@ sample space consists of all ordered pairs \((i,j)\) of the numbers
 represented by a matrix:
 ```
 
-```{r, label="twodiceAB",fig.cap='(ref:cap-twodiceAB)'}
+```{r, echo=FALSE,label="twodiceAB",fig.cap='(ref:cap-twodiceAB)'}
 A <- rolldie(2)
 B <- subset(A, X1==X2)
 C <- subset(A, X1+X2 > 7)
 B$lab <- rep("X", dim(B)[1])
 C$lab <- rep("O", dim(C)[1])
 p <- ggplot(rbind(B, C), aes(x=X1, y=X2, label=lab))
-p + geom_text(size = 15) + xlab("First roll") + ylab("Second roll")
+p + geom_text(size = 5) + xlab("First roll") + ylab("Second roll")
 ```
 
 (ref:cap-twodiceAB) \small Rolling two dice. The outcomes in A are marked with X, the outcomes in B are marked with O.
@@ -1575,7 +1578,7 @@ B <- subset(S, X1 + X2 >= 8)
 ```
 
 And now we are ready to calculate probabilities. To do conditional
-probability, we use the `given` argument of the `prob` function:
+probability, we use the `given` argument of the `Prob` function:
 
 ```{r, echo=TRUE}  
 Prob(A, given = B)
@@ -1584,7 +1587,7 @@ Prob(B, given = A)
 
 Note that we do not actually need to define the events \(A\) and \(B\)
 separately as long as we reference the original probability space
-\(S\) as the first argument of the `prob` calculation:
+\(S\) as the first argument of the `Prob` calculation:
 
 ```{r, echo=TRUE}  
 Prob(S, X1==X2, given = (X1 + X2 >= 8) )
@@ -1596,6 +1599,8 @@ Prob(S, X1+X2 >= 8, given = (X1==X2) )
 The following theorem establishes that conditional probabilities
 behave just like regular probabilities when the conditioned event is
 fixed.
+
+\bigskip
 
 ```{theorem}
 For any fixed event \(A\) with \(\mathbb{P}(A)>0\),
@@ -1613,8 +1618,11 @@ In other words, \(\mathbb{P}(\cdot|A)\) is a legitimate probability
 function. With this fact in mind, the following properties are
 immediate:
 
+\bigskip
+
 ```{proposition}
 For any events \(A\), \(B\), and \(C\) with \(\mathbb{P}(A)>0\),
+
 1. \(\mathbb{P} ( B^{c} | A ) = 1 - \mathbb{P} (B|A).\)
 2. If \(B\subset C\) then \(\mathbb{P}(B|A)\leq\mathbb{P}(C|A)\).
 3. \(\mathbb{P} [ ( B\cup C ) | A ] = \mathbb{P} (B|A) +
@@ -1684,7 +1692,7 @@ N[[1]][[1]];  N$probs[1]
 
 
 Now that we have the probability space `N` we are ready to do some
-probability. We use the `prob` function, just like before. The only
+probability. We use the `Prob` function, just like before. The only
 trick is to specify the event of interest correctly, and recall that
 we were interested in \(\mathbb{P}(\mbox{both Aces})\). But if the
 cards are both Aces then the `rank` of both cards should be `A`, which
@@ -1734,12 +1742,12 @@ N <- probspace(M)
 
 Now let us think about how to set up the event \(\{ \mbox{all 3 balls
 are red}\}\). Rows of `N` that satisfy this condition have
-\(\mathtt{X1=="red"\ \&\ X2=="red"\ \&\ X3=="red"}\), but there must
+`X1=="red" & X2=="red" & X3=="red"`, but there must
 be an easier way. Indeed, there is. The `isrep` function (short for
 "is repeated") in the `prob` package was written for this
 purpose. The command `isrep(N,"red",3)` will test each row of `N` to
 see whether the value `red` appears `3` times. The result is exactly
-what we need to define an event with the `prob` function. Observe
+what we need to define an event with the `Prob` function. Observe
 
 ```{r, echo=TRUE}  
 Prob(N, isrep(N, "red", 3))
@@ -1862,6 +1870,8 @@ Intuitively, this means that the information that the first toss is
 \(H\) has no bearing on the probability that the second toss is
 \(H\). The coin does not remember the result of the first toss.
 
+\bigskip
+
 ```{definition}
 Events \(A\) and \(B\) are said to be *independent* if 
 \begin{equation}
@@ -1895,6 +1905,8 @@ probability \(\mathbb{P}(A|B)\) is only defined when
 restriction. It can be shown that when \(\mathbb{P}(A),\
 \mathbb{P}(B)>0\) the two notions of independence are equivalent.
 
+\bigskip
+
 ```{proposition}
 If the events \(A\) and \(B\) are independent then
 
@@ -1916,6 +1928,8 @@ end, note that the Multiplication Rule, Equation
  & = & \mathbb{P}(B)\mathbb{P}(A^{c}).
 \end{eqnarray*}
 ```
+
+\bigskip
 
 ```{definition}
 The events \(A\), \(B\), and \(C\) are *mutually independent* if the
@@ -2041,6 +2055,8 @@ We mentioned the subjective view of probability in Section
 allows us to update our probabilities when new information becomes
 available.
 
+\bigskip
+
 ```{theorem, name="Bayes' Rule"}
 Let \(B_{1}\), \(B_{2}\), ..., \(B_{n}\) be mutually exclusive and
 exhaustive and let \(A\) be an event with \(\mathbb{P}(A)>0\). Then
@@ -2067,7 +2083,7 @@ A)=\sum_{k=1}^{n}\mathbb{P}(B_{k})\mathbb{P}(A|B_{k}).  \]
 
 What does it mean? Usually in applications we are given (or know) *a priori* probabilities \(\mathbb{P}(B_{k})\). We go out and collect
 some data, which we represent by the event \(A\). We want to know: how
-do we *update# \(\mathbb{P}(B_{k})\) to \(\mathbb{P}(B_{k}|A)\)? The
+do we *update* \(\mathbb{P}(B_{k})\) to \(\mathbb{P}(B_{k}|A)\)? The
 answer: Bayes' Rule.
 
 \bigskip
@@ -2110,7 +2126,7 @@ The boss decides to use probability to decide, and walks straight to
 the workload schedule. (S)he reasons that, since the three employees
 work at the same speed, the probability that a randomly selected file
 would have been filed by each one would be proportional to his
-workload. The boss notifies *Moe# that he has until the end of the day
+workload. The boss notifies *Moe* that he has until the end of the day
 to empty his desk.
 
 But Moe argues in his defense that the boss has ignored additional
@@ -2137,7 +2153,7 @@ In other words, on the average, Moe misfiles 0.3% of the documents he
 is supposed to file. Notice that Moe was correct: he is the most
 accurate filer, followed by Larry, and lastly Curly. If the boss were
 to make a decision based only on the worker's overall accuracy,
-then *Curly# should get the axe. But Curly hears this and interjects
+then *Curly* should get the axe. But Curly hears this and interjects
 that he only works a short period during the day, and consequently
 makes mistakes only very rarely; there is only the tiniest chance that
 he misfiled this particular document.
@@ -2225,7 +2241,7 @@ to do by hand.
 \bigskip
 
 ```{example, name="Misfiling Assistants"}
-(Continued from Example \@ref(ex:misfiling-assistants)). We store the
+Continued from Example \@ref(ex:misfiling-assistants). We store the
 prior probabilities and the likelihoods in vectors and go to town.
 ```
 
@@ -2253,7 +2269,7 @@ probabilities be?
 
 ```{r, echo=TRUE}  
 newprior <- post
-post <- newprior # like^7
+post <- newprior * like^7
 post / sum(post)
 ```
 
@@ -2276,7 +2292,7 @@ then observed eight misfiled documents, and calculated the posterior?
 What would she get? It must be the same answer, of course.
 
 ```{r, echo=TRUE}  
-fastpost <- prior # like^8
+fastpost <- prior * like^8
 fastpost / sum(fastpost)
 ```
 
@@ -2291,6 +2307,8 @@ experiment. We conduct a random experiment \(E\) and after learning
 the outcome \(\omega\) in \(S\) we calculate a number \(X\). That is,
 to each outcome \(\omega\) in the sample space we associate a number
 \(X(\omega)=x\).
+
+\bigskip
 
 ```{definition}
 A *random variable* \(X\) is a function \(X:S\to\mathbb{R}\) that
@@ -2314,7 +2332,7 @@ example, \(X(HH)=2\), while \(X(HT)=1\). We may make a table of the
 possibilities:
 ```
 
-(ref:tab-flip-coin-twice)
+{#tab-flip-coin-twice}
 
 | \(\omega\in S\) | \(HH\) | \(HT\) | \(TH\) | \(TT\) |
 |-----------------+--------+--------+--------+--------|
@@ -2364,8 +2382,8 @@ called *continuous random variables*, to be studied in Chapter
 \@ref(cha-continuous-distributions).
 
 [^4]: This isn't really the reason, but it serves as an
-effective litmus test at the introductory level. See Billingsley or
-Resnick.
+effective litmus test at the introductory level. See Billingsley [@Billingsley1995] or
+Resnick [@Resnick1999].
 
 ### How to do it with R
 
@@ -2462,7 +2480,8 @@ probability space.
 ## Exercises
 
 **Exercise.** 
-<<xca-numb-cond-indep>> Prove the assertion given in the text: the
+<<xca-numb-cond-indep>> 
+Prove the assertion given in the text: the
 number of conditions that the events \(A_{1}\), \(A_{2}\), ...,
 \(A_{n}\) must satisfy in order to be mutually independent is
 \(2^{n} - n - 1\). (*Hint*: think about Pascal's triangle.)

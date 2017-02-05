@@ -173,8 +173,7 @@ head(cars)
 
 The `speed` represents how fast the car was going (\(x\)) in miles per
 hour and `dist` (\(Y\)) measures how far it took the car to stop, in
-feet. We can make a simple scatterplot of the data with the `qplot`
-command in the `ggplot2` package [@ggplot2].
+feet. We first make a simple scatterplot of the data.
 
 ```{r,label="carscatter",fig.cap='(ref:cap-carscatter)'}
 plot(dist ~ speed, data = cars)
@@ -186,13 +185,12 @@ You can see the output in Figure \@ref(fig:carscatter), which was
 produced by the following code.
 
 ```{r, echo=TRUE, eval=FALSE}
-qplot(speed, dist, data = cars)
+plot(dist ~ speed, data = cars)
 ```
 
 There is a pronounced upward trend to the data points, and the pattern
 looks approximately linear. There does not appear to be substantial
 fanning out of the points or extreme values.
-
 
 ## Estimation {#sec-slr-estimation}
 
@@ -323,9 +321,8 @@ to `abline` are the coefficients of `cars.lm`; see Figure
 \@ref(fig:carline).
 
 ```{r,label="carline",fig.cap='(ref:carline)'}
-ggplot(cars, aes(x = speed, y = dist)) + 
-  geom_point(shape = 19) + 
-  geom_smooth(method = lm, se = FALSE)
+plot(dist ~ speed, data = cars, pch = 16)
+abline(coef(cars))
 ```
 
 (ref:cap-carline) \small A scatterplot with an added regression line for the `cars` data.
@@ -1015,17 +1012,27 @@ We can assess the normality of the residuals with graphical methods
 and hypothesis tests. To check graphically whether the residuals are
 normally distributed we may look at histograms or *q-q* plots. We
 first examine a histogram in Figure
-\@ref(fig:normal-q-q-plot-cars). There we see that the distribution of
+\@ref(fig:normal-hist-cars), which was produced by the following code. 
+
+```{r,label="normal-hist-cars",fig.cap='(ref:cap-normal-hist-cars)'}
+hist(residuals(cars.lm))
+```
+
+
+(ref:cap-normal-hist-cars) \small A histogram of the residuals from the linear regression model for the `cars` data. Used for checking the normality assumption. Look out for any skewness or extreme values; hopefully the graph is mound shaped and symmetric about zero, with no outliers.
+
+
+There we see that the distribution of
 the residuals appears to be mound shaped, for the most part. We can
-plot the order statistics of the sample versus quantiles from a
-\(\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=1)\) distribution with
-the command `plot(cars.lm, which = 2)`, and the results are in Figure
+plot the order statistics of the studentized residuals versus quantiles from a
+\(\mathsf{t}(\mathtt{mean}=0,\,\mathtt{sd}=1)\) distribution with
+the command `qqPlot(cars.lm)` from the `RcmdrMisc` package [@RcmdrMisc], and the results are in Figure
 \@ref(fig:normal-q-q-plot-cars). If the assumption of normality were
 true, then we would expect points randomly scattered about the dotted
 straight line displayed in the figure. In this case, we see a slight
-departure from normality in that the dots show systematic clustering
+departure from normality in that the dots show a bit of clustering
 on one side or the other of the line. The points on the upper end of
-the plot also appear begin to stray from the line. We would say there
+the plot also begin to stray from the line. We would say there
 is some evidence that the residuals are not perfectly normal.
 
 ```{r,label="normal-q-q-plot-cars",fig.cap='(ref:cap-normal-q-q-plot-cars)',message=FALSE}
@@ -1033,7 +1040,7 @@ library(RcmdrMisc)
 qqPlot(cars.lm)
 ```
 
-(ref:cap-normal-q-q-plot-cars) \small Used for checking the normality assumption. Look out for any curvature or substantial departures from the straight line; hopefully the dots hug the line closely.
+(ref:cap-normal-q-q-plot-cars) \small A quantile-quantile plot of the studentized residuals from the linear regression model for the `cars` data. Used for checking the normality assumption. Look out for any curvature or substantial departures from the straight line; hopefully the dots hug the line closely and stay within the bands.
 
 
 #### Testing the Normality Assumption

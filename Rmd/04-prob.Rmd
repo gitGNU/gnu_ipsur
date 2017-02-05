@@ -506,9 +506,10 @@ defined to be the elements of \(S\) that are not in \(A\) simply with
 `setdiff`, `subset`, and `union` in the case that the input objects
 are of class `ps`. See Section \@ref(sub-howto-ps-objects).
 
+\bigskip
 
-
-**Note.** When the `prob` package [@prob] loads you will notice a message:
+```{block, type="note"}
+When the `prob` package [@prob] loads you will notice a message:
 `The following object(s) are masked from package:base: intersect, setdiff`. The reason for this message is that there already exist
 methods for the functions `intersect`, `setdiff`, `subset`, and
 `union` in the `base` package which ships with
@@ -522,7 +523,7 @@ definitions from the existing ones. But there is no cause for alarm,
 thankfully, because the `prob` functions have been carefully defined
 to match the usual `base` package definition in the case that the
 arguments are vectors.
-
+```
 
 ## Model Assignment {#sec-interpreting-probabilities}
 
@@ -823,16 +824,24 @@ A *probability function* is a rule that associates with each event
 the *probability of* \(A\). Any probability function \(\mathbb{P}\)
 satisfies the following three Kolmogorov Axioms:
 
-**Axiom 1.**
-<<ax-prob-nonnegative>> \(\mathbb{P}(A)\geq0\) for any event \(A\subset S\).
+\bigskip
 
+```{block, type="axiom", label="ax-prob-nonnegative"}
+\(\mathbb{P}(A)\geq0\) for any event \(A\subset S\).
 
-**Axiom 2.**
-<<ax-total-mass-one>> \(\mathbb{P}(S)=1\).
+```
 
+\bigskip
 
-**Axiom 3.**
-<<ax-countable-additivity>> If the events \(A_{1}\), \(A_{2}\),
+```{block, type="axiom", label="ax-total-mass-one"}
+\(\mathbb{P}(S)=1\).
+
+```
+
+\bigskip
+
+```{block, type="axiom", label="ax-countable-additivity"}
+If the events \(A_{1}\), \(A_{2}\),
 \(A_{3}\)... are disjoint then
 \begin{equation}
 \mathbb{P}\left(\bigcup_{i=1}^{n}A_{i}\right)=\sum_{i=1}^{n}\mathbb{P}(A_{i})\mbox{ for every }n,
@@ -842,6 +851,7 @@ and furthermore,
 \mathbb{P}\left(\bigcup_{i=1}^{\infty}A_{i}\right)=\sum_{i=1}^{\infty}\mathbb{P}(A_{i}).
 \end{equation}
 
+```
 
 The intuition behind the axioms goes like this: first, the probability
 of an event should never be negative. Second, since the sample space
@@ -2479,10 +2489,11 @@ probability space.
 
 ## Exercises
 
-**Exercise.** 
-<<xca-numb-cond-indep>> 
+\bigskip
+
+```{block, type="xca", label="xca-numb-cond-indep"}
 Prove the assertion given in the text: the
 number of conditions that the events \(A_{1}\), \(A_{2}\), ...,
 \(A_{n}\) must satisfy in order to be mutually independent is
 \(2^{n} - n - 1\). (*Hint*: think about Pascal's triangle.)
-
+```

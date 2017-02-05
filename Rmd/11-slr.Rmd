@@ -83,31 +83,39 @@ More to the point, there are *three simple linear regression* (SLR)
 assumptions \index{regression assumptions} that will form
 the basis for the rest of this chapter:
 
-**Assumption.**
+\bigskip
+
+```{block, type="assumption"}
 We assume that \(\mu\) is a linear function of \(x\), that is, 
 \begin{equation}
 \mu(x)=\beta_{0}+\beta_{1}x,
 \end{equation}
 where \(\beta_{0}\) and \(\beta_{1}\) are unknown constants to be
 estimated.
+\bigskip
 
-
-**Assumption.**
+```{block, type="assumption"}
 We further assume that \(Y_{i}\) is \(\mu(x_{i})\), a "signal",
 plus some "error" (represented by the symbol \(\epsilon_{i}\)):
 \begin{equation}
 Y_{i} = \beta_{0} + \beta_{1}x_{i} + \epsilon_{i}, \quad i = 1,2,\ldots,n.
 \end{equation}
 
+```
 
-**Assumption.**
+\bigskip
+
+```{block, type="assumption"}
 We lastly assume that the errors are IID normal with mean 0 and variance \(\sigma^{2}\):
 \begin{equation}
 \epsilon_{1},\epsilon_{2},\ldots,\epsilon_{n}\sim\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=\sigma).
 \end{equation}
 
+```
 
-**Remark.**
+\bigskip
+
+```{block, type="rem"}
 We assume both the normality of the errors \(\epsilon\) and the
 linearity of the mean function \(\mu\). Recall from Proposition
 \@ref(pro:mvnorm-cond-dist) of Chapter
@@ -115,7 +123,7 @@ linearity of the mean function \(\mu\). Recall from Proposition
 \(x\). This is not a coincidence. In more advanced classes we study
 the case that both \(X\) and \(Y\) are random, and in particular, when
 they are jointly normally distributed.
-
+```
 
 ### What does it all mean?
 See Figure \@ref(fig:philosophy). Shown in the figure is a solid line, the
@@ -267,7 +275,10 @@ we use the "line of best fit"
 where \(\hat{\beta}_{0}\) and \(\hat{\beta}_{1}\) are given as
 above. For notation we will usually write \(b_{0} = \hat{\beta_{0}}\) and \(b_{1}=\hat{\beta_{1}}\) so that \(\hat{\mu}(x) = b_{0} + b_{1}x\).
 
-**Remark.** The formula for \(b_{1}\) in Equation
+\bigskip
+
+```{block, type="rem"}
+The formula for \(b_{1}\) in Equation
 \eqref{eq-regline-slope-formula} gets the job done but does not really
 make any sense. There are many equivalent formulas for \(b_{1}\)
 that are more intuitive, or at the least are easier to remember. One
@@ -282,6 +293,7 @@ the \(Y\) and \(x\) data, respectively. See Exercise
 \@ref(xca:show-alternate-slope-formula). Also, notice the similarity
 between Equation \eqref{eq-sample-correlation-formula} and Equation
 \eqref{eq-population-slope-slr}.
+```
 
 
 #### How to do it with R
@@ -1578,17 +1590,20 @@ side of the plot, near the horizontal axis.
 
 ## Exercises
 
+\bigskip
 
-**Exercise.**
+```{block, type="xca"}
 Prove the ANOVA equality, Equation \eqref{eq-anovaeq}. *Hint*:
 show that
 \[
 \sum_{i=1}^{n}(Y_{i}-\hat{Y_{i}})(\hat{Y_{i}}-\overline{Y})=0.
 \]
+```
 
+\bigskip
 
-**Exercise.**
-<<xca-find-mles-SLR>> Solve the following system of equations for
+```{block, type="xca",label="xca-find-mles-slr"}
+Solve the following system of equations for
 \(\beta_{1}\) and \(\beta_{0}\) to find the MLEs for slope and
 intercept in the simple linear regression model.
 \begin{eqnarray*}
@@ -1596,12 +1611,18 @@ n\beta_{0}+\beta_{1}\sum_{i=1}^{n}x_{i} & = & \sum_{i=1}^{n}y_{i}\\
 \beta_{0}\sum_{i=1}^{n}x_{i}+\beta_{1}\sum_{i=1}^{n}x_{i}^{2} & = & \sum_{i=1}^{n}x_{i}y_{i}
 \end{eqnarray*}
 
+```
 
-**Exercise.**
-<<xca-show-alternate-slope-formula>> Show that the formula given in
-Equation \eqref{eq-sample-correlation-formula} is equivalent to \[
+\bigskip
+
+```{block, type="xca", label="xca-show-alternate-slope-formula"}
+Show that the formula given in
+Equation \eqref{eq-sample-correlation-formula} is equivalent to 
+\[
 \hat{\beta}_{1} =
 \frac{\sum_{i=1}^{n}x_{i}y_{i}-\left.\left(\sum_{i=1}^{n}x_{i}\right)\left(\sum_{i=1}^{n}y_{i}\right)\right/
 n}{\sum_{i=1}^{n}x_{i}^{2}-\left.\left(\sum_{i=1}^{n}x_{i}\right)^{2}\right/
 n}.  \]
+
+```
 

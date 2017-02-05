@@ -191,7 +191,6 @@ the result is shown in Figure \@ref(fig:3D-scatterplot-trees).
 ```{r, label="3D-scatterplot-trees",fig.cap='(ref:3D-scatterplot-trees)'}
 s3d <- with(trees, scatterplot3d(Girth, Height, Volume, pch = 16, 
                                  highlight.3d = TRUE, angle = 60))
-fit <- lm(Volume ~ Girth + Height, data = trees)
 ```
 
 (ref:cap-3D-scatterplot-trees) \small A 3D scatterplot with regression plane for the `trees` data.
@@ -251,18 +250,23 @@ get the maximum likelihood estimator of \(\upbeta\) which we denote by
 topic falls outside the scope of this book. The interested reader can
 consult an advanced text such as Rao [@Rao1999].
 
-**Remark.**
+\bigskip
+
+```{block, type="rem"}
 The formula in Equation \eqref{eq-b-formula-matrix} is convenient for
 mathematical study but is inconvenient for numerical
 computation. Researchers have devised much more efficient algorithms
 for the actual calculation of the parameter estimates, and we do not
 explore them here.
+```
 
+\bigskip
 
-**Remark.**
+```{block2, type="rem"}
 We have only found a critical value, and have not actually shown that
 the critical value is a minimum. We omit the details and refer the
 interested reader to [@Rao1999].
+```
 
 
 #### How to do it with R
@@ -271,6 +275,10 @@ We do all of the above just as we would in simple linear
 regression. The powerhouse is the `lm` \index{lm@\texttt{lm}}
 function. Everything else is based on it. We separate explanatory
 variables in the model formula by a plus sign.
+
+```{r,echo=FALSE}
+fit <- lm(Volume ~ Girth + Height, data = trees)
+```
 
 ```{r, echo=TRUE} 
 trees.lm <- lm(Volume ~ Girth + Height, data = trees)
@@ -905,12 +913,16 @@ The plot is shown in Figure \@ref(fig:fitting-the-quadratic). Pay
 attention to the scale on the \(x\)-axis: it is on the scale of the
 transformed `Girth` data and not on the original scale.
 
-**Remark.** When a model includes a quadratic term for an independent
+\bigskip
+
+```{block, type="rem"}
+When a model includes a quadratic term for an independent
 variable, it is customary to also include the linear term in the
 model. The principle is called *parsimony*. More generally, if the
 researcher decides to include \(x^{m}\) as a term in the model, then
 (s)he should also include all lower order terms \(x\), \(x^{2}\),
 ...,\(x^{m-1}\) in the model.
+```
 
 We do estimation/prediction the same way that we did in Section
 \@ref(sub-mlr-point-est-regsurface), except we do not need a `Height`
@@ -927,10 +939,13 @@ were previously. Notice that it was not necessary to rescale the
 `Girth` prediction data before input to the `predict` function; the
 model did the rescaling for us automatically.
 
-**Remark.**
+\bigskip
+
+```{block, type="rem"}
 We have mentioned on several occasions that it is important to rescale
 the explanatory variables for polynomial regression. Watch what
 happens if we ignore this advice:
+```
 
 ```{r, echo=TRUE} 
 summary(lm(Volume ~ Girth + I(Girth^2), data = trees))
@@ -1024,7 +1039,9 @@ From the output we see that all parameter estimates are statistically
 significant and we conclude that the mean response differs for trees
 with `Tall = yes` and trees with `Tall = no`.
 
-**Remark.**
+\bigskip
+
+```{block2, type="rem"}
 We were somewhat disingenuous when we defined the dummy variable
 `Tallyes` because, in truth, R defines `Tallyes`
 automatically without input from the user[^6]. Indeed, the
@@ -1035,7 +1052,7 @@ that R handles factors internally is part of a much
 larger topic concerning *contrasts*, which falls outside the scope of
 this book. The interested reader should see Neter et al
 [@Neter1996] or Fox [@Fox1997] for more.
-
+```
 
 [^6]: That is, R by default handles contrasts
 according to its internal settings which may be customized by the user
@@ -1044,7 +1061,9 @@ in this book it does not serve the discussion to delve into those
 settings, either. The interested reader should check `?contrasts` for
 details.
 
-**Remark.** 
+\bigskip
+
+```{block, type="rem"}
 In general, if an explanatory variable `foo` is qualitative with \(n\)
 levels `bar1`, `bar2`, ..., `barn` then R will by default
 automatically define \(n-1\) indicator variables in the following way:
@@ -1053,7 +1072,7 @@ The level `bar1` is represented by
 \(\mathtt{foobar2}=\cdots=\mathtt{foobarn}=0\). We just need to make
 sure that `foo` is stored as a factor and R will take
 care of the rest.
-
+```
 
 ### Graphing the Regression Lines
 

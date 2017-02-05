@@ -1720,14 +1720,14 @@ data(RcmdrTestDrive)
 attach(RcmdrTestDrive)
 names(RcmdrTestDrive)
 ```
+
 To load the data in the R Commander (`Rcmdr`), click the
 `Data Set` button, and select `RcmdrTestDrive` as the active data
 set. To learn more about the data set and where it comes from, type
 `?RcmdrTestDrive` at the command line.
 
-
-**Exercise.**
-<<xca-summary-RcmdrTestDrive>> Perform a summary of all variables in
+```{block, type="xca", label="xca-summary-RcmdrTestDrive"}
+Perform a summary of all variables in
 `RcmdrTestDrive`. You can do this with the command
 `summary(RcmdrTestDrive)`.
 
@@ -1735,9 +1735,11 @@ Alternatively, you can do this in the `Rcmdr` with the sequence
 `Statistics` \(\triangleright\) `Summaries` \(\triangleright\) `Active
 Data Set`. Report the values of the summary statistics for each
 variable.
+```
 
+\bigskip
 
-**Exercise.**
+```{block, type="xca"}
 Make a table of the `race` variable. Do this with `Statistics`
 \(\triangleright\) `Summaries` \(\triangleright\) `Frequency
 Distributions - IPSUR...`
@@ -1745,29 +1747,37 @@ Distributions - IPSUR...`
 1. Which ethnicity has the lowest frequency?
 1. Include a bar graph of `race`. Do this with `Graphs`
    \(\triangleright\) `IPSUR - Bar Graph...`
+   
+```
 
+\bigskip
 
-**Exercise.**
+```{block, type="xca"}
 Calculate the average `salary` by the factor `gender`. Do this with
 `Statistics` \(\triangleright\) `Summaries` \(\triangleright\) `Table
 of Statistics...`
+
 1. Which `gender` has the highest mean `salary`? 
 1. Report the highest mean `salary`.
 1. Compare the spreads for the genders by calculating the standard
    deviation of `salary` by `gender`. Which `gender` has the biggest
    standard deviation?
 1. Make boxplots of `salary` by `gender` with the following method:
-   #+BEGIN_quote
-   On the `Rcmdr`, click `Graphs` \(\triangleright\) `IPSUR - Boxplot...`
-   In the `Variable` box, select `salary`.
-   Click the `Plot by groups...` box and select `gender`. Click `OK`.
-   Click `OK` to graph the boxplot.
-   #+END_quote
-   How does the boxplot compare to your answers to (1) and (3)?
 
+       i) On the `Rcmdr`, click `Graphs` \(\triangleright\) `IPSUR - Boxplot...`
+       i) In the `Variable` box, select `salary`.
+       i) Click the `Plot by groups...` box and select `gender`. Click `OK`.
+       i) Click `OK` to graph the boxplot.
+   
+How does the boxplot compare to your answers to (1) and (3)?
 
-**Exercise.**
+```
+
+\bigskip
+
+```{block, type="xca"}
 For this problem we will study the variable `reduction`.
+
 1. Find the order statistics and store them in a vector `x`. *Hint:*
    `x <- sort(reduction)`
 1. Find \(x_{(137)}\), the 137\(^{\mathrm{th}}\) order statistic.
@@ -1785,10 +1795,14 @@ For this problem we will study the variable `reduction`.
 1. Using the rules discussed in the text, classify answers to (8), if
    any, as *potential* or *suspected* outliers.
 
+```
 
-**Exercise.**
+\bigskip
+
+```{block, type="xca"}
 In this problem we will compare the variables `before` and
 `after`. Don't forget `library("e1071")`.
+
 1. Examine the two measures of center for both variables. Judging from
    these measures, which variable has a higher center?
 1. Which measure of center is more appropriate for `before`? (You may
@@ -1805,16 +1819,21 @@ In this problem we will compare the variables `before` and
 1. Plot histograms of `before` and `after` and compare them to your
    answers to (4) and (5).
 
+```
 
-**Exercise.**
+\bigskip
+
+```{block, type="xca"}
 Describe the following data sets just as if you were communicating
 with an alien, but one who has had a statistics class. Mention the
 salient features (data type, important properties, anything
 special). Support your answers with the appropriate visual displays
 and descriptive statistics.
+
 1. Conversion rates of Euro currencies stored in `euro`.
 2. State abbreviations stored in `state.abb`.
 3. Areas of the world's landmasses stored in `islands`.
 4. Areas of the 50 United States stored in `state.area`.
 5. Region of the 50 United States stored in `state.region`.
 
+```

@@ -27,6 +27,7 @@
 library(diagram)
 library(prob)
 library(RcmdrPlugin.IPSUR)
+library(ggplot2)
 ```
  
 In this chapter we define the basic terminology associated with
@@ -86,8 +87,8 @@ textellipse(mid = c(0.29,0.25), box.col = grey(0.95),
 For a random experiment \(E\), the set of all possible outcomes of
 \(E\) is called the *sample space* \index{sample space} and is denoted
 by the letter \(S\). For a coin-toss experiment, \(S\) would be the
-results "Head" and "Tail", which we may represent by \( S = \{H,T
-\} \). Formally, the performance of a random experiment is the
+results "Head" and "Tail", which we may represent by \(S = \{H,T
+\}\). Formally, the performance of a random experiment is the
 unpredictable selection of an outcome in \(S\).
 
 ### How to do it with R
@@ -324,8 +325,8 @@ performance of a random experiment \(E\) we say that the event \(A\)
 *occurred* if the experiment's outcome belongs to \(A\). We say that a
 bunch of events \(A_{1}\), \(A_{2}\), \(A_{3}\), ... are *mutually exclusive* \index{mutually exclusive} or *disjoint* if \(A_{i}\cap
 A_{j}=\emptyset\) for any distinct pair \(A_{i}\neq A_{j}\). For
-instance, in the coin-toss experiment the events \( A = \{
-\mbox{Heads} \}\) and \( B = \{ \mbox{Tails} \} \) would be mutually
+instance, in the coin-toss experiment the events \(A = \{
+\mbox{Heads} \}\) and \(B = \{ \mbox{Tails} \}\) would be mutually
 exclusive. Now would be a good time to review the algebra of sets in
 Appendix \@ref(sec-the-algebra-of).
 
@@ -539,11 +540,11 @@ will do. But in any given physical circumstance there are typically
 all sorts of probability measures from which to choose, and it is left
 to the experimenter to make a reasonable choice -- one usually based
 on considerations of objectivity. For the tossing coin example, a
-valid probability measure assigns probability \(p\) to the event \( \{
-\mbox{Heads} \} \), where \(p\) is some number \(0\leq p\leq1\). An
+valid probability measure assigns probability \(p\) to the event \(\{
+\mbox{Heads} \}\), where \(p\) is some number \(0\leq p\leq1\). An
 experimenter that wishes to incorporate the symmetry of the coin would
-choose \(p=1/2\) to balance the likelihood of \( \{\mbox{Heads} \} \)
-and \( \{ \mbox{Tails} \} \).
+choose \(p=1/2\) to balance the likelihood of \(\{\mbox{Heads} \}\)
+and \(\{ \mbox{Tails} \}\).
 
 Once the probability measure is chosen (or determined), there is not
 much left to do. All assignments of probability are made by the
@@ -568,7 +569,7 @@ allow us to analyze intricate probabilistic problems with vigor.
 The large degree of flexibility is also a disadvantage, however. When
 symmetry fails it is not always obvious what an "objective" choice
 of probability measure should be; for instance, what probability
-should we assign to \( \{ \mbox{Heads} \} \) if we spin the coin
+should we assign to \(\{ \mbox{Heads} \}\) if we spin the coin
 rather than flip it? (It is not \(1/2\).) Furthermore, the
 mathematical rules are restrictive when we wish to incorporate
 subjective knowledge into the model, knowledge which changes over time
@@ -889,7 +890,7 @@ For any events \(A\) and \(B\),
 
 A model of particular interest is the *equally likely model*. The idea
 is to divide the sample space \(S\) into a finite collection of
-elementary events \( \{ a_{1},\ a_{2}, \ldots, a_{N} \} \) that are
+elementary events \(\{ a_{1},\ a_{2}, \ldots, a_{N} \}\) that are
 equally likely in the sense that each \(a_{i}\) has equal chances of
 occurring. The probability function associated with this model must
 satisfy \(\mathbb{P}(S)=1\), by Axiom 2. On the other hand, it must
@@ -900,8 +901,8 @@ a_{N})=\sum_{i=1}^{N}\mathbb{P}(a_{i}), \] by Axiom 3. Since
 equals \(1/N\).
 
 For an event \(A\subset S\), we write \(A\) as a collection of
-elementary outcomes: if \( A = \{ a_{i_{1}}, a_{i_{2}}, \ldots,
-a_{i_{k}} \} \) then \(A\) has \(k\) elements and
+elementary outcomes: if \(A = \{ a_{i_{1}}, a_{i_{2}}, \ldots,
+a_{i_{k}} \}\) then \(A\) has \(k\) elements and
 \begin{align*}
 \mathbb{P}(A) & =\mathbb{P}(a_{i_{1}})+\mathbb{P}(a_{i_{2}})+\cdots+\mathbb{P}(a_{i_{k}}),\\
  & =\frac{1}{N}+\frac{1}{N}+\cdots+\frac{1}{N},\\
@@ -954,8 +955,8 @@ equally likely. For the sake of argument, however, we will assume that
 the elementary outcomes each have probability \(1/8\).
 
 What is \(\mathbb{P}(\mbox{exactly 2 Boys})\)? Inspecting the sample
-space reveals three outcomes with exactly two boys: \( \{ BBG,\,
-BGB,\, GBB \} \).  Therefore \(\mathbb{P}(\mbox{exactly 2 Boys}) =
+space reveals three outcomes with exactly two boys: \(\{ BBG,\,
+BGB,\, GBB \}\).  Therefore \(\mathbb{P}(\mbox{exactly 2 Boys}) =
 3/8\).
 
 What is \(\mathbb{P}(\mbox{at most 2 Boys})\)? One way to solve the
@@ -971,8 +972,8 @@ Thus \[ \mathbb{P}(\mbox{at most 2 Boys}) = 1 - \mathbb{P}(BBB) = 1 -
 
 ```{example}
 Consider the experiment of rolling a six-sided die, and let the
-outcome be the face showing up when the die comes to rest. Then \( S =
-\{ 1,\,2,\,3,\,4,\,5,\,6 \} \). It is usually reasonable to suppose
+outcome be the face showing up when the die comes to rest. Then \(S =
+\{ 1,\,2,\,3,\,4,\,5,\,6 \}\). It is usually reasonable to suppose
 that the die is fair, so that the six outcomes are equally likely.
 ```
 
@@ -987,8 +988,8 @@ above King.
 
 Let the random experiment \(E\) consist of drawing exactly one card
 from a well-shuffled deck, and let the outcome be the face of the
-card. Define the events \( A = \{ \mbox{draw an Ace} \} \) and \( B =
-\{ \mbox{draw a Club} \} \). Bear in mind: we are only drawing one
+card. Define the events \(A = \{ \mbox{draw an Ace} \}\) and \(B =
+\{ \mbox{draw a Club} \}\). Bear in mind: we are only drawing one
 card.
 
 Immediately we have \(\mathbb{P}(A) = 4/52\) since there are four Aces
@@ -1015,8 +1016,8 @@ selection of a five card stud poker hand, where "five card stud"
 means that we draw exactly five cards from the deck without
 replacement, no more, and no less. It turns out that the sample space
 \(S\) is so large and complicated that we will be obliged to settle
-for the trivial description \( S = \{ \mbox{all possible 5 card hands}
-\} \) for the time being. We will have a more precise description
+for the trivial description \(S = \{ \mbox{all possible 5 card hands}
+\}\) for the time being. We will have a more precise description
 later.
 ```
 
@@ -1143,6 +1144,7 @@ subjects from a population that has \(n\) distinguishable members is
 * \(n^{k}\) if sampling is done with replacement,
 * \(n(n-1)(n-2)\cdots(n-k+1)\) if sampling is done without
   replacement.
+
 ```
 
 Recall from calculus the notation for *factorials*: 
@@ -1188,6 +1190,7 @@ members is
 
 * \((n-1+k)!/[(n-1)!k!]\) if sampling is done with replacement,
 * \(n!/[k!(n-k)!]\) if sampling is done without replacement.
+
 ```
 
 The quantity \(n!/[k!(n-k)!]\) is called a *binomial coefficient* and
@@ -1240,7 +1243,7 @@ above.
 |                   | `ordered = TRUE`    | `ordered = FALSE`           |
 |-------------------+---------------------+-----------------------------|
 | `replace = TRUE`  | \(n^{k}\)           | \((n-1+k)! / [(n-1)!k!]\)   |
-| `replace = FALSE` | \( n! / (n-k)! \)   | \( {n \choose k} \)         |
+| `replace = FALSE` | \(n! / (n-k)!\)   | \({n \choose k}\)         |
 
 Table: Sampling \(k\) from \(n\) objects with `urnsamples`.
 
@@ -1430,18 +1433,18 @@ the year, and even for more than two matches.
 ## Conditional Probability {#sec-conditional-probability}
 
 Consider a full deck of 52 standard playing cards. Now select two
-cards from the deck, in succession. Let \( A = \{ \mbox{first card
-drawn is an Ace} \} \) and \( B = \{ \mbox{second card drawn is an
-Ace} \} \). Since there are four Aces in the deck, it is natural to
-assign \( \mathbb{P}(A) = 4/52 \). Suppose we look at the first
+cards from the deck, in succession. Let \(A = \{ \mbox{first card
+drawn is an Ace} \}\) and \(B = \{ \mbox{second card drawn is an
+Ace} \}\). Since there are four Aces in the deck, it is natural to
+assign \(\mathbb{P}(A) = 4/52\). Suppose we look at the first
 card. What now is the probability of \(B\)? Of course, the answer
 depends on the value of the first card. If the first card is an Ace,
-then the probability that the second also is an Ace should be \( 3/51
-\), but if the first card is not an Ace, then the probability that the
-second is an Ace should be \( 4/51 \). As notation for these two
+then the probability that the second also is an Ace should be \(3/51\), but if the first card is not an Ace, then the probability that the
+second is an Ace should be \(4/51\). As notation for these two
 situations we write 
-\[ \mathbb{P}(B|A)=3/51,\quad
-\mathbb{P}(B|A^{c})=4/51.  
+\[ 
+\mathbb{P}(B\vert A)=3/51,\quad
+\mathbb{P}(B\vert A^{c})=4/51.  
 \]
 
 ```{definition}
@@ -1467,8 +1470,8 @@ Dooleans-Dade.
 
 
 Toss a coin twice. The sample space is given by \(S=\{ HH,\ HT,\ TH,\
-TT \} \). Let \(A= \{ \mbox{a head occurs} \} \) and \(B= \{ \mbox{a
-head and tail occur} \} \). It should be clear that
+TT \}\). Let \(A= \{ \mbox{a head occurs} \}\) and \(B= \{ \mbox{a
+head and tail occur} \}\). It should be clear that
 \(\mathbb{P}(A)=3/4\), \(\mathbb{P}(B)=2/4\), and \(\mathbb{P}(A\cap
 B)=2/4\). What now are the probabilities \(\mathbb{P}(A|B)\) and
 \(\mathbb{P}(B|A)\)?  
@@ -1492,10 +1495,10 @@ outcomes are equally likely with exactly two outcomes lying in the set
 ```{example, label="toss-a-six-sided-die-twice"}
 Toss a six-sided die twice. The
 sample space consists of all ordered pairs \((i,j)\) of the numbers
-\(1,2,\ldots,6\), that is, \( S = \{ (1,1),\ (1,2),\ldots,(6,6) \}
-\). We know from Section \@ref(sec-methods-of-counting) that \( \# (S) =
-6^{2} = 36 \). Let \( A = \{ \mbox{outcomes match} \} \) and \( B = \{
-\mbox{sum of outcomes at least 8} \} \). The sample space may be
+\(1,2,\ldots,6\), that is, \(S = \{ (1,1),\ (1,2),\ldots,(6,6) \}
+\). We know from Section \@ref(sec-methods-of-counting) that \(\# (S) =
+6^{2} = 36\). Let \(A = \{ \mbox{outcomes match} \}\) and \(B = \{
+\mbox{sum of outcomes at least 8} \}\). The sample space may be
 represented by a matrix:
 ```
 
@@ -1574,12 +1577,13 @@ fixed.
 ```{theorem}
 For any fixed event \(A\) with \(\mathbb{P}(A)>0\),
 
-1. \( \mathbb{P} (B|A)\geq 0 \), for all events \( B \subset S\),
-1. \( \mathbb{P} (S|A) = 1 \), and
+1. \(\mathbb{P} (B|A)\geq 0\), for all events \(B \subset S\),
+1. \(\mathbb{P} (S|A) = 1\), and
 1. If \(B_{1}\), \(B_{2}\), \(B_{3}\),... are disjoint events, then
   \begin{equation}
   \mathbb{P}\left(\left.\bigcup_{k=1}^{\infty}B_{k}\:\right|A\right)=\sum_{k=1}^{\infty}\mathbb{P}(B_{k}|A).
   \end{equation}
+
 ```
 
 In other words, \(\mathbb{P}(\cdot|A)\) is a legitimate probability
@@ -1588,9 +1592,9 @@ immediate:
 
 ```{proposition}
 For any events \(A\), \(B\), and \(C\) with \(\mathbb{P}(A)>0\),
-1. \( \mathbb{P} ( B^{c} | A ) = 1 - \mathbb{P} (B|A).\)
+1. \(\mathbb{P} ( B^{c} | A ) = 1 - \mathbb{P} (B|A).\)
 2. If \(B\subset C\) then \(\mathbb{P}(B|A)\leq\mathbb{P}(C|A)\).
-3. \( \mathbb{P} [ ( B\cup C ) | A ] = \mathbb{P} (B|A) +
+3. \(\mathbb{P} [ ( B\cup C ) | A ] = \mathbb{P} (B|A) +
    \mathbb{P}(C|A) - \mathbb{P} [ (B \cap C|A) ].\)
 4. **The Multiplication Rule.** For any two events \(A\) and \(B\),
    \begin{equation}
@@ -1603,6 +1607,7 @@ For any events \(A\), \(B\), and \(C\) with \(\mathbb{P}(A)>0\),
    \label{eq-multiplication-rule-long}
    \mathbb{P}(A_{1}\cap A_{2}\cap\cdots\cap A_{n})=\mathbb{P}(A_{1})\mathbb{P}(A_{2}|A_{1})\cdots\mathbb{P}(A_{n}|A_{1}\cap A_{2}\cap\cdots\cap A_{n-1}).
    \end{equation}
+
 ```
 
 The Multiplication Rule is very important because it allows us to find
@@ -1673,9 +1678,9 @@ the event's computer representation.
 ```{example, label="urn-7-red-3-green"}
 Consider an urn with 10 balls inside, 7 of
 which are red and 3 of which are green. Select 3 balls successively
-from the urn. Let \( A = \{ 1^{\mathrm{st}} \mbox{ ball is red} \} \),
-\( B = \{ 2^{\mathrm{nd}} \mbox{ ball is red} \} \), and \( C = \{
-3^{\mathrm{rd}} \mbox{ ball is red} \} \). Then \[
+from the urn. Let \(A = \{ 1^{\mathrm{st}} \mbox{ ball is red} \}\),
+\(B = \{ 2^{\mathrm{nd}} \mbox{ ball is red} \}\), and \(C = \{
+3^{\mathrm{rd}} \mbox{ ball is red} \}\). Then \[
 \mathbb{P}(\mbox{all 3 balls are red})=\mathbb{P}(A\cap B\cap
 C)=\frac{7}{10}\cdot\frac{6}{9}\cdot\frac{5}{8}\approx 0.2917.  \]
 ```
@@ -1702,7 +1707,7 @@ N <- probspace(M)
 ```
 
 Now let us think about how to set up the event \(\{ \mbox{all 3 balls
-are red}\} \). Rows of `N` that satisfy this condition have
+are red}\}\). Rows of `N` that satisfy this condition have
 \(\mathtt{X1=="red"\ \&\ X2=="red"\ \&\ X3=="red"}\), but there must
 be an easier way. Indeed, there is. The `isrep` function (short for
 "is repeated") in the `prob` package was written for this
@@ -1752,8 +1757,8 @@ from the second urn. What is the probability that the selected ball is
 red? 
 ```
 
-Let \( A = \{ \mbox{transferred ball is red} \} \) and \( B = \{
-\mbox{selected ball is red} \} \). Write
+Let \(A = \{ \mbox{transferred ball is red} \}\) and \(B = \{
+\mbox{selected ball is red} \}\). Write
 \begin{align*}
 B & =S\cap B\\
  & =(A\cup A^{c})\cap B\\
@@ -1789,8 +1794,8 @@ from the two-way table that \(\mathbb{P}(\mbox{Female})=70/168\) and
 subjects quits smoking, but we do not know the person's gender. If we
 now select one nonsmoker at random, what would be
 \(\mathbb{P}(\mbox{Female})\)? This example is just like the last
-example, but with different labels. Let \( A = \{ \mbox{the quitter is
-a female} \} \) and \( B = \{ \mbox{selected nonsmoker is a female} \}
+example, but with different labels. Let \(A = \{ \mbox{the quitter is
+a female} \}\) and \(B = \{ \mbox{selected nonsmoker is a female} \}
 \). Write
 
 \begin{align*}
@@ -1869,6 +1874,7 @@ If the events \(A\) and \(B\) are independent then
 * \(A\) and \(B^{c}\) are independent,
 * \(A^{c}\) and \(B\) are independent,
 * \(A^{c}\) and \(B^{c}\) are independent.
+
 ```
 
 ```{proof}
@@ -2265,7 +2271,7 @@ possible outcomes of \(E\), we call the set of all possible values of
 
 ```{example}
 Let \(E\) be the experiment of flipping a coin twice. We have seen
-that the sample space is \( S = \{ HH,\ HT,\ TH,\ TT \} \). Now define
+that the sample space is \(S = \{ HH,\ HT,\ TH,\ TT \}\). Now define
 the random variable \(X = \mbox{the number of heads}\). That is, for
 example, \(X(HH)=2\), while \(X(HT)=1\). We may make a table of the
 possibilities:
@@ -2280,7 +2286,7 @@ possibilities:
 Table:  Flipping a coin twice.
 
 Taking a look at the second row of the table, we see that the support
-of \(X\) -- the set of all numbers that \(X\) assumes -- would be \(S_{X}= \{ 0,1,2 \} \).
+of \(X\) -- the set of all numbers that \(X\) assumes -- would be \(S_{X}= \{ 0,1,2 \}\).
 
 
 
@@ -2288,16 +2294,16 @@ of \(X\) -- the set of all numbers that \(X\) assumes -- would be \(S_{X}= \{ 0,
 ```{example}
 Let \(E\) be the experiment of flipping a coin repeatedly until
 observing a Head. The sample space would be \(S= \{ H,\ TH,\ TTH,\
-TTTH,\ \ldots \} \). Now define the random variable \(Y=\mbox{the
+TTTH,\ \ldots \}\). Now define the random variable \(Y=\mbox{the
 number of Tails before the first head}\). Then the support of \(Y\)
-would be \( S_{Y}= \{ 0,1,2,\ldots \} \).
+would be \(S_{Y}= \{ 0,1,2,\ldots \}\).
 ```
 
 
 ```{example}
 Let \(E\) be the experiment of tossing a coin in the air, and define
-the random variable \( Z = \mbox{the time (in seconds) until the coin
-hits the ground} \). In this case, the sample space is inconvenient to
+the random variable \(Z = \mbox{the time (in seconds) until the coin
+hits the ground}\). In this case, the sample space is inconvenient to
 describe. Yet the support of \(Z\) would be \((0,\infty)\). Of course,
 it is reasonable to suppose that the coin will return to Earth in a
 short amount of time; in practice, the set \((0,\infty)\) is

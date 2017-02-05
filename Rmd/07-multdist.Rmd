@@ -245,7 +245,6 @@ we did in Example \@ref(ex:toss-two-dice-joint-pmf). See Table \@ref(tab-max-sum
 
 |       | 2                | 3                | 4                | 5                | 6                | 7                | 8                | 9                | 10               | 11               | 12               | Total            |
 |-------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------|
-|     / | <                |                  |                  |                  |                  |                  |                  |                  |                  |                  |                  | <                |
 |     1 | \(\frac{1}{36}\) |                  |                  |                  |                  |                  |                  |                  |                  |                  |                  | \(\frac{1}{36}\) |
 |     2 |                  | \(\frac{2}{36}\) | \(\frac{1}{36}\) |                  |                  |                  |                  |                  |                  |                  |                  | \(\frac{3}{36}\)  |
 |     3 |                  |                  | \(\frac{2}{36}\) | \(\frac{2}{36}\) | \(\frac{1}{36}\) |                  |                  |                  |                  |                  |                  | \(\frac{5}{36}\)  |
@@ -500,7 +499,7 @@ instance, we may compute the covariance of \((U,V)\) from Example
 Eu <- sum(S$U*S$probs)
 Ev <- sum(S$V*S$probs)
 Euv <- sum(S$U*S$V*S$probs)
-Euv - Eu # Ev
+Euv - Eu * Ev
 ```
 
 Compare this answer to what we got in Example \@ref(ex:max-sum-dice-covariance).
@@ -739,7 +738,7 @@ zero.
 ```
 
 For more details, see Casella and Berger
-[@Casella2002]. Proposition [[pro-indep-implies-prodexpect]] is
+[@Casella2002]. Proposition \@ref(pro:indep-implies-prodexpect) is
 useful to us and we will receive mileage out of it, but there is
 another fact which will play an even more important
 role. Unfortunately, the proof is beyond the techniques presented
@@ -1161,7 +1160,7 @@ It may not be obvious, but Equation \eqref{eq-biv-norm-hidden} is the PDF of a
 Theorem \@ref(thm:mvnorm-dist-matrix-prod).
 ```
 
-### How to do it with R {#sub-bivariate-transf-r}
+#### How to do it with R {#sub-bivariate-transf-r}
 
 It is possible to do the computations above in R with the
 `Ryacas` package. The package is an interface to the open-source

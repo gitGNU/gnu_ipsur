@@ -1007,7 +1007,7 @@ function (x, y)
     y <- as.vector(y)
     unique(y[match(as.vector(x), y, 0L)])
 }
-<bytecode: 0x459a8d8>
+<bytecode: 0x2b460b0>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1026,7 +1026,7 @@ instance, typing \texttt{rev} \index{rev@\texttt{rev}} says
 \begin{verbatim}
 function (x) 
 UseMethod("rev")
-<bytecode: 0x363fe40>
+<bytecode: 0x1e3ce40>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1059,7 +1059,7 @@ does. For example, the \texttt{default} method can be viewed with
 \begin{verbatim}
 function (x) 
 if (length(x)) x[length(x):1L] else x
-<bytecode: 0x42510b8>
+<bytecode: 0x27d8d08>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1078,7 +1078,7 @@ example, if we try to look at the code for \texttt{wilcox.test}
 \begin{verbatim}
 function (x, ...) 
 UseMethod("wilcox.test")
-<bytecode: 0x351ddf0>
+<bytecode: 0x1d1adf0>
 <environment: namespace:stats>
 \end{verbatim}
 
@@ -7140,6 +7140,2022 @@ to be mutually independent is \(2^{n} - n - 1\). (\emph{Hint}: think
 about Pascal's triangle.)
 \end{xca}
 
+\chapter{Multivariate
+Distributions}\label{cha-multivariable-distributions}
+
+We have built up quite a catalogue of distributions, discrete and
+continuous. They were all univariate, however, meaning that we only
+considered one random variable at a time. We can imagine nevertheless
+many random variables associated with a single person: their height,
+their weight, their wrist circumference (all continuous), or their
+eye/hair color, shoe size, whether they are right handed, left handed,
+or ambidextrous (all categorical), and we can even surmise reasonable
+probability distributions to associate with each of these variables.
+
+But there is a difference: for a single person, these variables are
+related. For instance, a person's height betrays a lot of information
+about that person's weight.
+
+The concept we are hinting at is the notion of \emph{dependence} between
+random variables. It is the focus of this chapter to study this concept
+in some detail. Along the way, we will pick up additional models to add
+to our catalogue. Moreover, we will study certain classes of dependence,
+and clarify the special case when there is no dependence, namely,
+independence.
+
+The interested reader who would like to learn more about any of the
+below mentioned multivariate distributions should take a look at
+\emph{Discrete Multivariate Distributions} by Johnson \emph{et al}
+\autocite{Johnson1997} or \emph{Continuous Multivariate Distributions}
+\autocite{Kotz2000} by Kotz \emph{et al}.
+
+\textbf{What do I want them to know?}
+
+\begin{itemize}
+\tightlist
+\item
+  the basic notion of dependence and how it is manifested with multiple
+  variables (two, in particular)
+\item
+  joint versus marginal distributions/expectation (discrete and
+  continuous)
+\item
+  some numeric measures of dependence
+\item
+  conditional distributions, in the context of independence and
+  exchangeability
+\item
+  some details of at least one multivariate model (discrete and
+  continuous)
+\item
+  what it looks like when there are more than two random variables
+  present
+\end{itemize}
+
+\section{Joint and Marginal Probability
+Distributions}\label{sec-joint-probability-distributions}
+
+Consider two discrete random variables \(X\) and \(Y\) with PMFs
+\(f_{X}\) and \(f_{Y}\) that are supported on the sample spaces
+\(S_{X}\) and \(S_{Y}\), respectively. Let \(S_{X,Y}\) denote the set of
+all possible observed \emph{pairs} \((x,y)\), called the \emph{joint
+support set} of \(X\) and \(Y\). Then the \emph{joint probability mass
+function} of \(X\) and \(Y\) is the function \(f_{X,Y}\) defined by
+
+\begin{equation}
+\label{eq-joint-pmf}
+f_{X,Y}(x,y)=\mathbb{P}(X=x,\, Y=y),\quad \mbox{for }(x,y)\in S_{X,Y}.
+\end{equation}
+
+Every joint PMF satisfies
+
+\begin{equation}
+f_{X,Y}(x,y)>0\mbox{ for all }(x,y)\in S_{X,Y},
+\end{equation}
+
+and
+
+\begin{equation}
+\sum_{(x,y)\in S_{X,Y}}f_{X,Y}(x,y)=1.
+\end{equation}
+
+It is customary to extend the function \(f_{X,Y}\) to be defined on all
+of \(\mathbb{R}^{2}\) by setting \(f_{X,Y}(x,y)=0\) for
+\((x,y)\not\in S_{X,Y}\).
+
+In the context of this chapter, the PMFs \(f_{X}\) and \(f_{Y}\) are
+called the \emph{marginal PMFs} of \(X\) and \(Y\), respectively. If we
+are given only the joint PMF then we may recover each of the marginal
+PMFs by using the Theorem of Total Probability (see Equation
+\eqref{eq-theorem-total-probability}): observe
+
+\begin{eqnarray}
+f_{X}(x) & = & \mathbb{P}(X=x),\\
+ & = & \sum_{y\in S_{Y}}\mathbb{P}(X=x,\, Y=y),\\
+ & = & \sum_{y\in S_{Y}}f_{X,Y}(x,y).
+\end{eqnarray}
+
+By interchanging the roles of \(X\) and \(Y\) it is clear that
+
+\begin{equation}
+\label{eq-marginal-pmf}
+f_{Y}(y)=\sum_{x\in S_{Y}}f_{X,Y}(x,y).
+\end{equation}
+
+Given the joint PMF we may recover the marginal PMFs, but the converse
+is not true. Even if we have \emph{both} marginal distributions they are
+not sufficient to determine the joint PMF; more information is
+needed\footnote{We can find solutions of the normal equations even when
+  \(\mathbf{X}^{\mathrm{T}}\mathbf{X}\) is not of full rank, but the
+  topic falls outside the scope of this book. The interested reader can
+  consult an advanced text such as Rao \autocite{Rao1999}.}.
+
+Associated with the joint PMF is the \emph{joint cumulative distribution
+function} \(F_{X,Y}\) defined by \[ F_{X,Y}(x,y)=\mathbb{P}(X\leq x,\,
+Y\leq y),\quad \mbox{for }(x,y)\in\mathbb{R}^{2}.  \] The bivariate
+joint CDF is not quite as tractable as the univariate CDFs, but in
+principle we could calculate it by adding up quantities of the form in
+Equation \eqref{eq-joint-pmf}. The joint CDF is typically not used in
+practice due to its inconvenient form; one can usually get by with the
+joint PMF alone.
+
+We now introduce some examples of bivariate discrete distributions. The
+first we have seen before, and the second is based on the first.
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:toss-two-dice-joint-pmf}{}{\label{ex:toss-two-dice-joint-pmf}}Roll
+a fair die twice. Let \(X\) be the face shown on the first roll, and let
+\(Y\) be the face shown on the second roll. We have already seen this
+example in Chapter \ref{cha-probability}, Example
+\ref{ex:toss-a-six-sided-die-twice}. For this example, it suffices to
+define \[ f_{X,Y}(x,y)=\frac{1}{36},\quad
+x=1,\ldots,6,\ y=1,\ldots,6.  \] The marginal PMFs are given by
+\(f_{X}(x)=1/6\), \(x=1,2,\ldots,6\), and \(f_{Y}(y)=1/6\),
+\(y=1,2,\ldots,6\), since \[
+f_{X}(x)=\sum_{y=1}^{6}\frac{1}{36}=\frac{1}{6},\quad x=1,\ldots,6, \]
+and the same computation with the letters switched works for \(Y\).
+\EndKnitrBlock{example}
+
+In the previous example, and in many other ones, the joint support can
+be written as a product set of the support of \(X\) ``times'' the
+support of \(Y\), that is, it may be represented as a cartesian product
+set, or rectangle, \(S_{X,Y}=S_{X}\times S_{Y}\), where
+\(S_{X} \times S_{Y}= \{ (x,y):\ x\in S_{X},\, y\in S_{Y} \}\). As we
+shall see presently in Section \ref{sec-independent-random-variables},
+this form is a necessary condition for \(X\) and \(Y\) to be
+\emph{independent} (or alternatively \emph{exchangeable} when
+\(S_{X}=S_{Y}\)). But please note that in general it is not required for
+\(S_{X,Y}\) to be of rectangle form. We next investigate just such an
+example.
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:max-sum-two-dice}{}{\label{ex:max-sum-two-dice}}Let
+the random experiment again be to roll a fair die twice, except now let
+us define the random variables \(U\) and \(V\) by
+
+\begin{eqnarray*}
+U & = & \mbox{the maximum of the two rolls, and }\\
+V & = & \mbox{the sum of the two rolls.}
+\end{eqnarray*}
+
+We see that the support of \(U\) is \(S_{U}= \{ 1,2,\ldots,6 \}\) and
+the support of \(V\) is \(S_{V}= \{ 2,3,\ldots,12 \}\). We may represent
+the sample space with a matrix, and for each entry in the matrix we may
+calculate the value that \(U\) assumes. The result is in the left half
+of Figure \ref{fig:max-and-sum-two-dice}.
+\EndKnitrBlock{example}
+
+We can use the table to calculate the marginal PMF of \(U\), because
+from Example \ref{ex:toss-a-six-sided-die-twice} we know that each entry
+in the matrix has probability \(1/36\) associated with it. For instance,
+there is only one outcome in the matrix with \(U=1\), namely, the bottom
+left corner. This single entry has probability \(1/36\), therefore, it
+must be that \(f_{U}(1)=\mathbb{P}(U=1)=1/36\). Similarly we see that
+there are three entries in the matrix with \(U=2\), thus
+\(f_{U}(2)=3/36\). Continuing in this fashion we will find the marginal
+distribution of \(U\) may be written
+
+\begin{equation}
+f_{U}(u)=\frac{2u-1}{36},\quad u=1,\,2,\ldots,6.
+\end{equation}
+
+We may do a similar thing for \(V\); see the right half of Figure
+\ref{fig:max-and-sum-two-dice}. Collecting all of the probability we
+will find that the marginal PMF of \(V\) is
+
+\begin{equation}
+f_{V}(v)=\frac{6-|v-7|}{36},\quad v=2,\,3,\ldots,12.
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{_main_files/figure-latex/max-and-sum-two-dice-1.pdf}
+\caption{\label{fig:max-and-sum-two-dice}\small Rolling two dice. The value of U
+is the maximum of the two rolls, while the value of V is the sum of the
+two rolls.}
+\end{figure}
+
+
+
+
+
+We may collapse the two matrices from Figure
+\ref{fig:max-and-sum-two-dice} into one, big matrix of pairs of values
+\((u,v)\). The result is shown in Table
+\ref{fig:max-sum-two-dice-joint}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{_main_files/figure-latex/max-sum-two-dice-joint-1.pdf}
+\caption{\label{fig:max-sum-two-dice-joint}(ref:cap-max-sum-two-dice)}
+\end{figure}
+
+
+
+
+Again, each of these pairs has probability \(1/36\) associated with it
+and we are looking at the joint PDF of \((U,V)\) albeit in an unusual
+form. Many of the pairs are repeated, but some of them are not:
+\((1,2)\) appears only once, but \((2,3)\) appears twice. We can make
+more sense out of this by writing a new table with \(U\) on one side and
+\(V\) along the top. We will accumulate the probability just like we did
+in Example \ref{ex:toss-two-dice-joint-pmf}. See Table
+\ref{tab-max-sum-joint-pmf}.
+
+(ref:tab-max-sum-joint-pm)
+
+\begin{longtable}[]{@{}lllllllllllll@{}}
+\caption{The joint PMF of \((U,V)\). The outcomes of \(U\) are along the
+left and the outcomes of \(V\) are along the top. Empty entries in the
+table have zero probability. The row totals (on the right) and column
+totals (on the bottom) correspond to the marginal distribution of \(U\)
+and \(V\), respectively.}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.02\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+3\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+4\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+6\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+7\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+8\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+9\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+10\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+11\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+12\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+Total\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.02\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+3\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+4\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+6\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+7\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+8\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+9\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+10\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+11\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+12\strut
+\end{minipage} & \begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+Total\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.02\columnwidth}\raggedright\strut
+1\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{1}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{1}{36}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.02\columnwidth}\raggedright\strut
+2\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{1}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{3}{36}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.02\columnwidth}\raggedright\strut
+3\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{1}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{5}{36}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.02\columnwidth}\raggedright\strut
+4\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{1}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{7}{36}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.02\columnwidth}\raggedright\strut
+5\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{1}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{9}{36}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.02\columnwidth}\raggedright\strut
+6\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{1}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{11}{36}\)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.02\columnwidth}\raggedright\strut
+-------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.02\columnwidth}\raggedright\strut
+Total\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{1}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{3}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{4}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{5}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{6}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{5}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{4}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{3}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{2}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\(\frac{1}{36}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+1\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+The joint support of \((U,V)\) is concentrated along the main diagonal;
+note that the nonzero entries do not form a rectangle. Also notice that
+if we form row and column totals we are doing exactly the same thing as
+Equation \eqref{eq-marginal-pmf}, so that the marginal distribution of
+\(U\) is the list of totals in the right ``margin'' of the Table
+\ref{tab-max-sum-joint-pmf}, and the marginal distribution of \(V\) is
+the list of totals in the bottom ``margin''.
+
+Continuing the reasoning for the discrete case, given two continuous
+random variables \(X\) and \(Y\) there similarly exists\footnote{We are
+  taking great leaps over the mathematical details. In particular, we
+  have yet to show that \(s^{2}\) has a chi-square distribution and we
+  have not even come close to showing that \(b_{i}\) and \(s_{b_{i}}\)
+  are independent. But these are entirely outside the scope of the
+  present book and the reader may rest assured that the proofs await in
+  later classes. See C.R. Rao for more.} a function \(f_{X,Y}(x,y)\)
+associated with \(X\) and \(Y\) called the \emph{joint probability
+density function} of \(X\) and \(Y\). Every joint PDF satisfies
+
+\begin{equation}
+f_{X,Y}(x,y)\geq0\mbox{ for all }(x,y)\in S_{X,Y},
+\end{equation}
+
+and
+
+\begin{equation}
+\iintop_{S_{X,Y}}f_{X,Y}(x,y)\,\mathrm{d} x\,\mathrm{d} y=1.
+\end{equation}
+
+In the continuous case there is not such a simple interpretation for the
+joint PDF; however, we do have one for the joint CDF, namely, \[
+F_{X,Y}(x,y)=\mathbb{P}(X\leq x,\, Y\leq
+y)=\int_{-\infty}^{x}\int_{-\infty}^{y}f_{X,Y}(u,v)\,\mathrm{d}
+v\,\mathrm{d} u, \] for \((x,y)\in\mathbb{R}^{2}\). If \(X\) and \(Y\)
+have the joint PDF \(f_{X,Y}\), then the marginal density of \(X\) may
+be recovered by
+
+\begin{equation}
+f_{X}(x)=\int_{S_{Y}}f_{X,Y}(x,y)\,\mathrm{d} y,\quad x \in S_{X}
+\end{equation}
+
+and the marginal PDF of \(Y\) may be found with
+
+\begin{equation}
+f_{Y}(y)=\int_{S_{X}}f_{X,Y}(x,y)\,\mathrm{d} x, \quad y \in S_{Y}.
+\end{equation}
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:joint-pdf}{}{\label{ex:joint-pdf}}Let the joint PDF
+of \((X,Y)\) be given by \[
+f_{X,Y}(x,y)=\frac{6}{5}\left(x+y^{2}\right),\quad 0 < x < 1,\ 0 < y
+< 1.  \] The marginal PDF of \(X\) is
+
+\begin{eqnarray*}
+f_{X}(x) & = & \int_{0}^{1}\frac{6}{5}\left(x+y^{2}\right)\,\mathrm{d} y,\\
+ & = & \left.\frac{6}{5}\left(xy+\frac{y^{3}}{3}\right)\right|_{y=0}^{1},\\
+ & = & \frac{6}{5}\left(x+\frac{1}{3}\right),
+\end{eqnarray*}
+
+for \(0 < x < 1\), and the marginal PDF of \(Y\) is
+
+\begin{eqnarray*}
+f_{Y}(y) & = & \int_{0}^{1}\frac{6}{5}\left(x+y^{2}\right)\,\mathrm{d} x,\\
+ & = & \left.\frac{6}{5}\left(\frac{x^{2}}{2}+xy^{2}\right)\right|_{x=0}^{1},\\
+ & = & \frac{6}{5}\left(\frac{1}{2}+y^{2}\right),
+\end{eqnarray*}
+
+for \(0 < y < 1\). In this example the joint support set was a rectangle
+\([0,1]\times[0,1]\), but it turns out that \(X\) and \(Y\) are not
+independent. See Section \ref{sec-independent-random-variables}.
+\EndKnitrBlock{example}
+
+\subsection{How to do it with R}\label{how-to-do-it-with-r-20}
+
+We will show how to do Example \ref{ex:max-sum-two-dice} using R; it is
+much simpler to do it with R than without. First we set up the sample
+space with the \texttt{rolldie} function. Next, we add random variables
+\(U\) and \(V\) with the \texttt{addrv} function. We take a look at the
+very top of the data frame (probability space) to make sure that
+everything is operating according to plan.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{S <-}\StringTok{ }\KeywordTok{rolldie}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DataTypeTok{makespace =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{S <-}\StringTok{ }\KeywordTok{addrv}\NormalTok{(S, }\DataTypeTok{FUN =} \NormalTok{max, }\DataTypeTok{invars =} \KeywordTok{c}\NormalTok{(}\StringTok{"X1"}\NormalTok{,}\StringTok{"X2"}\NormalTok{), }\DataTypeTok{name =} \StringTok{"U"}\NormalTok{)}
+\NormalTok{S <-}\StringTok{ }\KeywordTok{addrv}\NormalTok{(S, }\DataTypeTok{FUN =} \NormalTok{sum, }\DataTypeTok{invars =} \KeywordTok{c}\NormalTok{(}\StringTok{"X1"}\NormalTok{,}\StringTok{"X2"}\NormalTok{), }\DataTypeTok{name =} \StringTok{"V"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(S)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  X1 X2 U V      probs
+1  1  1 1 2 0.02777778
+2  2  1 2 3 0.02777778
+3  3  1 3 4 0.02777778
+4  4  1 4 5 0.02777778
+5  5  1 5 6 0.02777778
+6  6  1 6 7 0.02777778
+\end{verbatim}
+
+Yes, the \(U\) and \(V\) columns have been added to the data frame and
+have been computed correctly. This result would be fine as it is, but
+the data frame has too many rows: there are repeated pairs \((u,v)\)
+which show up as repeated rows in the data frame. The goal is to
+aggregate the rows of \(S\) such that the result has exactly one row for
+each unique pair \((u,v)\) with positive probability. This sort of thing
+is exactly the task for which the \texttt{marginal} function was
+designed. We may take a look at the joint distribution of \(U\) and
+\(V\) (we only show the first few rows of the data frame, but the
+complete one has 11 rows).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{UV <-}\StringTok{ }\KeywordTok{marginal}\NormalTok{(S, }\DataTypeTok{vars =} \KeywordTok{c}\NormalTok{(}\StringTok{"U"}\NormalTok{, }\StringTok{"V"}\NormalTok{))}
+\KeywordTok{head}\NormalTok{(UV)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  U V      probs
+1 1 2 0.02777778
+2 2 3 0.05555556
+3 2 4 0.02777778
+4 3 4 0.05555556
+5 3 5 0.05555556
+6 4 5 0.05555556
+\end{verbatim}
+
+The data frame is difficult to understand. It would be better to have a
+tabular display like Table \ref{tab-max-sum-joint-pmf}. We can do that
+with the \texttt{xtabs} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{xtabs}\NormalTok{(}\KeywordTok{round}\NormalTok{(probs,}\DecValTok{3}\NormalTok{) ~}\StringTok{ }\NormalTok{U +}\StringTok{ }\NormalTok{V, }\DataTypeTok{data =} \NormalTok{UV)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   V
+U       2     3     4     5     6     7     8     9    10
+  1 0.028 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+  2 0.000 0.056 0.028 0.000 0.000 0.000 0.000 0.000 0.000
+  3 0.000 0.000 0.056 0.056 0.028 0.000 0.000 0.000 0.000
+  4 0.000 0.000 0.000 0.056 0.056 0.056 0.028 0.000 0.000
+  5 0.000 0.000 0.000 0.000 0.056 0.056 0.056 0.056 0.028
+  6 0.000 0.000 0.000 0.000 0.000 0.056 0.056 0.056 0.056
+   V
+U      11    12
+  1 0.000 0.000
+  2 0.000 0.000
+  3 0.000 0.000
+  4 0.000 0.000
+  5 0.000 0.000
+  6 0.056 0.028
+\end{verbatim}
+
+Compare these values to the ones shown in Table
+\ref{tab-max-sum-joint-pmf}. We can repeat the process with
+\texttt{marginal} to get the univariate marginal distributions of \(U\)
+and \(V\) separately.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{marginal}\NormalTok{(UV, }\DataTypeTok{vars =} \StringTok{"U"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  U      probs
+1 1 0.02777778
+2 2 0.08333333
+3 3 0.13888889
+4 4 0.19444444
+5 5 0.25000000
+6 6 0.30555556
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(}\KeywordTok{marginal}\NormalTok{(UV, }\DataTypeTok{vars =} \StringTok{"V"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  V      probs
+1 2 0.02777778
+2 3 0.05555556
+3 4 0.08333333
+4 5 0.11111111
+5 6 0.13888889
+6 7 0.16666667
+\end{verbatim}
+
+Another way to do the same thing is with the \texttt{rowSums} and
+\texttt{colSums} of the \texttt{xtabs} object. Compare
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{temp <-}\StringTok{ }\KeywordTok{xtabs}\NormalTok{(probs ~}\StringTok{ }\NormalTok{U +}\StringTok{ }\NormalTok{V, }\DataTypeTok{data =} \NormalTok{UV)}
+\KeywordTok{rowSums}\NormalTok{(temp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+         1          2          3          4          5 
+0.02777778 0.08333333 0.13888889 0.19444444 0.25000000 
+         6 
+0.30555556 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colSums}\NormalTok{(temp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+         2          3          4          5          6 
+0.02777778 0.05555556 0.08333333 0.11111111 0.13888889 
+         7          8          9         10         11 
+0.16666667 0.13888889 0.11111111 0.08333333 0.05555556 
+        12 
+0.02777778 
+\end{verbatim}
+
+You should check that the answers that we have obtained exactly match
+the same (somewhat laborious) calculations that we completed in Example
+\ref{ex:max-sum-two-dice}.
+
+\section{Joint and Marginal
+Expectation}\label{sec-joint-and-marginal-expectation}
+
+Given a function \(g\) with arguments \((x,y)\) we would like to know
+the long-run average behavior of \(g(X,Y)\) and how to mathematically
+calculate it. Expectation in this context is computed in the pedestrian
+way. We simply integrate (sum) with respect to the joint probability
+density (mass) function.
+
+\begin{equation}
+\mathbb{E}\, g(X,Y)=\iintop_{S_{X,Y}}g(x,y)\, f_{X,Y}(x,y)\,\mathrm{d} x\,\mathrm{d} y,
+\end{equation}
+
+or in the discrete case,
+
+\begin{equation}
+\mathbb{E}\, g(X,Y)=\mathop{\sum\sum}\limits _{(x,y)\in S_{X,Y}}g(x,y)\, f_{X,Y}(x,y).
+\end{equation}
+
+\subsection{Covariance and
+Correlation}\label{covariance-and-correlation}
+
+There are two very special cases of joint expectation: the
+\emph{covariance} and the \emph{correlation}. These are measures which
+help us quantify the dependence between \(X\) and \(Y\).
+
+\bigskip
+
+\BeginKnitrBlock{definition}
+\protect\hypertarget{def:unnamed-chunk-201}{}{\label{def:unnamed-chunk-201}}The
+\emph{covariance} of \(X\) and \(Y\) is
+
+\begin{equation}
+\mbox{Cov}(X,Y)=\mathbb{E}(X-\mathbb{E} X)(Y-\mathbb{E} Y).
+\end{equation}
+\EndKnitrBlock{definition}
+
+By the way, there is a shortcut formula for covariance which is almost
+as handy as the shortcut for the variance:
+
+\begin{equation}
+\mbox{Cov}(X,Y)=\mathbb{E}(XY)-(\mathbb{E} X)(\mathbb{E} Y).
+\end{equation}
+
+The proof is left to Exercise \ref{xca-prove-cov-shortcut}.
+
+The Pearson product moment correlation between \(X\) and \(Y\) is the
+covariance between \(X\) and \(Y\) rescaled to fall in the interval
+\([-1,1]\). It is formally defined by
+
+\begin{equation}
+\mbox{Corr}(X,Y)=\frac{\mbox{Cov}(X,Y)}{\sigma_{X}\sigma_{Y}}.
+\end{equation}
+
+The correlation is usually denoted by \(\rho_{X,Y}\) or simply \(\rho\)
+if the random variables are clear from context. There are some important
+facts about the correlation coefficient: 1. The range of correlation is
+\(-1\leq\rho_{X,Y}\leq1\). 1. Equality holds above (\(\rho_{X,Y}=\pm1\))
+if and only if \(Y\) is a linear function of \(X\) with probability one.
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:max-sum-dice-covariance}{}{\label{ex:max-sum-dice-covariance}}We
+will compute the covariance for the discrete distribution in Example
+\ref{ex:max-sum-two-dice}. The expected value of \(U\) is
+\[ \mathbb{E} U=\sum_{u=1}^{6}u\,
+f_{U}(u)=\sum_{u=1}^{6}u\,\frac{2u-1}{36}=1\left(\frac{1}{36}\right)+2\left(\frac{3}{36}\right)+\cdots+6\left(\frac{11}{36}\right)=\frac{161}{36},
+\] and the expected value of \(V\) is \[ \mathbb{E}
+V=\sum_{v=2}^{12}v\,\frac{6-|7-v|}{36}=2\left(\frac{1}{36}\right)+3\left(\frac{2}{36}\right)+\cdots+12\left(\frac{1}{36}\right)=7,
+\] and the expected value of \(UV\) is \[ \mathbb{E}
+UV=\sum_{u=1}^{6}\sum_{v=2}^{12}uv\,
+f_{U,V}(u,v)=1\cdot2\left(\frac{1}{36}\right)+2\cdot3\left(\frac{2}{36}\right)+\cdots+6\cdot12\left(\frac{1}{36}\right)=\frac{308}{9}.
+\] Therefore the covariance of \((U,V)\) is \[
+\mbox{Cov}(U,V)=\mathbb{E} UV-\left(\mathbb{E}
+U\right)\left(\mathbb{E}
+V\right)=\frac{308}{9}-\frac{161}{36}\cdot7=\frac{35}{12}.
+\] All we need now are the standard deviations of \(U\) and \(V\) to
+calculate the correlation coefficient (omitted).
+\EndKnitrBlock{example}
+
+We will do a continuous example so that you can see how it works.
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:unnamed-chunk-202}{}{\label{ex:unnamed-chunk-202}}Let
+us find the covariance of the variables \((X,Y)\) from Example
+\ref{ex:joint-pdf}. The expected value of \(X\) is \[ \mathbb{E}
+X=\int_{0}^{1}x\cdot\frac{6}{5}\left(x+\frac{1}{3}\right)\mathrm{d}
+x=\left.\frac{2}{5}x^{3}+\frac{1}{5}x^{2}\right|_{x=0}^{1}=\frac{3}{5},
+\] and the expected value of \(Y\) is \[ \mathbb{E}
+Y=\int_{0}^{1}y\cdot\frac{6}{5}\left(\frac{1}{2}+y^{2}\right)\mathrm{d}
+x=\left.\frac{3}{10}y^{2}+\frac{3}{20}y^{4}\right|_{y=0}^{1}=\frac{9}{20}.
+\] Finally, the expected value of \(XY\) is
+
+\begin{eqnarray*}
+\mathbb{E} XY & = & \int_{0}^{1}\int_{0}^{1}xy\,\frac{6}{5}\left(x+y^{2}\right)\mathrm{d} x\,\mathrm{d} y,\\
+ & = & \int_{0}^{1}\left.\left(\frac{2}{5}x^{3}y+\frac{3}{5}x^{2}y^{3}\right)\right|_{x=0}^{1}\mathrm{d} y,\\
+ & = & \int_{0}^{1}\left(\frac{2}{5}y+\frac{3}{5}y^{3}\right)\mathrm{d} y,\\
+ & = & \frac{1}{5}+\frac{3}{20},
+\end{eqnarray*}
+
+which is 7/20. Therefore the covariance of \((X,Y)\) is \[
+\mbox{Cov}(X,Y)=\frac{7}{20}-\left(\frac{3}{5}\right)\left(\frac{9}{20}\right)=\frac{2}{25}.
+\]
+\EndKnitrBlock{example}
+
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-21}
+
+There are not any specific functions in the \texttt{prob} package
+\autocite{prob} designed for multivariate expectation. This is not a
+problem, though, because it is easy enough to do expectation the long
+way -- with column operations. We just need to keep the definition in
+mind. For instance, we may compute the covariance of \((U,V)\) from
+Example \ref{ex:max-sum-dice-covariance}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Eu <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(S$U*S$probs)}
+\NormalTok{Ev <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(S$V*S$probs)}
+\NormalTok{Euv <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(S$U*S$V*S$probs)}
+\NormalTok{Euv -}\StringTok{ }\NormalTok{Eu *}\StringTok{ }\NormalTok{Ev}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2.916667
+\end{verbatim}
+
+Compare this answer to what we got in Example
+\ref{ex:max-sum-dice-covariance}.
+
+To do the continuous case we could use the computer algebra utilities of
+\texttt{Yacas} and the associated R package \texttt{Ryacas}
+\autocite{Ryacas}. See Section \ref{sub-bivariate-transf-r} for another
+example where the \texttt{Ryacas} package appears.
+
+\section{Conditional Distributions}\label{sec-conditional-distributions}
+
+If \(x\in S_{X}\) is such that \(f_{X}(x)>0\), then we define the
+\emph{conditional density} of \(Y|\, X=x\), denoted \(f_{Y|x}\), by
+
+\begin{equation}
+f_{Y|x}(y|x)=\frac{f_{X,Y}(x,y)}{f_{X}(x)},\quad y\in S_{Y}.
+\end{equation}
+
+We define \(f_{X|y}\) in a similar fashion.
+
+BLANK
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:unnamed-chunk-204}{}{\label{ex:unnamed-chunk-204}}Let
+the joint PMF of \(X\) and \(Y\) be given by \[
+f_{X,Y}(x,y) =
+\]
+\EndKnitrBlock{example}
+
+\subsection{Bayesian Connection}\label{bayesian-connection}
+
+Conditional distributions play a fundamental role in Bayesian
+probability and statistics. There is a parameter \(\theta\) which is of
+primary interest, and about which we would like to learn. But rather
+than observing \(\theta\) directly, we instead observe a random variable
+\(X\) whose probability distribution depends on \(\theta\). Using the
+information we provided by \(X,\) we would like to update the
+information that we have about \(\theta\).
+
+Our initial beliefs about \(\theta\) are represented by a probability
+distribution, called the \emph{prior distribution}, denoted by \(\pi\).
+The PDF \(f_{X|\theta}\) is called the \emph{likelihood function}, also
+called the \emph{likelihood of} \(X\) \emph{conditional on} \(\theta\).
+Given an observation \(X=x\), we would like to update our beliefs
+\(\pi\) to a new distribution, called the \emph{posterior distribution
+of} \(\theta\) \emph{given the observation} \(X=x\), denoted
+\(\pi_{\theta|x}\). It may seem a mystery how to obtain
+\(\pi_{\theta|x}\) based only on the information provided by \(\pi\) and
+\(f_{X|\theta}\), but it should not be. We have already studied this in
+Section \ref{sec-bayes-rule} where it was called Bayes' Rule:
+
+\begin{equation} 
+\pi(\theta|x)=\frac{\pi(\theta)\, f(x|\theta)}{\int\pi(u)\, f(x|u)\mathrm{d} u}.
+\end{equation}
+
+Compare the above expression to Equation \eqref{eq-bayes-rule}.
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:unnamed-chunk-205}{}{\label{ex:unnamed-chunk-205}}Suppose
+the parameter \(\theta\) is the \(\mathbb{P}(\mbox{Heads})\) for a
+biased coin. It could be any value from 0 to 1. Perhaps we have some
+prior information about this coin, for example, maybe we have seen this
+coin before and we have reason to believe that it shows Heads less than
+half of the time. Suppose that we represent our beliefs about \(\theta\)
+with a \(\mathsf{beta}(\mathtt{shape1}=1,\,\mathtt{shape2}=3)\) prior
+distribution, that is, we assume \[
+\theta\sim\pi(\theta)=3(1-\theta)^{2},\quad 0 < \theta < 1.  \] To learn
+more about \(\theta\), we will do what is natural: flip the coin. We
+will observe a random variable \(X\) which takes the value \(1\) if the
+coin shows Heads, and 0 if the coin shows Tails. Under these
+circumstances, \(X\) will have a Bernoulli distribution, and in
+particular,
+\(X|\theta\sim\mathsf{binom}(\mathtt{size}=1,\,\mathtt{prob}=\theta)\):
+\[ f_{X|\theta}(x|\theta)=\theta^{x}(1-\theta)^{1-x},\quad x=0,1.  \]
+Based on the observation \(X=x\), we will update the prior distribution
+to the posterior distribution, and we will do so with Bayes' Rule: it
+says
+
+\begin{eqnarray*}
+\pi(\theta|x) & \propto & f(x|\theta) \, \pi(\theta),\\
+ & = & \theta^{x}(1-\theta)^{1-x}\cdot3(1-\theta)^{2},\\
+ & = & 3\,\theta^{x}(1-\theta)^{3-x},\quad 0 < \theta < 1,
+\end{eqnarray*}
+
+where the constant of proportionality is given by \[ \int3\,
+u^{x}(1-u)^{3-x}\mathrm{d} u=\int3\,
+u^{(1+x)-1}(1-u)^{(4-x)-1}\mathrm{d}
+u=3\,\frac{\Gamma(1+x)\Gamma(4-x)}{\Gamma[(1+x)+(4-x)]}, \] the integral
+being calculated by inspection of the formula for a
+\(\mathsf{beta}(\mathtt{shape1}=1+x,\,\mathtt{shape2}=4-x)\)
+distribution. That is to say, our posterior distribution is precisely \[
+\theta|x\sim\mathsf{beta}(\mathtt{shape1}=1+x,\,\mathtt{shape2}=4-x).
+\] The Bayesian statistician uses the posterior distribution for all
+matters concerning inference about \(\theta\).
+\EndKnitrBlock{example}
+
+\bigskip
+
+\begin{remark}
+We usually do not restrict ourselves to the observation of only one
+\(X\) conditional on \(\theta\). In fact, it is common to observe an
+entire sample \(X_{1}\), \(X_{2}\),\ldots{},\(X_{n}\) conditional on
+\(\theta\) (which itself is often multidimensional). Do not be
+frightened, however, because the intuition is the same. There is a prior
+distribution \(\pi(\theta)\), a likelihood
+\(f(x_{1},x_{2},\ldots,x_{n}|\theta)\), and a posterior distribution
+\(\pi(\theta|x_{1},x_{2},\ldots,x_{n})\). Bayes' Rule states that the
+relationship between the three is \[
+\pi(\theta|x_{1},x_{2},\ldots,x_{n})\propto\pi(\theta)\,
+f(x_{1},x_{2},\ldots,x_{n}|\theta), \] where the constant of
+proportionality is
+\(\int\pi(u)\, f(x_{1},x_{2},\ldots,x_{n}|u)\,\mathrm{d} u\).
+\end{remark}
+
+Any good textbook on Bayesian Statistics will explain these notions in
+detail; to the interested reader I recommend Gelman
+\autocite{Gelman2004} or Lee \autocite{Lee1997}.
+
+\section{Independent Random
+Variables}\label{sec-independent-random-variables}
+
+\subsection{Independent Random
+Variables}\label{sub-independent-random-variables}
+
+We recall from Chapter \ref{cha-probability} that the events \(A\) and
+\(B\) are said to be independent when
+
+\begin{equation}
+\mathbb{P}(A\cap B)=\mathbb{P}(A)\mathbb{P}(B).
+\end{equation}
+
+If it happens that
+
+\begin{equation}
+\mathbb{P}(X=x,Y=y)=\mathbb{P}(X=x)\mathbb{P}(Y=y),\quad \mbox{for every }x\in S_{X},\ y\in S_{Y},
+\end{equation}
+
+then we say that \(X\) and \(Y\) are \emph{independent random
+variables}. Otherwise, we say that \(X\) and \(Y\) are \emph{dependent}.
+Using the PMF notation from above, we see that independent discrete
+random variables satisfy
+
+\begin{equation}
+f_{X,Y}(x,y)=f_{X}(x)f_{Y}(y)\quad \mbox{for every }x\in S_{X},\ y\in S_{Y}.
+\end{equation}
+
+Continuing the reasoning, given two continuous random variables \(X\)
+and \(Y\) with joint PDF \(f_{X,Y}\) and respective marginal PDFs
+\(f_{X}\) and \(f_{Y}\) that are supported on the sets \(S_{X}\) and
+\(S_{Y}\), if it happens that
+
+\begin{equation}
+f_{X,Y}(x,y)=f_{X}(x)f_{Y}(y)\quad \mbox{for every }x\in S_{X},\ y\in S_{Y},
+\end{equation}
+
+then we say that \(X\) and \(Y\) are independent.
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:unnamed-chunk-207}{}{\label{ex:unnamed-chunk-207}}In
+Example \ref{ex:toss-two-dice-joint-pmf} we considered the random
+experiment of rolling a fair die twice. There we found the joint PMF to
+be \[
+f_{X,Y}(x,y)=\frac{1}{36},\quad x=1,\ldots,6,\ y=1,\ldots,6,
+\] and we found the marginal PMFs \(f_{X}(x)=1/6\), \(x=1,2,\ldots,6\),
+and \(f_{Y}(y)=1/6\), \(y=1,2,\ldots,6\). Therefore in this experiment
+\(X\) and \(Y\) are independent since for every \(x\) and \(y\) in the
+joint support the joint PMF satisfies \[
+f_{X,Y}(x,y)=\frac{1}{36}=\left(\frac{1}{6}\right)\left(\frac{1}{6}\right)=f_{X}(x)\,
+f_{Y}(y). 
+\]
+\EndKnitrBlock{example}
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:unnamed-chunk-208}{}{\label{ex:unnamed-chunk-208}}In
+Example \ref{ex:max-sum-two-dice} we considered the same experiment but
+different random variables \(U\) and \(V\). We can prove that \(U\) and
+\(V\) are not independent if we can find a single pair \((u,v)\) where
+the independence equality does not hold. There are many such pairs. One
+of them is \((6,12)\): \[
+f_{U,V}(6,12)=\frac{1}{36}\neq\left(\frac{11}{36}\right)\left(\frac{1}{36}\right)=f_{U}(6)\,
+f_{V}(12).  
+\]
+\EndKnitrBlock{example}
+
+Independent random variables are very useful to the mathematician. They
+have many, many, tractable properties. We mention some of the more
+important ones.
+
+\bigskip
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:indep-implies-prodexpect}{}{\label{prp:indep-implies-prodexpect}}If
+\(X\) and \(Y\) are independent, then for any functions \(u\) and \(v\),
+
+\begin{equation}
+\mathbb{E}\left(u(X)v(Y)\right)=\left(\mathbb{E} u(X)\right)\left(\mathbb{E} v(Y)\right).
+\end{equation}
+\EndKnitrBlock{proposition}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi This is straightforward from the definition.
+
+\begin{eqnarray*}
+\mathbb{E}\left(u(X)v(Y)\right) & = & \iint\, u(x)v(y)\, f_{X,Y}(x,y)\,\mathrm{d} x\mathrm{d} y\\
+ & = & \iint\, u(x)v(y)\, f_{X}(x)\, f_{Y}(y)\,\mathrm{d} x\mathrm{d} y\\
+ & = & \int u(x)\, f_{X}(x)\,\mathrm{d} x\ \int v(y)\, f_{Y}(y)\,\mathrm{d} y
+\end{eqnarray*}
+
+and this last quantity is exactly
+\(\left(\mathbb{E} u(X)\right)\left(\mathbb{E} v(Y)\right)\).
+\EndKnitrBlock{proof}
+
+Now that we have Proposition \ref{pro:indep-implies-prodexpect} we
+mention a corollary that will help us later to quickly identify those
+random variables which are \emph{not} independent.
+
+\bigskip
+
+\BeginKnitrBlock{corollary}
+\protect\hypertarget{cor:cor-indep-implies-uncorr}{}{\label{cor:cor-indep-implies-uncorr}}If
+\(X\) and \(Y\) are independent, then \(\mbox{Cov}(X,Y)=0\), and
+consequently, \(\mbox{Corr}(X,Y)=0\).
+\EndKnitrBlock{corollary}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi When \(X\) and \(Y\) are independent then
+\(\mathbb{E} XY=\mathbb{E} X\,\mathbb{E} Y\). And when the covariance is
+zero the numerator of the correlation is 0.
+\EndKnitrBlock{proof}
+
+\bigskip
+
+\begin{remark}
+Unfortunately, the converse of Corollary \ref{cor:indep-implies-uncorr}
+is not true. That is, there are many random variables which are
+dependent yet their covariance and correlation is zero.
+\end{remark}
+
+For more details, see Casella and Berger \autocite{Casella2002}.
+Proposition \ref{pro:indep-implies-prodexpect} is useful to us and we
+will receive mileage out of it, but there is another fact which will
+play an even more important role. Unfortunately, the proof is beyond the
+techniques presented here. The inquisitive reader should consult Casella
+and Berger \autocite{Casella2002}, Resnick \autocite{Resnick1999},
+\emph{etc}.
+
+\bigskip
+
+\begin{fact}
+If \(X\) and \(Y\) are independent, then \(u(X)\) and \(v(Y)\) are
+independent for any functions \(u\) and \(v\).
+\end{fact}
+
+\subsection{Combining Independent Random
+Variables}\label{sub-combining-independent-random}
+
+Another important corollary of Proposition
+\ref{pro:indep-implies-prodexpect} will allow us to find the
+distribution of sums of random variables.
+
+\bigskip
+
+\BeginKnitrBlock{corollary}
+\protect\hypertarget{cor:unnamed-chunk-211}{}{\label{cor:unnamed-chunk-211}}If
+\(X\) and \(Y\) are independent, then the moment generating function of
+\(X+Y\) is
+
+\begin{equation}
+M_{X+Y}(t)=M_{X}(t)\cdot M_{Y}(t).
+\end{equation}
+\EndKnitrBlock{corollary}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi Choose \(u(x)=\mathrm{e}^{x}\) and
+\(v(y)=\mathrm{e}^{y}\) in Proposition
+\ref{pro:indep-implies-prodexpect}, and remember the identity
+\(\mathrm{e}^{t(x+y)}=\mathrm{e}^{tx}\,\mathrm{e}^{ty}\).
+\EndKnitrBlock{proof}
+
+Let us take a look at some examples of the corollary in action.
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:unnamed-chunk-213}{}{\label{ex:unnamed-chunk-213}}Let
+\(X\sim\mathsf{binom}(\mathtt{size}=n_{1},\,\mathtt{prob}=p)\) and
+\(Y\sim\mathsf{binom}(\mathtt{size}=n_{2},\,\mathtt{prob}=p)\) be
+independent. Then \(X+Y\) has MGF \[ M_{X+Y}(t)=M_{X}(t)\,
+M_{Y}(t)=\left(q+p\mathrm{e}^{t}\right)^{n_{1}}\left(q+p\mathrm{e}^{t}\right)^{n_{2}}=\left(q+p\mathrm{e}^{t}\right)^{n_{1}+n_{2}},
+\] which is the MGF of a
+\(\mathsf{binom}(\mathtt{size}=n_{1}+n_{2},\,\mathtt{prob}=p)\)
+distribution. Therefore,
+\(X+Y\sim\mathsf{binom}(\mathtt{size}=n_{1}+n_{2},\,\mathtt{prob}=p)\).
+\EndKnitrBlock{example}
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:unnamed-chunk-214}{}{\label{ex:unnamed-chunk-214}}Let
+\(X\sim\mathsf{norm}(\mathtt{mean}=\mu_{1},\,\mathtt{sd}=\sigma_{1})\)
+and
+\(Y\sim\mathsf{norm}(\mathtt{mean}=\mu_{2},\,\mathtt{sd}=\sigma_{2})\)
+be independent. Then \(X+Y\) has MGF \[ M_{X}(t)\,
+M_{Y}(t)=\exp\left\{ \mu_{1}t+t^{2}\sigma_{1}^{2}/2\right\}
+\exp\left\{ \mu_{2}t+t^{2}\sigma_{2}^{2}/2\right\} =\exp\left\{
+\left(\mu_{1}+\mu_{2}\right)t+t^{2}\left(\sigma_{1}^{2}+\sigma_{2}^{2}\right)/2\right\}
+, \] which is the MGF of a
+\(\mathsf{norm}\left(\mathtt{mean}=\mu_{1}+\mu_{2},\,\mathtt{sd}=\sqrt{\sigma_{1}^{2}+\sigma_{2}^{2}}\right)\)
+distribution.
+\EndKnitrBlock{example}
+
+Even when we cannot use the MGF trick to identify the exact distribution
+of a linear combination of random variables, we can still say something
+about its mean and variance.
+
+\bigskip
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:mean-sd-lin-comb-two}{}{\label{prp:mean-sd-lin-comb-two}}Let
+\(X_{1}\) and \(X_{2}\) be independent with respective population means
+\(\mu_{1}\) and \(\mu_{2}\) and population standard deviations
+\(\sigma_{1}\) and \(\sigma_{2}\). For given constants \(a_{1}\) and
+\(a_{2}\), define \(Y=a_{1}X_{1}+a_{2}X_{2}\). Then the mean and
+standard deviation of \(Y\) are given by the formulas
+
+\begin{equation}
+\mu_{Y}=a_{1}\mu_{1}+a_{2}\mu_{2},\quad \sigma_{Y}=\left(a_{1}^{2}\sigma_{1}^{2}+a_{2}^{2}\sigma_{2}^{2}\right)^{1/2}.
+\end{equation}
+\EndKnitrBlock{proposition}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi We use Proposition
+\ref{pro:expectation-properties} to see \[ 
+\mathbb{E}
+Y=\mathbb{E}\left(a_{1}X_{1}+a_{2}X_{2}\right)=a_{1}\mathbb{E}X_{1}+a_{2}\mathbb{E} X_{2}=a_{1}\mu_{1}+a_{2}\mu_{2}.
+\] For the standard deviation, we will find the variance and take the
+square root at the end. And to calculate the variance we will first
+compute \(\mathbb{E} Y^{2}\) with an eye toward using the identity
+\(\sigma_{Y}^{2}=\mathbb{E} Y^{2}-\left(\mathbb{E} Y\right)^{2}\) as a
+final step. \[ \mathbb{E}
+Y^{2}=\mathbb{E}\left(a_{1}X_{1}+a_{2}X_{2}\right)^{2}=\mathbb{E}\left(a_{1}^{2}X_{1}^{2}+a_{2}^{2}X_{2}^{2}+2a_{1}a_{2}X_{1}X_{2}\right).
+\] Using linearity of expectation the \(\mathbb{E}\) distributes through
+the sum. Now \(\mathbb{E} X_{i}^{2}=\sigma_{i}^{2}+\mu_{i}^{2}\), for
+\(i=1\) and 2 and
+\(\mathbb{E} X_{1}X_{2}=\mathbb{E} X_{1}\mathbb{E} X_{2}=\mu_{1}\mu_{2}\)
+because of independence. Thus
+
+\begin{eqnarray*}
+\mathbb{E} Y^{2} & = & a_{1}^{2}(\sigma_{1}^{2}+\mu_{1}^{2})+a_{2}^{2}(\sigma_{2}^{2}+\mu_{2}^{2})+2a_{1}a_{2}\mu_{1}\mu_{2},\\
+ & = & a_{1}^{2}\sigma_{1}^{2}+a_{2}^{2}\sigma_{2}^{2}+\left(a_{1}^{2}\mu_{1}^{2}+a_{2}^{2}\mu_{2}^{2}+2a_{1}a_{2}\mu_{1}\mu_{2}\right).
+\end{eqnarray*}
+
+But notice that the expression in the parentheses is exactly
+\(\left(a_{1}\mu_{1}+a_{2}\mu_{2}\right)^{2}=\left(\mathbb{E} Y\right)^{2}\),
+so the proof is complete.
+\EndKnitrBlock{proof}
+
+\section{Exchangeable Random
+Variables}\label{sec-exchangeable-random-variables}
+
+Two random variables \(X\) and \(Y\) are said to be \emph{exchangeable}
+if their joint CDF is a symmetric function of its arguments:
+
+\begin{equation}
+F_{X,Y}(x,y)=F_{X,Y}(y,x),\quad \mbox{for all }(x,y)\in\mathbb{R}^{2}.
+\end{equation}
+
+When the joint density \(f\) exists, we may equivalently say that \(X\)
+and \(Y\) are exchangeable if \(f(x,y)=f(y,x)\) for all \((x,y)\).
+
+Exchangeable random variables exhibit symmetry in the sense that a
+person may exchange one variable for the other with no substantive
+changes to their joint random behavior. While independence speaks to a
+\emph{lack of influence} between the two variables, exchangeability aims
+to capture the \emph{symmetry} between them.
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:unnamed-chunk-216}{}{\label{ex:unnamed-chunk-216}}Let
+\(X\) and \(Y\) have joint PDF
+
+\begin{multline}
+f_{X,Y}(x,y)=(1+\alpha)\lambda^{2}\mathrm{e}^{-\lambda(x+y)}+\alpha(2\lambda)^{2}\mathrm{e}^{-2\lambda(x+y)}-2\alpha\lambda^{2}\left(\mathrm{e}^{-\lambda(2x+y)}+\mathrm{e}^{-\lambda(x+2y)}\right).
+\end{multline}
+
+It is straightforward and tedious to check that \(\iint f=1\). We may
+see immediately that \(f_{X,Y}(x,y)=f_{X,Y}(y,x)\) for all \((x,y)\),
+which confirms that \(X\) and \(Y\) are exchangeable. Here, \(\alpha\)
+is said to be an association parameter.
+\EndKnitrBlock{example}
+
+The example above is one from the Farlie-Gumbel-Morgenstern family of
+distributions; see \autocite{Kotz2000}.
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:binom-exchangeable}{}{\label{ex:binom-exchangeable}}Suppose
+\(X\) and \(Y\) are IID
+\(\mathsf{binom}(\mathtt{size}=n,\,\mathtt{prob}=p)\). Then their joint
+PMF is
+
+\begin{eqnarray*}
+f_{X,Y}(x,y) & = & f_{X}(x)f_{Y}(y)\\
+ & = & {n \choose x}\, p^{x}(1-p)^{n-x}\,{n \choose y}\, p^{y}(1-p)^{n-y},\\
+ & = & {n \choose x}{n \choose y}\, p^{x+y}(1-p)^{2n-(x+y)},
+\end{eqnarray*}
+
+and the value is the same if we exchange \(x\) and \(y\). Therefore
+\((X,Y)\) are exchangeable.
+\EndKnitrBlock{example}
+
+Looking at Example \ref{ex:binom-exchangeable} more closely we see that
+the fact that \((X,Y)\) are exchangeable has nothing to do with the
+\(\mathsf{binom}(\mathtt{size}=n,\,\mathtt{prob}=p)\) distribution; it
+only matters that they are independent (so that the joint PDF factors)
+and they are identically distributed (in which case we may swap letters
+to no effect). We could just have easily used any other marginal
+distribution. We will take this as a proof of the following proposition.
+
+\bigskip
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:unnamed-chunk-217}{}{\label{prp:unnamed-chunk-217}}If
+\(X\) and \(Y\) are IID (with common marginal distribution \(F\)) then
+\(X\) and \(Y\) are exchangeable.
+\EndKnitrBlock{proposition}
+
+Exchangeability thus contains IID as a special case.
+
+\section{The Bivariate Normal
+Distribution}\label{sec-the-bivariate-normal}
+
+The bivariate normal PDF is given by the unwieldy formula
+
+\begin{multline}
+f_{X,Y}(x,y)=\frac{1}{2\pi\,\sigma_{X}\sigma_{Y}\sqrt{1-\rho^{2}}}\exp\left\{ -\frac{1}{2(1-\rho^{2})}\left[\left(\frac{x-\mu_{X}}{\sigma_{X}}\right)^{2}+\cdots\right.\right.\\
+\left.\left.\cdots+2\rho\left(\frac{x-\mu_{X}}{\sigma_{X}}\right)\left(\frac{y-\mu_{Y}}{\sigma_{Y}}\right)+\left(\frac{y-\mu_{Y}}{\sigma_{Y}}\right)^{2}\right]\right\} ,
+\end{multline}
+
+for \((x,y)\in\mathbb{R}^{2}\). We write
+\((X,Y)\sim\mathsf{mvnorm}(\mathtt{mean}=\upmu,\,\mathtt{sigma}=\Sigma)\),
+where
+
+\begin{equation}
+\upmu=(\mu_{X},\,\mu_{Y})^{T},\quad \sum=\left(
+\begin{array}{cc}
+\sigma_{X}^{2} & \rho\sigma_{X}\sigma_{Y}\\
+\rho\sigma_{X}\sigma_{Y} & \sigma_{Y}^{2}
+\end{array}
+\right).
+\end{equation}
+
+See Appendix \ref{cha-mathematical-machinery}. The vector notation
+allows for a more compact rendering of the joint PDF:
+
+\begin{equation}
+f_{X,Y}(\mathbf{x})=\frac{1}{2\pi\left|\Sigma\right|^{1/2}}\exp\left\{ -\frac{1}{2}\left(\mathbf{x}-\upmu\right)^{\top}\Sigma^{-1}\left(\mathbf{x}-\upmu\right)\right\} ,
+\end{equation}
+
+where in an abuse of notation we have written \(\mathbf{x}\) for
+\((x,y)\). Note that the formula only holds when \(\rho\neq\pm1\).
+
+\bigskip
+
+\begin{remark}
+In Remark \ref{rem-cov0-not-imply-indep} we noted that just because
+random variables are uncorrelated it does not necessarily mean that they
+are independent. However, there is an important exception to this rule:
+the bivariate normal distribution. Indeed,
+\((X,Y)\sim\mathsf{mvnorm}(\mathtt{mean}=\upmu,\,\mathtt{sigma}=\Sigma)\)
+are independent if and only if \(\rho=0\).
+\end{remark}
+
+\bigskip
+
+\begin{remark}
+Inspection of the joint PDF shows that if \(\mu_{X}=\mu_{Y}\) and
+\(\sigma_{X}=\sigma_{Y}\) then \(X\) and \(Y\) are exchangeable.
+\end{remark}
+
+The bivariate normal MGF is
+
+\begin{equation}
+M_{X,Y}(\mathbf{t})=\exp\left(\upmu^{\top}\mathbf{t}+\frac{1}{2}\mathbf{t}^{\top}\Sigma\mathbf{t}\right),
+\end{equation}
+
+where \(\mathbf{t}=(t_{1},t_{2})\).
+
+The bivariate normal distribution may be intimidating at first but it
+turns out to be very tractable compared to other multivariate
+distributions. An example of this is the following fact about the
+marginals.
+
+\bigskip
+
+\begin{fact}
+If
+\((X,Y)\sim\mathsf{mvnorm}(\mathtt{mean}=\upmu,\,\mathtt{sigma}=\Sigma)\)
+then
+
+\begin{equation}
+X\sim\mathsf{norm}(\mathtt{mean}=\mu_{X},\,\mathtt{sd}=\sigma_{X})\mbox{ and }Y\sim\mathsf{norm}(\mathtt{mean}=\mu_{Y},\,\mathtt{sd}=\sigma_{Y}).
+\end{equation}
+\end{fact}
+
+From this we immediately get that \(\mathbb{E} X=\mu_{X}\) and
+\(\mbox{Var}(X)=\sigma_{X}^{2}\) (and the same is true for \(Y\) with
+the letters switched). And it should be no surprise that the correlation
+between \(X\) and \(Y\) is exactly \(\mbox{Corr}(X,Y)=\rho\).
+
+\bigskip
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:mvnorm-cond-dist}{}{\label{prp:mvnorm-cond-dist}}The
+conditional distribution of \(Y|\, X=x\) is
+\(\mathsf{norm}(\mathtt{mean} = \mu_{Y|x}, \, \mathtt{sd} = \sigma_{Y|x})\),
+where
+
+\begin{equation}
+\mu_{Y|x}=\mu_{Y}+\rho\frac{\sigma_{Y}}{\sigma_{X}}\left(x-\mu_{X}\right),\mbox{ and }\sigma_{Y|x}=\sigma_{Y}\sqrt{1-\rho^{2}}.
+\end{equation}
+\EndKnitrBlock{proposition}
+
+There are a few things to note about Proposition
+\ref{pro:mvnorm-cond-dist} which will be important in Chapter
+\ref{cha-simple-linear-regression}. First, the conditional mean of
+\(Y|x\) is linear in \(x\), with slope
+
+\begin{equation}
+\label{eq-population-slope-slr}
+\rho\,\frac{\sigma_{Y}}{\sigma_{X}}.
+\end{equation}
+
+Second, the conditional variance of \(Y|x\) is independent of \(x\).
+
+\subsection{How to do it with R}\label{how-to-do-it-with-r-22}
+
+The multivariate normal distribution is implemented in both the
+\texttt{mvtnorm} package \autocite{mvtnorm:1} and the \texttt{mnormt}
+package \autocite{mnormt}. We use the \texttt{mvtnorm} package in this
+book simply because it is a dependency of another package used in the
+book.
+
+The \texttt{mvtnorm} package has functions \texttt{dmvnorm} and
+\texttt{rmvnorm} for the PDF and to generate random vectors,
+respectively. Let us get started with a graph of the bivariate normal
+PDF. We can make the plot with the following code, where the workhorse
+is the \texttt{persp} function in base R.
+
+Another way to do this is with the \texttt{curve3d} function in the
+\texttt{emdbook} package \autocite{emdbook}. It looks like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"emdbook"}\NormalTok{); }\KeywordTok{library}\NormalTok{(}\StringTok{"mvtnorm"}\NormalTok{) }\CommentTok{# note: the order matters}
+\NormalTok{mu <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{); sigma <-}\StringTok{ }\KeywordTok{diag}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{f <-}\StringTok{ }\NormalTok{function(x,y) }\KeywordTok{dmvnorm}\NormalTok{(}\KeywordTok{c}\NormalTok{(x,y), }\DataTypeTok{mean =} \NormalTok{mu, }\DataTypeTok{sigma =} \NormalTok{sigma)}
+\KeywordTok{curve3d}\NormalTok{(}\KeywordTok{f}\NormalTok{(x,y), }\DataTypeTok{from =} \KeywordTok{c}\NormalTok{(-}\DecValTok{3}\NormalTok{,-}\DecValTok{3}\NormalTok{), }\DataTypeTok{to =} \KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{), }\DataTypeTok{theta =} \NormalTok{-}\DecValTok{30}\NormalTok{, }\DataTypeTok{phi =} \DecValTok{30}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The code above is slightly shorter than that using \texttt{persp} and is
+easier to understand. One must be careful, however. If the
+\texttt{library} calls are swapped then the code will not work because
+both packages \texttt{emdbook} and \texttt{mvtnorm} have a function
+called \texttt{dmvnorm}; one must load them to the search path in the
+correct order or R will use the wrong one (the arguments are named
+differently and the underlying algorithms are different).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{y <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \NormalTok{-}\DecValTok{3}\NormalTok{, }\DataTypeTok{to =} \DecValTok{3}\NormalTok{, }\DataTypeTok{length.out =} \DecValTok{30}\NormalTok{)}
+\NormalTok{f <-}\StringTok{ }\NormalTok{function(x,y) }\KeywordTok{dmvnorm}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(x,y), }\DataTypeTok{mean =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{), }\DataTypeTok{sigma =} \KeywordTok{diag}\NormalTok{(}\DecValTok{2}\NormalTok{))}
+\NormalTok{z <-}\StringTok{ }\KeywordTok{outer}\NormalTok{(x, y, }\DataTypeTok{FUN =} \NormalTok{f)}
+\KeywordTok{persp}\NormalTok{(x, y, z, }\DataTypeTok{theta =} \NormalTok{-}\DecValTok{30}\NormalTok{, }\DataTypeTok{phi =} \DecValTok{30}\NormalTok{, }\DataTypeTok{ticktype =} \StringTok{"detailed"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We chose the standard bivariate normal,
+\(\mathsf{mvnorm}(\mathtt{mean}=\mathbf{0},\,\mathtt{sigma}=\mathbf{I})\),
+to display.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{_main_files/figure-latex/mvnorm-pdf-1.pdf}
+\caption{\label{fig:mvnorm-pdf}\small A graph of a bivariate normal PDF.}
+\end{figure}
+
+
+
+\section{Bivariate Transformations of Random
+Variables}\label{sec-transformations-multivariate}
+
+We studied in Section \ref{sec-functions-of-continuous} how to find the
+PDF of \(Y=g(X)\) given the PDF of \(X\). But now we have two random
+variables \(X\) and Y, with joint PDF \(f_{X,Y}\), and we would like to
+consider the joint PDF of two new random variables
+
+\begin{equation}
+U=g(X,Y)\quad \mbox{and}\quad V=h(X,Y),
+\end{equation}
+
+where \(g\) and \(h\) are two given functions, typically ``nice'' in the
+sense of Appendix \ref{sec-multivariable-calculus}.
+
+Suppose that the transformation \((x,y)\longmapsto(u,v)\) is one-to-one.
+Then an inverse transformation \(x=x(u,v)\) and \(y=y(u,v)\) exists, so
+let \(\partial(x,y)/\partial(u,v)\) denote the Jacobian of the inverse
+transformation. Then the joint PDF of \((U,V)\) is given by
+
+\begin{equation}
+f_{U,V}(u,v)=f_{X,Y}\left[x(u,v),\, y(u,v)\right]\left|\frac{\partial(x,y)}{\partial(u,v)}\right|,
+\end{equation}
+
+or we can rewrite more shortly as
+
+\begin{equation}
+\label{eq-biv-trans-pdf-short}
+f_{U,V}(u,v)=f_{X,Y}(x,y)\left|\frac{\partial(x,y)}{\partial(u,v)}\right|.
+\end{equation}
+
+Take a moment and compare Equation \eqref{eq-biv-trans-pdf-short} to
+Equation \eqref{eq-univ-trans-pdf-short}. Do you see the connection?
+
+\bigskip
+
+\begin{remark}
+It is sometimes easier to \emph{postpone} solving for the inverse
+transformation \(x=x(u,v)\) and \(y=y(u,v)\). Instead, leave the
+transformation in the form \(u=u(x,y)\) and \(v=v(x,y)\) and calculate
+the Jacobian of the \emph{original} transformation
+
+\begin{equation}
+\frac{\partial(u,v)}{\partial(x,y)}=\left|\begin{array}{cc}
+\frac{\partial u}{\partial x} & \frac{\partial u}{\partial y}\\
+\frac{\partial v}{\partial x} & \frac{\partial v}{\partial y}\end{array}\right|=\frac{\partial u}{\partial x}\frac{\partial v}{\partial y}-\frac{\partial u}{\partial y}\frac{\partial v}{\partial x}.
+\end{equation}
+
+Once this is known, we can get the PDF of \((U,V)\) by
+
+\begin{equation}
+f_{U,V}(u,v)=f_{X,Y}(x,y)\left|\frac{1}{\frac{\partial(u,v)}{\partial(x,y)}}\right|.
+\end{equation}
+
+In some cases there will be a cancellation and the work will be lot
+shorter. Of course, it is not always true that
+
+\begin{equation}
+\label{eq-biv-jacob-recip}
+\frac{\partial(x,y)}{\partial(u,v)}=\frac{1}{\frac{\partial(u,v)}{\partial(x,y)}},
+\end{equation}
+
+but for the well-behaved examples that we will see in this book it works
+just fine\ldots{} do you see the connection between Equations
+\eqref{eq-biv-jacob-recip} and \eqref{eq-univ-jacob-recip}?
+\end{remark}
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:unnamed-chunk-224}{}{\label{ex:unnamed-chunk-224}}Let
+\((X,Y)\sim\mathsf{mvnorm}(\mathtt{mean}=\mathbf{0}_{2\times1},\,\mathtt{sigma}=\mathbf{I}_{2\times2})\)
+and consider the transformation
+
+\begin{align*}
+U= & \ 3X+4Y,\\
+V= & \ 5X+6Y.
+\end{align*}
+
+We can solve the system of equations to find the inverse
+transformations; they are
+
+\begin{align*}
+X= & -3U+2V,\\
+Y= & \ \frac{5}{2}U-\frac{3}{2}V,
+\end{align*}
+
+in which case the Jacobian of the inverse transformation is
+\[ \begin{vmatrix} -3 & 2\\ \frac{5}{2} & -\frac{3}{2} \end{vmatrix} = -3\left(-\frac{3}{2}\right)-2\left(\frac{5}{2}\right) = -\frac{1}{2}.\]
+As \((x,y)\) traverses \(\mathbb{R}^{2}\), so too does \((u,v)\). Since
+the joint PDF of \((X,Y)\) is \[
+f_{X,Y}(x,y)=\frac{1}{2\pi}\exp\left\{ -\frac{1}{2}\left(x^{2}+y^{2}\right)\right\} ,\quad (x,y)\in\mathbb{R}^{2},
+\] we get that the joint PDF of \((U,V)\) is
+
+\begin{equation}
+\label{eq-biv-norm-hidden}
+f_{U,V}(u,v)=\frac{1}{2\pi}\exp\left\{ -\frac{1}{2}\left[\left(-3u+2v\right)^{2}+\left(\frac{5u-3v}{2}\right)^{2}\right]\right\} \cdot\frac{1}{2},\quad (u,v)\in\mathbb{R}^{2}.
+\end{equation}
+\EndKnitrBlock{example}
+
+\bigskip
+
+\begin{remark}
+It may not be obvious, but Equation \eqref{eq-biv-norm-hidden} is the
+PDF of a \(\mathsf{mvnorm}\) distribution. For a more general result see
+Theorem \ref{thm:mvnorm-dist-matrix-prod}.
+\end{remark}
+
+\subsubsection{How to do it with R}\label{sub-bivariate-transf-r}
+
+It is possible to do the computations above in R with the
+\texttt{Ryacas} package. The package is an interface to the open-source
+computer algebra system, ``Yacas''. The user installs Yacas, then
+employs \texttt{Ryacas} to submit commands to Yacas, after which the
+output is displayed in the R console.
+
+There are not yet any examples of Yacas in this book, but there are
+online materials to help the interested reader: see
+\url{http://code.google.com/p/ryacas/} to get started.
+
+\section{Remarks for the Multivariate
+Case}\label{sec-remarks-for-the-multivariate}
+
+There is nothing spooky about \(n\geq3\) random variables. We just have
+a whole bunch of them: \(X_{1}\), \(X_{2}\),\ldots{}, \(X_{n}\), which
+we can shorten to \(\mathbf{X}=(X_{1},X_{2},\ldots,X_{n})^{\mathrm{T}}\)
+to make the formulas prettier (now may be a good time to check out
+Appendix \ref{sec-linear-algebra}). For \(\mathbf{X}\) supported on the
+set \(S_{\mathbf{X}}\), the joint PDF \(f_{\mathbf{X}}\) (if it exists)
+satisfies
+
+\begin{equation}
+f_{\mathbf{X}}(\mathbf{x})>0,\quad \mbox{for }\mathbf{x}\in S_{\mathbf{X}},
+\end{equation}
+
+and
+
+\begin{equation}
+\int\!\!\!\int\cdots\int f_{\mathbf{X}}(\mathbf{x})\,\mathrm{d} x_{1}\mathrm{d} x_{2}\cdots\mathrm{d} x_{n}=1,
+\end{equation}
+
+or even shorter:
+\(\int f_{\mathbf{X}}(\mathbf{x})\,\mathrm{d}\mathbf{x}=1\). The joint
+CDF \(F_{\mathbf{X}}\) is defined by
+
+\begin{equation}
+F_{\mathbf{X}}(\mathbf{x})=\mathbb{P}(X_{1}\leq x_{1},\, X_{2}\leq x_{2},\ldots,\, X_{n}\leq x_{n}),
+\end{equation}
+
+for \(\mathbf{x}\in\mathbb{R}^{n}\). The expectation of a function
+\(g(\mathbf{X})\) is defined just as we would imagine:
+
+\begin{equation}
+\mathbb{E} g(\mathbf{X})=\int g(\mathbf{x})\, f_{\mathbf{X}}(\mathbf{x})\,\mathrm{d}\mathbf{x}.
+\end{equation}
+
+provided the integral exists and is finite. And the moment generating
+function in the multivariate case is defined by
+
+\begin{eqnarray} 
+M_{\mathbf{X}}(\mathbf{t}) & = & \mathbb{E}\exp\left\{ \mathbf{t}^{\mathrm{T}}\mathbf{X}\right\},
+\end{eqnarray}
+
+whenever the integral exists and is finite for all \(\mathbf{t}\) in a
+neighborhood of \(\mathbf{0}_{\mathrm{n}\times1}\) (note that
+\(\mathbf{t}^{\mathrm{T}}\mathbf{X}\) is shorthand for
+\(t_{1}X_{1}+t_{2}X_{2}+\cdots+t_{n}X_{n}\)). The only difference in any
+of the above for the discrete case is that integrals are replaced by
+sums.
+
+Marginal distributions are obtained by integrating out remaining
+variables from the joint distribution. And even if we are given all of
+the univariate marginals it is not enough to determine the joint
+distribution uniquely.
+
+We say that \(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) are \emph{mutually
+independent} if their joint PDF factors into the product of the
+marginals
+
+\begin{equation}
+f_{\mathbf{X}}(\mathbf{x})=f_{X_{1}}(x_{1})\, f_{X_{2}}(x_{2})\,\cdots\, f_{X_{n}}(x_{n}),
+\end{equation}
+
+for every \(\mathbf{x}\) in their joint support \(S_{\mathbf{X}}\), and
+we say that \(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) are
+\emph{exchangeable} if their joint PDF (or CDF) is a symmetric function
+of its \(n\) arguments, that is, if
+
+\begin{equation}
+f_{\mathbf{X}}(\mathbf{x^{\ast}})=f_{\mathbf{X}}(\mathbf{x}),
+\end{equation}
+
+for any reordering (permutation) \(\mathbf{x^{\ast}}\) of the elements
+of \(\mathbf{x}=(x_{1},x_{2},\ldots,x_{n})\) in the joint support.
+
+\bigskip
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:mean-sd-lin-comb}{}{\label{prp:mean-sd-lin-comb}}Let
+\(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) be independent with respective
+population means \(\mu_{1}\), \(\mu_{2}\), \ldots{}, \(\mu_{n}\) and
+standard deviations \(\sigma_{1}\), \(\sigma_{2}\), \ldots{},
+\(\sigma_{n}\). For given constants \(a_{1}\), \(a_{2}\),
+\ldots{},\(a_{n}\) define \(Y=\sum_{i=1}^{n}a_{i}X_{i}\). Then the mean
+and standard deviation of \(Y\) are given by the formulas
+
+\begin{equation}
+\mu_{Y}=\sum_{i=1}^{n}a_{i}\mu_{i},\quad \sigma_{Y}=\left(\sum_{i=1}^{n}a_{i}^{2}\sigma_{i}^{2}\right)^{1/2}.
+\end{equation}
+\EndKnitrBlock{proposition}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi The mean is easy: \[ \mathbb{E}
+Y=\mathbb{E}\left(\sum_{i=1}^{n}a_{i}X_{i}\right)=\sum_{i=1}^{n}a_{i}\mathbb{E}
+X_{i}=\sum_{i=1}^{n}a_{i}\mu_{i}.  \] The variance is not too difficult
+to compute either. As an intermediate step, we calculate
+\(\mathbb{E} Y^{2}\). \[ \mathbb{E}
+Y^{2}=\mathbb{E}\left(\sum_{i=1}^{n}a_{i}X_{i}\right)^{2}=\mathbb{E}\left(\sum_{i=1}^{n}a_{i}^{2}X_{i}^{2}+2\sum_{i=1}^{n-1}\sum_{j=i+1}^{n}a_{i}a_{j}X_{i}X_{j}\right).
+\] Using linearity of expectation the \(\mathbb{E}\) distributes through
+the sums. Now \(\mathbb{E} X_{i}^{2}=\sigma_{i}^{2}+\mu_{i}^{2}\) and
+\(\mathbb{E} X_{i}X_{j}=\mathbb{E} X_{i}\mathbb{E} X_{j}=\mu_{i}\mu_{j}\)
+when \(i\neq j\) because of independence. Thus
+
+\begin{eqnarray*}
+\mathbb{E} Y^{2} & = & \sum_{i=1}^{n}a_{i}^{2}(\sigma_{i}^{2}+\mu_{i}^{2})+2\sum_{i=1}^{n-1}\sum_{j=i+1}^{n}a_{i}a_{j}\mu_{i}\mu_{j}\\
+ & = & \sum_{i=1}^{n}a_{i}^{2}\sigma_{i}^{2}+\left(\sum_{i=1}^{n}a_{i}^{2}\mu_{i}^{2}+2\sum_{i=1}^{n-1}\sum_{j=i+1}^{n}a_{i}a_{j}\mu_{i}\mu_{j}\right)
+\end{eqnarray*}
+
+To complete the proof, note that the expression in the parentheses is
+exactly \(\left(\mathbb{E} Y\right)^{2}\), and recall the identity
+\(\sigma_{Y}^{2}=\mathbb{E} Y^{2}-\left(\mathbb{E} Y\right)^{2}\).
+\EndKnitrBlock{proof}
+
+There is a corresponding statement of Fact
+\ref{fac-indep-then-function-indep} for the multivariate case. The proof
+is also omitted here.
+
+\begin{fact}
+If \(\mathbf{X}\) and \(\mathbf{Y}\) are mutually independent random
+vectors, then \(u(\mathbf{X})\) and \(v(\mathbf{Y})\) are independent
+for any functions \(u\) and \(v\).
+\end{fact}
+
+Bruno de Finetti was a strong proponent of the subjective approach to
+probability. He proved an important theorem in 1931 which illuminates
+the link between exchangeable random variables and independent random
+variables. Here it is in one of its simplest forms.
+
+\bigskip
+
+\BeginKnitrBlock{theorem}[De Finetti's Theorem]
+\protect\hypertarget{thm:unnamed-chunk-228}{}{\label{thm:unnamed-chunk-228}
+\iffalse (De Finetti's Theorem) \fi }Let \(X_{1}\), \(X_{2}\), \ldots{}
+be a sequence of \(\mathsf{binom}(\mathtt{size}=1,\,\mathtt{prob}=p)\)
+random variables such that \((X_{1},\ldots,X_{k})\) are exchangeable for
+every \(k\). Then there exists a random variable \(\Theta\) with support
+\([0,1]\) and PDF \(f_{\Theta}(\theta)\) such that
+
+\begin{equation}
+\label{eq-definetti-binary}
+\mathbb{P}(X_{1}=x_{1},\ldots,\, X_{k}=x_{k})=\int_{0}^{1}\theta^{\sum x_{i}}(1-\theta)^{k-\sum x_{i}}\, f_{\Theta}(\theta)\,\mathrm{d}\theta,
+\end{equation}
+
+for all \(x_{i}=0,\,1\), \(i=1,\,2,\ldots,k\).
+\EndKnitrBlock{theorem}
+
+To get a handle on the intuitive content de Finetti's theorem, imagine
+that we have a \emph{bunch} of coins in our pocket with each having its
+own unique value of \(\theta=\mathbb{P}(\mbox{Heads})\). We reach into
+our pocket and select a coin at random according to some probability --
+say, \(f_{\Theta}(\theta)\). We take the randomly selected coin and flip
+it \(k\) times.
+
+Think carefully: the conditional probability of observing a sequence
+\(X_{1}=x_{1},\ldots,\, X_{k}=x_{k}\), given a specific coin \(\theta\)
+would just be \(\theta^{\sum x_{i}}(1-\theta)^{k-\sum x_{i}}\), because
+the coin flips are an independent sequence of Bernoulli trials. But the
+coin is random, so the Theorem of Total Probability says we can get the
+\emph{unconditional} probability
+\(\mathbb{P}(X_{1}=x_{1},\ldots,\, X_{k}=x_{k})\) by adding up terms
+that look like
+
+\begin{equation}
+\theta^{\sum x_{i}}(1-\theta)^{k-\sum x_{i}}\, f_{\Theta}(\theta),
+\end{equation}
+
+where we sum over all possible coins. The right-hand side of Equation
+\eqref{eq-definetti-binary} is a sophisticated way to denote this
+process.
+
+Of course, the integral's value does not change if we jumble the
+\(x_{i}\)'s, so \((X_{1},\ldots,X_{k})\) are clearly exchangeable. The
+power of de Finetti's Theorem is that \emph{every} infinite binary
+exchangeable sequence can be written in the above form.
+
+The connection to subjective probability: our prior information about
+\(\theta\) corresponds to \(f_{\Theta}(\theta)\) and the likelihood of
+the sequence \(X_{1}=x_{1},\ldots,\, X_{k}=x_{k}\) (conditional on
+\(\theta\)) corresponds to
+\(\theta^{\sum x_{i}}(1-\theta)^{k-\sum x_{i}}\). Compare Equation
+\eqref{eq-definetti-binary} to Section \ref{sec-Bayes-Rule} and Section
+\ref{sec-conditional-distributions}.
+
+The multivariate normal distribution immediately generalizes from the
+bivariate case. If the matrix \(\Sigma\) is nonsingular then the joint
+PDF of
+\(\mathbf{X}\sim\mathsf{mvnorm}(\mathtt{mean}=\upmu,\,\mathtt{sigma}=\Sigma)\)
+is
+
+\begin{equation}
+f_{\mathbf{X}}(\mathbf{x})=\frac{1}{(2\pi)^{n/2}\left|\Sigma\right|^{1/2}}\exp\left\{ -\frac{1}{2}\left(\mathbf{x}-\upmu\right)^{\top}\Sigma^{-1}\left(\mathbf{x}-\upmu\right)\right\},
+\end{equation}
+
+and the MGF is
+
+\begin{equation}
+M_{\mathbf{X}}(\mathbf{t})=\exp\left\{ \upmu^{\top}\mathbf{t}+\frac{1}{2}\mathbf{t}^{\top}\Sigma\mathbf{t}\right\}.
+\end{equation}
+
+We will need the following in Chapter
+\ref{cha-multiple-linear-regression}.
+
+\bigskip
+
+\BeginKnitrBlock{theorem}
+\protect\hypertarget{thm:mvnorm-dist-matrix-prod}{}{\label{thm:mvnorm-dist-matrix-prod}}If
+\(\mathbf{X} \sim \mathsf{mvnorm}(\mathtt{mean} = \upmu, \, \mathtt{sigma} = \Sigma)\)
+and \(\mathbf{A}\) is any matrix, then the random vector
+\(\mathbf{Y}=\mathbf{AX}\) is distributed
+
+\begin{equation}
+\mathbf{Y}\sim\mathsf{mvnorm}(\mathtt{mean}=\mathbf{A}\upmu,\,\mathtt{sigma}=\mathbf{A}\Sigma\mathbf{A}^{\mathrm{T}}).
+\end{equation}
+\EndKnitrBlock{theorem}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi Look at the MGF of \(\mathbf{Y}\):
+
+\begin{eqnarray*}
+M_{\mathbf{Y}}(\mathbf{t}) & = & \mathbb{E}\,\exp\left\{ \mathbf{t}^{\mathrm{T}}(\mathbf{AX})\right\} ,\\
+ & = & \mathbb{E}\,\exp\left\{ (\mathbf{A}^{\mathrm{T}}\mathbf{t})^{\mathrm{T}}\mathbf{X}\right\} ,\\
+ & = & \exp\left\{ \upmu^{\mathrm{T}}(\mathbf{A}^{\top}\mathbf{t})+\frac{1}{2}(\mathbf{A}^{\mathrm{T}}\mathbf{t})^{\mathrm{T}}\Sigma(\mathbf{A}^{\mathrm{T}}\mathbf{t})\right\} ,\\
+ & = & \exp\left\{ \left(\mathbf{A}\upmu\right)^{\mathrm{T}}\mathbf{t}+\frac{1}{2}\mathbf{t}^{\mathrm{T}}\left(\mathbf{A}\Sigma\mathbf{A}^{\mathrm{T}}\right)\mathbf{t}\right\},
+\end{eqnarray*}
+
+and the last expression is the MGF of an
+\(\mathsf{mvnorm}(\mathtt{mean}=\mathbf{A}\upmu,\,\mathtt{sigma}=\mathbf{A}\Sigma\mathbf{A}^{\mathrm{T}})\)
+distribution.
+\EndKnitrBlock{proof}
+
+\section{The Multinomial Distribution}\label{sec-multinomial}
+
+We sample \(n\) times, with replacement, from an urn that contains balls
+of \(k\) different types. Let \(X_{1}\) denote the number of balls in
+our sample of type 1, let \(X_{2}\) denote the number of balls of type
+2, \ldots{}, and let \(X_{k}\) denote the number of balls of type \(k\).
+Suppose the urn has proportion \(p_{1}\) of balls of type 1, proportion
+\(p_{2}\) of balls of type 2, \ldots{}, and proportion \(p_{k}\) of
+balls of type \(k\). Then the joint PMF of \((X_{1},\ldots,X_{k})\) is
+
+\begin{eqnarray}
+f_{X_{1},\ldots,X_{k}}(x_{1},\ldots,x_{k}) & = & {n \choose x_{1}\, x_{2}\,\cdots\, x_{k}}\, p_{1}^{x_{1}}p_{2}^{x_{2}}\cdots p_{k}^{x_{k}},
+\end{eqnarray}
+
+for \((x_{1},\ldots,x_{k})\) in the joint support
+\(S_{X_{1},\ldots X_{K}}\). We write
+
+\begin{equation}
+(X_{1},\ldots,X_{k})\sim\mathsf{multinom}(\mathtt{size}=n,\,\mathtt{prob}=\mathbf{p}_{\mathrm{k}\times1}).
+\end{equation}
+
+Several comments are in order. First, the joint support set
+\(S_{X_{1},\ldots X_{K}}\) contains all nonnegative integer \(k\)-tuples
+\((x_{1},\ldots,x_{k})\) such that \(x_{1}+x_{2}+\cdots+x_{k}=n\). A
+support set like this is called a \emph{simplex}. Second, the
+proportions \(p_{1}\), \(p_{2}\), \ldots{}, \(p_{k}\) satisfy
+\(p_{i}\geq0\) for all \(i\) and \(p_{1}+p_{2}+\cdots+p_{k}=1\).
+Finally, the symbol
+
+\begin{equation}
+{n \choose x_{1}\, x_{2}\,\cdots\, x_{k}}=\frac{n!}{x_{1}!\, x_{2}!\,\cdots x_{k}!}
+\end{equation}
+
+is called a \emph{multinomial coefficient} which generalizes the notion
+of a binomial coefficient we saw in Equation
+\eqref{eq-binomial-coefficient}.
+
+The form and notation we have just described matches the R usage but is
+not standard among other texts. Most other books use the above for a
+\(k-1\) dimension multinomial distribution, because the linear
+constraint \(x_{1}+x_{2}+\cdots+x_{k}=n\) means that once the values of
+\(X_{1}\), \(X_{2}\), \ldots{}, \(X_{k-1}\) are known the final value
+\(X_{k}\) is determined, not random. Another term used for this is a
+\emph{singular} distribution.
+
+For the most part we will ignore these difficulties, but the careful
+reader should keep them in mind. There is not much of a difference in
+practice, except that below we will use a two-dimensional support set
+for a three-dimension multinomial distribution. See Figure
+\ref{fig:multinom-pmf2}.
+
+When \(k=2\), we have \(x_{1}=x\) and \(x_{2}=n-x\), we have \(p_{1}=p\)
+and \(p_{2}=1-p\), and the multinomial coefficient is literally a
+binomial coefficient. In the previous notation we have thus shown that
+the
+\(\mathsf{multinom}(\mathtt{size}=n,\,\mathtt{prob}=\mathbf{p}_{2\times1})\)
+distribution is the same as a
+\(\mathsf{binom}(\mathtt{size}=n,\,\mathtt{prob}=p)\) distribution.
+
+\bigskip
+
+\BeginKnitrBlock{example}[Dinner with Barack Obama]
+\protect\hypertarget{ex:unnamed-chunk-230}{}{\label{ex:unnamed-chunk-230}
+\iffalse (Dinner with Barack Obama) \fi }During the 2008 U.S.
+presidential primary, Barack Obama offered to have dinner with three
+randomly selected monetary contributors to his campaign. Imagine the
+thousands of people in the contributor database. For the sake of
+argument, Suppose that the database was approximately representative of
+the U.S. population as a whole, Suppose Barack Obama wants to have
+\url{http://pewresearch.org/pubs/773/fewer-voters-identify-as-republicans}
+with 36 democrats, 27 republicans, and 37 independents.
+\EndKnitrBlock{example}
+
+BLANK
+
+\bigskip
+
+\begin{remark}
+Here are some facts about the multinomial distribution.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The expected value of \((X_{1},\, X_{2},\,\ldots,\, X_{k})\) is
+  \(n\mathbf{p}_{k\times1}\).
+\item
+  The variance-covariance matrix \(\Sigma\) is symmetric with diagonal
+  entries \(\sigma_{i}^{2}=np_{i}(1-p_{i})\), \(i=1,\,2,\,\ldots,\, k\)
+  and off-diagonal entries \(\mbox{Cov}(X_{i},\, X_{j})=-np_{i}p_{j}\),
+  for \(i\neq j\). The correlation between \(X_{i}\) and \(X_{j}\) is
+  therefore
+  \(\mbox{Corr}(X_{i},\,  X_{j})=-\sqrt{p_{i}p_{j}/(1-p_{i})(1-p_{j})}\).
+\item
+  The marginal distribution of \((X_{1},\, X_{2},\,\ldots,\,  X_{k-1})\)
+  is
+  \(\mathsf{multinom}(\mathtt{size}=n,\,\mathtt{prob}=\mathbf{p}_{(k-1)\times1})\)
+  with
+
+  \begin{equation}
+     \mathbf{p}_{(k-1)\times1}=\left(p_{1},\, p_{2},\,\ldots,\, p_{k-2},\, p_{k-1}+p_{k}\right),
+     \end{equation}
+
+  and in particular,
+  \(X_{i}\sim\mathsf{binom}(\mathtt{size}=n,\,\mathtt{prob}=p_{i})\).
+\end{enumerate}
+\end{remark}
+
+\subsection{How to do it with R}\label{how-to-do-it-with-r-23}
+
+There is support for the multinomial distribution in base R, namely in
+the \texttt{stats} package \autocite{stats}. The \texttt{dmultinom}
+function represents the PMF and the \texttt{rmultinom} function
+generates random variates.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tmp <-}\StringTok{ }\KeywordTok{t}\NormalTok{(}\KeywordTok{xsimplex}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{6}\NormalTok{))}
+\NormalTok{p <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(tmp, }\DataTypeTok{MARGIN =} \DecValTok{1}\NormalTok{, }\DataTypeTok{FUN =} \NormalTok{dmultinom, }\DataTypeTok{prob =} \KeywordTok{c}\NormalTok{(}\DecValTok{36}\NormalTok{,}\DecValTok{27}\NormalTok{,}\DecValTok{37}\NormalTok{))}
+\NormalTok{S <-}\StringTok{ }\KeywordTok{probspace}\NormalTok{(tmp, }\DataTypeTok{probs =} \NormalTok{p)}
+\NormalTok{ProbTable <-}\StringTok{ }\KeywordTok{xtabs}\NormalTok{(probs ~}\StringTok{ }\NormalTok{X1 +}\StringTok{ }\NormalTok{X2, }\DataTypeTok{data =} \NormalTok{S)}
+\KeywordTok{round}\NormalTok{(ProbTable, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   X2
+X1      0     1     2     3     4     5     6
+  0 0.003 0.011 0.020 0.020 0.011 0.003 0.000
+  1 0.015 0.055 0.080 0.058 0.021 0.003 0.000
+  2 0.036 0.106 0.116 0.057 0.010 0.000 0.000
+  3 0.047 0.103 0.076 0.018 0.000 0.000 0.000
+  4 0.034 0.050 0.018 0.000 0.000 0.000 0.000
+  5 0.013 0.010 0.000 0.000 0.000 0.000 0.000
+  6 0.002 0.000 0.000 0.000 0.000 0.000 0.000
+\end{verbatim}
+
+BLANK
+
+Do some examples of \texttt{rmultinom}.
+
+Another way to do the plot is with the \texttt{scatterplot3d} function
+in the \texttt{scatterplot3d} package \autocite{scatterplot3d}. It looks
+like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(}\StringTok{"scatterplot3d"}\NormalTok{)}
+\NormalTok{X <-}\StringTok{ }\KeywordTok{t}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{expand.grid}\NormalTok{(}\DecValTok{0}\NormalTok{:}\DecValTok{6}\NormalTok{, }\DecValTok{0}\NormalTok{:}\DecValTok{6}\NormalTok{)))}
+\NormalTok{X <-}\StringTok{ }\NormalTok{X[, }\KeywordTok{colSums}\NormalTok{(X) <=}\StringTok{ }\DecValTok{6} \NormalTok{]; X <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(X, }\DecValTok{6} \NormalTok{-}\StringTok{ }\KeywordTok{colSums}\NormalTok{(X))}
+\NormalTok{Z <-}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{apply}\NormalTok{(X, }\DecValTok{2}\NormalTok{, function(x) }\KeywordTok{dmultinom}\NormalTok{(x, }\DataTypeTok{prob =} \DecValTok{1}\NormalTok{:}\DecValTok{3}\NormalTok{)), }\DecValTok{3}\NormalTok{)}
+\NormalTok{A <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \NormalTok{X[}\DecValTok{1}\NormalTok{, ], }\DataTypeTok{y =} \NormalTok{X[}\DecValTok{2}\NormalTok{, ], }\DataTypeTok{probability =} \NormalTok{Z)}
+\KeywordTok{scatterplot3d}\NormalTok{(A, }\DataTypeTok{type =} \StringTok{"h"}\NormalTok{, }\DataTypeTok{lwd =} \DecValTok{3}\NormalTok{, }\DataTypeTok{box =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{scatterplot3d} graph looks better in this example, but the
+code is more difficult to understand. And with \texttt{cloud} one can
+easily do conditional plots of the form
+\texttt{cloud(z\ \textasciitilde{}\ x\ +\ y\ \textbar{}\ f)}, where
+\texttt{f} is a factor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cloud}\NormalTok{(probs ~}\StringTok{ }\NormalTok{X1 +}\StringTok{ }\NormalTok{X2, }\DataTypeTok{data =} \NormalTok{S, }\DataTypeTok{type =} \KeywordTok{c}\NormalTok{(}\StringTok{"p"}\NormalTok{,}\StringTok{"h"}\NormalTok{), }\DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }
+            \DataTypeTok{pch =} \DecValTok{16}\NormalTok{, }\DataTypeTok{cex =} \FloatTok{1.5}\NormalTok{, }\DataTypeTok{screen =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{z =} \DecValTok{15}\NormalTok{, }\DataTypeTok{x =} \NormalTok{-}\DecValTok{70}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{_main_files/figure-latex/multinom-pmf2-1.pdf}
+\caption{\label{fig:multinom-pmf2}\small A plot of a multinomial PMF.}
+\end{figure}
+
+
+
+\section{Exercises}\label{exercises-3}
+
+\begin{xca}
+Prove that
+\(\mbox{Cov}(X,Y)=\mathbb{E}(XY)-(\mathbb{E} X)(\mathbb{E} Y).\)
+\end{xca}
+
+\begin{xca}
+Suppose \(X\sim\mathsf{chisq}(\mathtt{df}=p_{1})\) and
+\(Y\sim\mathsf{chisq}(\mathtt{df}=p_{2})\) are independent. Find the
+distribution of \(X+Y\) (you may want to refer to Equation
+\eqref{eq-mgf-chisq}).
+\end{xca}
+
+\bigskip
+
+\begin{xca}
+Show that when \(X\) and \(Y\) are independent the MGF of \(X-Y\) is
+\(M_{X}(t)M_{Y}(-t)\). Use this to find the distribution of \(X-Y\) when
+\(X\sim\mathsf{norm}(\mathtt{mean}=\mu_{1},\,\mathtt{sd}=\sigma_{1})\)
+and
+\(Y\sim\mathsf{norm}(\mathtt{mean}=\mu_{2},\,\mathtt{sd}=\sigma_{2})\)
+are independent.
+\end{xca}
+
 \chapter{Simple Linear Regression}\label{cha-simple-linear-regression}
 
 \textbf{What do I want them to know?}
@@ -7299,7 +9315,7 @@ increases\footnote{We are taking great leaps over the mathematical
 \bigskip
 
 \BeginKnitrBlock{example}[Speed and stopping distance of cars]
-\protect\hypertarget{ex:unnamed-chunk-200}{}{\label{ex:unnamed-chunk-200}
+\protect\hypertarget{ex:unnamed-chunk-242}{}{\label{ex:unnamed-chunk-242}
 \iffalse (Speed and stopping distance of cars) \fi }We will use the data
 frame \texttt{cars} \index{Data
 sets!cars@\texttt{cars}} from the \texttt{datasets} package
@@ -7484,7 +9500,7 @@ Also, notice the similarity between Equation
 \eqref{eq-population-slope-slr}.
 \end{rem}
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-20}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-24}
 
 Here we go. R will calculate the linear regression line with the
 \texttt{lm} function. We will store the result in an object which we
@@ -7649,7 +9665,7 @@ estimates are usually worthless. \emph{Do not extrapolate} unless there
 are compelling external reasons, and even then, temper it with a good
 deal of caution.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-21}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-25}
 
 The fitted values are automatically computed as a byproduct of the model
 fitting procedure and are already stored as a component of the
@@ -7728,7 +9744,7 @@ and we estimate \(\sigma\) with the \emph{standard error}
   problem with the explanatory variables, such as
   \emph{multicollinearity}. See Section \ref{sub-Multicollinearity}.}.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-22}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-26}
 
 The residuals for the model may be obtained with the \texttt{residuals}
 function; we only show the first few entries in the interest of space:
@@ -7857,7 +9873,7 @@ has a \(\mathsf{t}(\mathtt{df}=n-2)\) distribution and a
 b_{0}\pm\mathsf{t}_{\alpha/2}(\mathtt{df}=n-1)\, S_{b_{0}}.
 \end{equation}
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-23}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-27}
 
 Let us take a look at the output from \texttt{summary(cars.lm)}:
 
@@ -7976,7 +9992,7 @@ We notice that the prediction interval in Equation
 Equation \eqref{eq-SLR-conf-int-formula}, as we expected at the
 beginning of the section.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-24}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-28}
 
 Confidence and prediction intervals are calculated in R with the
 \texttt{predict} \index{predict@\texttt{predict}} function, which we
@@ -7987,7 +10003,7 @@ argument. The general syntax follows.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-216}{}{\label{ex:unnamed-chunk-216}}We
+\protect\hypertarget{ex:unnamed-chunk-258}{}{\label{ex:unnamed-chunk-258}}We
 will find confidence and prediction intervals for the stopping distance
 of a car travelling 5, 6, and 21 mph (note from the graph that there are
 no collected data for these speeds). We have computed \texttt{cars.lm}
@@ -8042,7 +10058,7 @@ The type of interval is dictated by the \texttt{interval} argument
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-222}{}{\label{ex:unnamed-chunk-222}}Using
+\protect\hypertarget{ex:unnamed-chunk-264}{}{\label{ex:unnamed-chunk-264}}Using
 the \texttt{cars} data,
 \EndKnitrBlock{example}
 
@@ -8144,7 +10160,7 @@ alternative \(H_{1}:\beta_{0}\neq0\) with the statistic
 \ref{sub-slr-interval-est-params}. The test is conducted the same way as
 for \(\beta_{1}\).
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-25}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-29}
 
 Let us take another look at the output from \texttt{summary(cars.lm)}:
 
@@ -8271,7 +10287,7 @@ sign of the slope estimate \(b_{1}\). That is, if the regression line
 \(\hat{\mu}(x)\) has positive slope, then \(r=\sqrt{r^{2}}\). Likewise,
 if the slope of \(\hat{\mu}(x)\) is negative, then \(r=-\sqrt{r^{2}}\).
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-26}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-30}
 
 The primary method to display partitioned sums of squared errors is with
 an \emph{ANOVA table}. The command in R to produce such a table is
@@ -8374,7 +10390,7 @@ important role in the multiple linear regression model which we will
 study in Chapter \ref{cha-multiple-linear-regression}. See Section
 \ref{sub-mlr-overall-f-test} for details.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-27}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-31}
 
 The overall \(F\) statistic and \(p\)-value are displayed in the bottom
 line of the \texttt{summary(cars.lm)} output. It is also shown in the
@@ -8894,7 +10910,7 @@ called the \emph{Bonferroni approach} and can be overly conservative for
 large data sets. The responsible statistician should look at the data
 and use his/her best judgement, in every case.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-28}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-32}
 
 We can calculate the standardized residuals with the \texttt{rstandard}
 function. The input is the \texttt{lm} object, which is
@@ -9098,7 +11114,7 @@ To assess the significance of \(D\), we compare to quantiles of an
 of thumb is to classify observations falling higher than the
 \(50^{\mathrm{th}}\) percentile as being extreme.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-29}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-33}
 
 We can calculate the Cook's Distances with the \texttt{cooks.distance}
 function.
@@ -9235,7 +11251,7 @@ shown in the bottom right corner of Figure
 \ref{fig:diagnostic-plots-cars}). Observations 1 and 2 fall on the far
 right side of the plot, near the horizontal axis.
 
-\section{Exercises}\label{exercises-3}
+\section{Exercises}\label{exercises-4}
 
 \bigskip
 
@@ -9377,7 +11393,7 @@ Y_{i}=\beta_{0}+\beta_{1}x_{1i}+\beta_{2}x_{2i}+\cdots+\beta_{p}x_{pi}+\epsilon_
 \bigskip
 
 \BeginKnitrBlock{example}[Girth, Height, and Volume for Black Cherry trees]
-\protect\hypertarget{ex:unnamed-chunk-249}{}{\label{ex:unnamed-chunk-249}
+\protect\hypertarget{ex:unnamed-chunk-291}{}{\label{ex:unnamed-chunk-291}
 \iffalse (Girth, Height, and Volume for Black Cherry trees)
 \fi }\index{Data sets!trees@\texttt{trees}} Measurements were made of
 the girth, height, and volume of timber in 31 felled black cherry trees.
@@ -9584,7 +11600,7 @@ the critical value is a minimum. We omit the details and refer the
 interested reader to \autocite{Rao1999}.
 \EndKnitrBlock{rem}
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-30}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-34}
 
 We do all of the above just as we would in simple linear regression. The
 powerhouse is the \texttt{lm} \index{lm@\texttt{lm}} function.
@@ -9715,7 +11731,7 @@ which is just a fancy way to write
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-256}{}{\label{ex:unnamed-chunk-256}}If
+\protect\hypertarget{ex:unnamed-chunk-298}{}{\label{ex:unnamed-chunk-298}}If
 we wanted to predict the average volume of black cherry trees that have
 \texttt{Girth\ =\ 15} in and are \texttt{Height\ =\ 77} ft tall then we
 would use the estimate
@@ -9730,7 +11746,7 @@ We would use the same estimate \(\hat{Y}=35.6\) to predict the measured
 \texttt{Volume} of another black cherry tree -- yet to be observed --
 that has \texttt{Girth\ =\ 15} in and is \texttt{Height\ =\ 77} ft tall.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-31}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-35}
 
 The fitted values are stored inside \texttt{trees.lm} and may be
 accessed with the \texttt{fitted} function. We only show the first five
@@ -9849,7 +11865,7 @@ S^{2}=\frac{SSE}{n-(p+1)}.
 That would be a good guess. The \emph{residual standard error} is
 \(S=\sqrt{S^{2}}\).
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-32}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-36}
 
 The residuals are also stored with \texttt{trees.lm} and may be accessed
 with the \texttt{residuals} function. We only show the first five
@@ -9950,7 +11966,7 @@ The degrees of freedom for the Student's \(t\) distribution\footnote{We
   proofs await in later classes. See C.R. Rao for more.} are the same as
 the denominator of \(S^{2}\).
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-33}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-37}
 
 To get confidence intervals for the parameters we need only use
 \texttt{confint} \index{confint@\texttt{confint}}:
@@ -10022,7 +12038,7 @@ given by
 The prediction intervals are wider than the confidence intervals, just
 as in Section \ref{sub-slr-interval-est-regline}.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-34}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-38}
 
 The syntax is identical to that used in SLR, with the proviso that we
 need to specify values of the independent variables in the data frame
@@ -10163,7 +12179,7 @@ substantially, or if one changes dramatically when an explanatory
 variable is added, then (s)he should take a closer look at the
 explanatory variables in the model.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-35}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-39}
 
 For the \texttt{trees} data, we can get \(R^{2}\) and
 \(\overline{R}^{2}\) from the \texttt{summary} output or access the
@@ -10213,7 +12229,7 @@ shown that \(F\sim\mathsf{f}(\mathtt{df1}=p,\,\mathtt{df2}=n-p-1)\). We
 reject \(H_{0}\) when \(F\) is large, that is, when the explained
 variation is large relative to the unexplained variation.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-36}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-40}
 
 The overall \(F\) statistic and its associated \emph{p}-value is listed
 at the bottom of the \texttt{summary} output, or we can access it
@@ -10281,7 +12297,7 @@ the null hypothesis \(H_{0}:\beta_{i}=0\) the statistic
 \(t_{i}=b_{i}/S_{b_{i}}\) has a \(\mathsf{t}(\mathtt{df}=n-p-1)\)
 distribution.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-37}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-41}
 
 The Student's \(t\) tests for significance of the individual explanatory
 variables are shown in the \texttt{summary} output.
@@ -10392,7 +12408,7 @@ model. That is, we replace the \(x_{i}\)'s with \(x_{i}-\overline{x}\)
   orthogonal polynomials in action can be run with
   \texttt{example(cars)}.}.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-38}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-42}
 
 There are multiple ways to fit a quadratic model to the variables
 \texttt{Volume} and \texttt{Girth} using R. 1. One way would be to
@@ -10413,7 +12429,7 @@ approach in 2 with
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-275}{}{\label{ex:unnamed-chunk-275}}We
+\protect\hypertarget{ex:unnamed-chunk-317}{}{\label{ex:unnamed-chunk-317}}We
 will fit the quadratic model to the \texttt{trees} data and display the
 results with \texttt{summary}, being careful to rescale the data before
 fitting the model. We may rescale the \texttt{Girth} variable to have
@@ -10632,7 +12648,7 @@ one for short trees. The regression lines have the same slope but they
 have different \(y\) intercepts (which are exactly \(|\beta_{2}|\) far
 apart).
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-39}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-43}
 
 The important thing is to double check that the qualitative variable in
 question is stored as a factor. The way to check is with the
@@ -10831,7 +12847,7 @@ that the partial \(F\) statistic has an
 calculate the \(p\)-value of the observed partial \(F\) statistic and
 reject \(H_{0}\) if the \(p\)-value is small.
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-40}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-44}
 
 The key ingredient above is that the two competing models are
 \emph{nested} in the sense that the reduced model is entirely contained
@@ -10843,7 +12859,7 @@ model and the reduced model then compare the answers with the
 \bigskip
 
 \BeginKnitrBlock{example}[The Trees data]
-\protect\hypertarget{ex:unnamed-chunk-286}{}{\label{ex:unnamed-chunk-286}
+\protect\hypertarget{ex:unnamed-chunk-328}{}{\label{ex:unnamed-chunk-328}
 \iffalse (The Trees data) \fi }For the \texttt{trees} data, let us fit a
 polynomial regression model and for the sake of argument we will ignore
 our own good advice and fail to rescale the explanatory variables.
@@ -11281,7 +13297,7 @@ Criterion}\label{akaikes-information-criterion}
 AIC = -2\ln L + 2(p + 1)
 \]
 
-\section{Exercises}\label{exercises-4}
+\section{Exercises}\label{exercises-5}
 
 \textbf{Exercise.} Use Equations \eqref{eq-mlr-sse-matrix},
 \eqref{eq-mlr-ssto-matrix}, and \eqref{eq-mlr-ssr-matrix} to prove the

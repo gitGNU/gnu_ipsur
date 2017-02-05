@@ -95,13 +95,13 @@ unpredictable selection of an outcome in \(S\).
 Most of the probability work in this book is done with the `prob`
 package [@prob]. A sample space is (usually) represented by a
 *data frame*, that is, a rectangular collection of variables (see
-Section [[#sub-Multivariate-Data]]). Each row of the data frame corresponds to
+Section \@ref(sub-multivariate-data)). Each row of the data frame corresponds to
 an outcome of the experiment. The data frame choice is convenient both
 for its simplicity and its compatibility with the R
 Commander. Data frames alone are, however, not sufficient to describe
 some of the more interesting probabilistic applications we will study
 later; to handle those we will need to consider a more general *list*
-data structure. See Section [[#sub-howto-ps-objects]] for details.
+data structure. See Section \@ref(sub-howto-ps-objects) for details.
 
 
 ```{example}
@@ -327,7 +327,7 @@ A_{j}=\emptyset\) for any distinct pair \(A_{i}\neq A_{j}\). For
 instance, in the coin-toss experiment the events \( A = \{
 \mbox{Heads} \}\) and \( B = \{ \mbox{Tails} \} \) would be mutually
 exclusive. Now would be a good time to review the algebra of sets in
-Appendix [[#sec-The-Algebra-of]].
+Appendix \@ref(sec-the-algebra-of).
 
 [^2]: This naive definition works for finite or countably
 infinite sample spaces, but is inadequate for sample spaces in
@@ -500,7 +500,7 @@ calculate the *complement* of a set \(A\), denoted \(A^{c}\) and
 defined to be the elements of \(S\) that are not in \(A\) simply with
 `setdiff(S,A)`. There have been methods written for `intersect`,
 `setdiff`, `subset`, and `union` in the case that the input objects
-are of class `ps`. See Section [[#sub-howto-ps-objects]].
+are of class `ps`. See Section \@ref(sub-howto-ps-objects).
 
 
 
@@ -578,7 +578,7 @@ the flipping.
 
 The mathematician who revolutionized this way to do probability theory
 was Andrey Kolmogorov, who published a landmark monograph in 1933. See
-[[http://www-history.mcs.st-andrews.ac.uk/Mathematicians/Kolmogorov.html][here]] for more information.
+<http://www-history.mcs.st-andrews.ac.uk/Mathematicians/Kolmogorov.html> for more information.
 
 ### Relative Frequency Approach
 
@@ -621,7 +621,7 @@ class, or the probability that the world is destroyed by nuclear war.
 
 This approach was espoused by Richard von Mises in the early twentieth
 century, and some of his main ideas were incorporated into the measure
-theory approach. See [[http://www-history.mcs.st-andrews.ac.uk/Biographies/Mises.html][here]] for more.
+theory approach. See <http://www-history.mcs.st-andrews.ac.uk/Biographies/Mises.html> for more.
 
 ### The Subjective Approach
 
@@ -631,7 +631,7 @@ probability of an event is based on the totality of the individual's
 knowledge at the time. As new information becomes available, the
 estimate is modified accordingly to best reflect his/her current
 knowledge. The method by which the probabilities are updated is
-commonly done with Bayes' Rule, discussed in Section [[#sec-Bayes-Rule]].
+commonly done with Bayes' Rule, discussed in Section \@ref(sec-bayes-rule).
 
 So for the coin toss example, a person may have
 \(\mathbb{P}(\mbox{Heads})=1/2\) in the absence of additional
@@ -652,7 +652,7 @@ indefinitely, for example, to assign your probability that you will
 get an A in this class, the chances of a devastating nuclear war, or
 the likelihood that a cure for the common cold will be discovered.
 
-The roots of subjective probability reach back a long time. See [[http://en.wikipedia.org/wiki/Subjective_probability][here]]
+The roots of subjective probability reach back a long time. See <http://en.wikipedia.org/wiki/Subjective_probability>
 for a short discussion and links to references about the subjective
 approach.
 
@@ -851,30 +851,25 @@ be the chance of rolling a 1 plus the chance of rolling a 2.
 For any events \(A\) and \(B\),
 
 1. <<enu-prop-prob-complement>> \(\mathbb{P}(A^{c})=1-\mathbb{P}(A)\).
-   #+BEGIN_proof
+   **Proof:**
    Since \(A\cup A^{c}=S\) and \(A\cap A^{c}=\emptyset\), we have
    \[
    1=\mathbb{P}(S)=\mathbb{P}(A\cup A^{c})=\mathbb{P}(A)+\mathbb{P}(A^{c}).
    \]
-   #+END_proof
 1. \(\mathbb{P}(\emptyset)=0\).
-   #+BEGIN_proof
+   **Proof:**
    Note that \(\emptyset=S^{c}\), and use Property 1.
-   #+END_proof
 1. If \(A\subset B\) , then \(\mathbb{P}(A)\leq\mathbb{P}(B)\).
-   #+BEGIN_proof
+   **Proof:**
    Write \(B=A\cup\left(B\cap A^{c}\right)\), and notice that \(A\cap\left(B\cap A^{c}\right)=\emptyset\); thus
    \[
    \mathbb{P}(B)=\mathbb{P}(A\cup\left(B\cap A^{c}\right))=\mathbb{P}(A)+\mathbb{P}\left(B\cap A^{c}\right)\geq\mathbb{P}(A),
    \]
    since \(\mathbb{P}\left(B\cap A^{c}\right)\ge0\). 
-   #+END_proof
 1. \(0\leq\mathbb{P}(A)\leq1\).
-   #+BEGIN_proof
-   The left inequality is immediate from Axiom [[ax-prob-nonnegative]], and the second inequality follows from Property 3 since \(A\subset S\).
-   #+END_proof
-
-1. *The General Addition Rule.*
+   **Proof:**
+   The left inequality is immediate from Axiom \@ref(ax-prob-nonnegative), and the second inequality follows from Property 3 since \(A\subset S\).
+1. **The General Addition Rule.**
    \begin{equation}
    \label{eq-general-addition-rule-1}
    \mathbb{P}(A\cup B)=\mathbb{P}(A)+\mathbb{P}(B)-\mathbb{P}(A\cap B).
@@ -883,7 +878,7 @@ For any events \(A\) and \(B\),
    \begin{equation}
    \mathbb{P}\left(\bigcup_{i=1}^{n}A_{i}\right)=\sum_{i=1}^{n}\mathbb{P}(A_{i})-\sum_{i=1}^{n-1}\sum_{j=i+1}^{n}\mathbb{P}(A_{i}\cap A_{j})+\cdots+(-1)^{n-1}\mathbb{P}\left(\bigcap_{i=1}^{n}A_{i}\right)
    \end{equation}
-1. *The Theorem of Total Probability.# Let \(B_{1}\), \(B_{2}\), ...,
+1. **The Theorem of Total Probability.** Let \(B_{1}\), \(B_{2}\), ...,
    \(B_{n}\) be mutually exclusive and exhaustive. Then
    \begin{equation}
    \label{eq-theorem-total-probability}
@@ -939,7 +934,7 @@ Head; thus, \(\mathbb{P}(\mbox{at least 1 Head})=3/4\).
 
 What is \(\mathbb{P}(\mbox{no Heads})\)? Notice that the event \(\{
 \mbox{no Heads} \} = \{ \mbox{at least one Head} \} ^{c}\), which by
-Property [[enu-prop-prob-complement]] means \(\mathbb{P}(\mbox{no
+Property \@ref(enu-prop-prob-complement) means \(\mathbb{P}(\mbox{no
 Heads})=1-\mathbb{P}(\mbox{at least one head})=1-3/4=1/4\). It is
 obvious in this simple example that the only outcome with no Heads is
 \(TT\), however, this complementation trick can be handy in more
@@ -1032,7 +1027,7 @@ It should be clear that there are only four possible royal
 flushes. Thus, if we could only count the number of outcomes in \(S\)
 then we could simply divide four by that number and we would have our
 answer under the equally likely model. This is the subject of Section
-[[#sec-Methods-of-Counting]].
+\@ref(sec-methods-of-counting).
 
 #### How to do it with R
 
@@ -1070,9 +1065,9 @@ desired.
 We have as yet glossed over the details. More specifically, `prob` has
 three arguments: `x`, which is a probability space (or a subset of
 one), `event`, which is a logical expression used to define a subset,
-and `given`, which is described in Section [[#sec-Conditional-Probability]].
+and `given`, which is described in Section \@ref(sec-conditional-probability).
 
-*WARNING*. The `event` argument is used to define a subset of `x`,
+**WARNING.** The `event` argument is used to define a subset of `x`,
 that is, the only outcomes used in the probability calculation will be
 those that are elements of `x` and satisfy `event` simultaneously. In
 other words, `Prob(x, event)` calculates `Prob(intersect(x, subset(x, event)))`.
@@ -1253,7 +1248,7 @@ Table: Sampling \(k\) from \(n\) objects with `urnsamples`.
 ```{example}
 We will compute the number of outcomes for each of the four
 `urnsamples` examples that we saw in Example
-[[exa-sample-urn-two-from-three]]. Recall that we took a sample of size two from an
+\@ref(ex:sample-urn-two-from-three). Recall that we took a sample of size two from an
 urn with three distinguishable elements.
 ```
 
@@ -1352,7 +1347,7 @@ soon will see, it will be more convenient for us to calculate
 For starters we will ignore leap years and assume that there are only
 365 days in a year. Second, we will assume that births are equally
 distributed over the course of a year (which is not true due to all
-sorts of complications such as hospital delivery schedules). See [[http://en.wikipedia.org/wiki/Birthday_problem][here]]
+sorts of complications such as hospital delivery schedules). See <http://en.wikipedia.org/wiki/Birthday_problem>
 for more.
 
 Let us next think about the sample space. There are 365 possibilities
@@ -1360,7 +1355,7 @@ for the first person's birthday, 365 possibilities for the second, and
 so forth. The total number of possible birthday sequences is therefore
 \(\#(S)=365^{n}\).
 
-Now we will use the complementation trick we saw in Example [[exa-three-child-family]]. We realize that the only situation in which \(A\) does
+Now we will use the complementation trick we saw in Example \@ref(ex:three-child-family). We realize that the only situation in which \(A\) does
 *not* occur is if there are *no* matches among all people in the room,
 that is, only when everybody's birthday is different, so \[
 \mathbb{P}(A)=1-\mathbb{P}(A^{c})=1-\frac{\#(A^{c})}{\#(S)}, \] since
@@ -1396,7 +1391,7 @@ we observe a match in the class, to the students' disbelief.
 
 Students are usually surprised to hear that, using the formula above,
 one needs only \(n=23\) students to have a greater than 50% chance of
-at least one match. Figure [[fig-birthday]] shows a graph of the birthday
+at least one match. Figure \@ref(fig:birthday) shows a graph of the birthday
 probabilities:
 
 
@@ -1413,7 +1408,7 @@ remove(g)
 
 #### How to do it with R
 
-We can make the plot in Figure [[fig-birthday]] with the following
+We can make the plot in Figure \@ref(fig:birthday) with the following
 sequence of commands.
 
 ```{r, echo=TRUE, eval=FALSE}
@@ -1498,7 +1493,7 @@ outcomes are equally likely with exactly two outcomes lying in the set
 Toss a six-sided die twice. The
 sample space consists of all ordered pairs \((i,j)\) of the numbers
 \(1,2,\ldots,6\), that is, \( S = \{ (1,1),\ (1,2),\ldots,(6,6) \}
-\). We know from Section [[#sec-Methods-of-Counting]] that \( \# (S) =
+\). We know from Section \@ref(sec-methods-of-counting) that \( \# (S) =
 6^{2} = 36 \). Let \( A = \{ \mbox{outcomes match} \} \) and \( B = \{
 \mbox{sum of outcomes at least 8} \} \). The sample space may be
 represented by a matrix:
@@ -1537,7 +1532,7 @@ outcomes that also fall in \(B\), thus, the probability of \(B\) given
 
 ### How to do it with R
 
-Continuing with Example [[exa-Toss-a-six-sided-die-twice]], the first thing to do is set
+Continuing with Example \@ref(ex:toss-a-six-sided-die-twice), the first thing to do is set
 up the probability space with the `rolldie` function.
 
 ```{r, echo=TRUE}  
@@ -1625,7 +1620,7 @@ B)=\mathbb{P}(A)\mathbb{P}(B|A)=\frac{4}{52}\cdot\frac{3}{51}\approx0.00452.
 
 #### How to do it with R {#sub-howto-ps-objects}
 
-Continuing Example [[exa-two-cards-both-aces]], we set up the probability
+Continuing Example \@ref(ex:two-cards-both-aces), we set up the probability
 space by way of a three step process. First we employ the `cards`
 function to get a data frame `L` with two columns: `rank` and
 `suit`. Both columns are stored internally as factors with 13 and 4
@@ -1670,7 +1665,7 @@ Prob(N, all(rank == "A"))
 ```
 
 Note that this value matches what we found in Example
-[[exa-two-cards-both-aces]], above. We could calculate all sorts of
+\@ref(ex:two-cards-both-aces), above. We could calculate all sorts of
 probabilities at this point; we are limited only by the complexity of
 the event's computer representation.
 
@@ -1687,8 +1682,8 @@ C)=\frac{7}{10}\cdot\frac{6}{9}\cdot\frac{5}{8}\approx 0.2917.  \]
 
 #### How to do it with R
 
-Example [[exa-urn-7-red-3-green]] is similar to Example
-[[exa-two-cards-both-aces]], but it is even easier. We need to set up
+Example \@ref(ex:urn-7-red-3-green) is similar to Example
+\@ref(ex:two-cards-both-aces), but it is even easier. We need to set up
 an urn (vector `L`) to hold the balls, we sample from `L` to get the
 sample space (data frame `M`), and we associate a probability vector
 (column `probs`) with the outcomes (rows of `M`) of the sample
@@ -1720,7 +1715,7 @@ Prob(N, isrep(N, "red", 3))
 ```
 
 Note that this answer matches what we found in Example
-[[exa-urn-7-red-3-green]]. Now let us try some other probability
+\@ref(ex:urn-7-red-3-green). Now let us try some other probability
 questions. What is the probability of getting two `red`'s?
 
 ```{r, echo=TRUE}  
@@ -1729,7 +1724,7 @@ Prob(N, isrep(N, "red", 2))
 
 
 Note that the exact value is \(21/40\); we will learn a quick way to
-compute this in Section [[#sec-other-discrete-distributions]]. What is the
+compute this in Section \@ref(sec-other-discrete-distributions). What is the
 probability of observing `red`, then `green`, then `red`?
 
 ```{r, echo=TRUE}  
@@ -1776,7 +1771,7 @@ and notice that \(A\cap B\) and \(A^{c}\cap B\) are disjoint. Therefore
 
 
 ```{example}
-We saw the `RcmdrTestDrive` data set in Chapter [[#cha-introduction-to-R]]
+We saw the `RcmdrTestDrive` data set in Chapter \@ref(cha-introduction-to-R)
 in which a two-way table of the smoking status versus the gender was
 ```
 
@@ -1844,7 +1839,7 @@ Otherwise, the events are said to be *dependent*.
 ```
 
 The connection with the above example stems from the following. We
-know from Section [[#sec-Conditional-Probability]] that when
+know from Section \@ref(sec-conditional-probability) that when
 \(\mathbb{P}(B)>0\) we may write
 \begin{equation}
 \mathbb{P}(A|B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.
@@ -1911,7 +1906,7 @@ We can now deduce the pattern for \(n\) events, \(n>3\). The events
 will be mutually independent only if they satisfy the product equality
 pairwise, then in groups of three, in groups of four, and so forth, up
 to all \(n\) events at once. For \(n\) events, there will be
-\(2^{n}-n-1\) equations that must be satisfied (see Exercise [[xca-numb-cond-indep]]). Although these requirements for a set of events to
+\(2^{n}-n-1\) equations that must be satisfied (see Exercise \@ref(xca-numb-cond-indep)). Although these requirements for a set of events to
 be mutually independent may seem stringent, the good news is that for
 most of the situations considered in this book the conditions will all
 be met (or at least we will suppose that they are).
@@ -1952,7 +1947,7 @@ A <- subset(S, isrep(S, vals = "T", nrep = 10))
 ```
 
 
-Compare this answer to what we got in Example [[exa-toss-ten-coins]].
+Compare this answer to what we got in Example \@ref(ex:toss-ten-coins).
 
 
 ### Independent, Repeated Experiments
@@ -1969,7 +1964,7 @@ experiment, and `probs` to specify the probabilities of the outcomes
 of `x` in a single trial.
 
 ```{example, name="An unbalanced coin"}
-(Continued, see Example [[exa-unbalanced-coin]]). It was
+(Continued, see Example \@ref(ex:unbalanced-coin)). It was
 easy enough to set up the probability space for one unbalanced toss,
 however, the situation becomes more complicated when there are many
 tosses involved. Clearly, the outcome \(HHH\) should not have the same
@@ -2005,14 +2000,11 @@ would give an error.
 ## Bayes' Rule {#sec-bayes-rule}
 
 We mentioned the subjective view of probability in Section
-[[#sec-Interpreting-Probabilities]]. In this section we introduce a rule that
+\@ref(sec-interpreting-probabilities). In this section we introduce a rule that
 allows us to update our probabilities when new information becomes
 available.
 
-#+ATTR_LATEX: :options [\textbf{Bayes' Rule}]
-
 ```{theorem, name="Bayes' Rule"}
-#+BEGIN_thm
 Let \(B_{1}\), \(B_{2}\), ..., \(B_{n}\) be mutually exclusive and
 exhaustive and let \(A\) be an event with \(\mathbb{P}(A)>0\). Then
 \begin{equation}
@@ -2192,7 +2184,7 @@ to do by hand.
 
 
 ```{example, name="Misfiling Assistants"}
-(Continued from Example [[exa-misfiling-assistants]]). We store the
+(Continued from Example \@ref(ex:misfiling-assistants)). We store the
 prior probabilities and the likelihoods in vectors and go to town.
 ```
 
@@ -2203,10 +2195,11 @@ post <- prior # like
 post / sum(post)
 ```
 
-Compare these answers with what we got in Example [[exa-misfiling-assistants]]. We would replace `prior` with `post` in a future
-calculation. We could raise `like` to a power to see how the posterior
-is affected by future document mistakes. (Do you see why? Think back
-to Section [[#sec-Independent-Events]].)
+Compare these answers with what we got in Example
+\@ref(ex:misfiling-assistants). We would replace `prior` with `post`
+in a future calculation. We could raise `like` to a power to see how
+the posterior is affected by future document mistakes. (Do you see
+why? Think back to Section \@ref(sec-independent-events).)
 
 
 ```{example}
@@ -2246,7 +2239,7 @@ fastpost / sum(fastpost)
 ```
 
 
-Compare this to what we got in Example [[exa-misfiling-assistants-multiple]].
+Compare this to what we got in Example \@ref(ex:misfiling-assistants-multiple).
 
 ## Random Variables {#sec-random-variables}
 
@@ -2319,13 +2312,13 @@ that can be inspected all at once. And while the support of \(Y\)
 cannot be exhaustively written down, its elements can nevertheless be
 listed in a naturally ordered sequence. Random variables with supports
 similar to those of \(X\) and \(Y\) are called *discrete random variables*. 
-We study these in Chapter [[#cha-Discrete-Distributions]].
+We study these in Chapter \@ref(cha-discrete-distributions).
 
 In contrast, the support of \(Z\) is a continuous interval, containing
 all rational and irrational positive real numbers. For this
 reason[^4], random variables with supports like \(Z\) are
 called *continuous random variables*, to be studied in Chapter
-[[#cha-Continuous-Distributions]].
+\@ref(cha-continuous-distributions).
 
 [^4]: This isn't really the reason, but it serves as an
 effective litmus test at the introductory level. See Billingsley or

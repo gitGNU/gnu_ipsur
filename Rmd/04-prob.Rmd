@@ -104,6 +104,7 @@ some of the more interesting probabilistic applications we will study
 later; to handle those we will need to consider a more general *list*
 data structure. See Section \@ref(sub-howto-ps-objects) for details.
 
+\bigskip
 
 ```{example}
 Consider the random experiment of dropping a Styrofoam cup onto the
@@ -215,6 +216,8 @@ function, which has arguments `x`, `size`, `replace`, and
 to be done. The `size` argument tells how large the sample will
 be. The `ordered` and `replace` arguments are logical and specify how
 sampling will be performed. We will discuss each in turn.
+
+\bigskip
 
 ```{example, label="sample-urn-two-from-three"}
 Let our urn simply contain three
@@ -710,6 +713,7 @@ as the number of outcomes in `x`). The specific choice of `probs`
 depends on the context of the problem, and some examples follow to
 demonstrate some of the more common choices.
 
+\bigskip
 
 ```{example}
 The Equally Likely Model asserts that every outcome of the sample
@@ -771,6 +775,8 @@ sample spaces are NOT, in general, equally likely. It is important for
 the user to carefully consider the experiment to decide whether or not
 the outcomes are equally likely and then use `probspace` to assign the
 model.
+
+\bigskip
 
 ```{example, label="unbalanced-coin",name="An unbalanced coin"} 
 While the `makespace`
@@ -912,6 +918,7 @@ In other words, under the equally likely model, the probability of an
 event \(A\) is determined by the number of elementary events that
 \(A\) contains.
 
+\bigskip
 
 ```{example}
 Consider the random experiment \(E\) of tossing a coin. Then the
@@ -920,6 +927,7 @@ these two outcomes have \(\mathbb{P}(H)=\mathbb{P}(T)=1/2\). This
 model is taken when it is reasonable to assume that the coin is fair.
 ```
 
+\bigskip
 
 ```{example}
 Suppose the experiment \(E\) consists of tossing a fair coin
@@ -941,6 +949,7 @@ obvious in this simple example that the only outcome with no Heads is
 \(TT\), however, this complementation trick can be handy in more
 complicated problems.
 
+\bigskip
 
 ```{example, label="three-child-family"}
 Imagine a three child family, each child
@@ -968,7 +977,7 @@ quicker way would be to recognize that the only way that the event
 Thus \[ \mathbb{P}(\mbox{at most 2 Boys}) = 1 - \mathbb{P}(BBB) = 1 -
 1/8 = 7/8. \]
 
-
+\bigskip
 
 ```{example}
 Consider the experiment of rolling a six-sided die, and let the
@@ -977,6 +986,7 @@ outcome be the face showing up when the die comes to rest. Then \(S =
 that the die is fair, so that the six outcomes are equally likely.
 ```
 
+\bigskip
 
 ```{example}
 Consider a standard deck of 52 cards. These are usually labeled with
@@ -1008,7 +1018,7 @@ Addition Rule to get
  & = & 16/52.
 \end{eqnarray*}
 
-
+\bigskip
 
 ```{example}
 Staying with the deck of cards, let another random experiment be the
@@ -1085,6 +1095,7 @@ counting the number of outcomes that \(A\) contains (together with the
 number of events in \(S\)). Hence, to be a master of probability one
 must be skilled at counting outcomes in events of all kinds.
 
+\bigskip
 
 ```{proposition, name="The Multiplication Principle"}
 Suppose that an experiment is composed of two successive
@@ -1097,6 +1108,8 @@ steps which may be performed in \(n_{1}\), \(n_{2}\), ..., \(n_{k}\)
 distinct ways, respectively, then the experiment may be performed in
 \(n_{1} n_{2} \cdots n_{k}\) distinct ways.
 ```
+
+\bigskip
 
 ```{example}
 We would like to order a pizza. It will be sure to have cheese (and
@@ -1119,7 +1132,7 @@ to be made. The Multiplication Principle says that we should multiply
 the 2's to find the total number of possible pizzas: \(2 \cdot 2 \cdot
 2 \cdot 2 \cdot 2 = 2^{5} = 32\).
 
-
+\bigskip
 
 ```{example}
 We would like to buy a desktop computer to study statistics. We go to
@@ -1159,13 +1172,14 @@ n! & = & n(n - 1)(n - 2) \cdots 3 \cdot 2 \cdot 1.
 **Fact:**
 The number of permutations of \(n\) elements is \(n!\).
 
-
+\bigskip
 
 ```{example}
 Take a coin and flip it 7 times. How many sequences of Heads and Tails
 are possible? **Answer:** \(2^{7}=128\).
 ```
 
+\bigskip
 
 ```{example}
 In a class of 20 students, we randomly select a class president, a
@@ -1173,6 +1187,7 @@ class vice-president, and a treasurer. How many ways can this be
 done? **Answer:** \(20\cdot19\cdot18=6840\).
 ```
 
+\bigskip
 
 ```{example}
 We rent five movies to watch over the span of two nights. We wish to
@@ -1201,6 +1216,7 @@ plays a special role in mathematics; it is denoted
 \end{equation}
 and is read "\(n\) choose \(k\)".
 
+\bigskip
 
 ```{example}
 You rent five movies to watch over the span of two nights, but only
@@ -1210,6 +1226,7 @@ Fred a favor, and allow him to select 2 movies from the set of 5. How
 many choices does Fred have? **Answer:** \({5 \choose 2}=10\).
 ```
 
+\bigskip
 
 ```{example}
 Place 3 six-sided dice into a cup. Next, shake the cup well and pour
@@ -1247,6 +1264,7 @@ above.
 
 Table: Sampling \(k\) from \(n\) objects with `urnsamples`.
 
+\bigskip
 
 ```{example}
 We will compute the number of outcomes for each of the four
@@ -1272,6 +1290,7 @@ vectors instead of numbers for `n`, `k`, `replace`, and `ordered`
 results in a vector of corresponding answers. This becomes
 particularly convenient for combinatorics problems.
 
+\bigskip
 
 ```{example}
 There are 11 artists who each submit a portfolio containing 7
@@ -1336,6 +1355,8 @@ same using `nsamp` versus `factorial` and `choose`. But the virtue of
 `nsamp` lies in its collecting the relevant counting formulas in a
 one-stop shop. Ultimately, it is up to the user to choose the method
 that works best for him/herself.
+
+\bigskip
 
 ```{example, name="The Birthday Problem"}
 Suppose that there are \(n\) people together
@@ -1492,6 +1513,8 @@ longer need to account for the outcome \(TT\), and the remaining three
 outcomes are equally likely with exactly two outcomes lying in the set
 \(B\).
 
+\bigskip
+
 ```{example, label="toss-a-six-sided-die-twice"}
 Toss a six-sided die twice. The
 sample space consists of all ordered pairs \((i,j)\) of the numbers
@@ -1614,6 +1637,8 @@ The Multiplication Rule is very important because it allows us to find
 probabilities in random experiments that have a sequential structure,
 as the next example shows.
 
+\bigskip
+
 ```{example, label="two-cards-both-aces"}
 At the beginning of the section we drew
 two cards from a standard playing deck. Now we may answer our original
@@ -1674,6 +1699,7 @@ Note that this value matches what we found in Example
 probabilities at this point; we are limited only by the complexity of
 the event's computer representation.
 
+\bigskip
 
 ```{example, label="urn-7-red-3-green"}
 Consider an urn with 10 balls inside, 7 of
@@ -1747,6 +1773,7 @@ Prob(N, isin(N, c("red","green","red")))
 We already knew this. It is the probability of observing two `red`'s,
 above.
 
+\bigskip
 
 ```{example}
 Consider two urns, the first with 5 red balls and 3 green balls, and
@@ -1773,7 +1800,7 @@ and notice that \(A\cap B\) and \(A^{c}\cap B\) are disjoint. Therefore
 \end{align*}
 (which is 7/24 in lowest terms).
 
-
+\bigskip
 
 ```{example}
 We saw the `RcmdrTestDrive` data set in Chapter \@ref(cha-introduction-to-R)
@@ -1917,6 +1944,8 @@ be mutually independent may seem stringent, the good news is that for
 most of the situations considered in this book the conditions will all
 be met (or at least we will suppose that they are).
 
+\bigskip
+
 ```{example, label="toss-ten-coins"}
 Toss ten coins. What is the probability of
 observing at least one Head? 
@@ -1968,6 +1997,8 @@ situation. It has three arguments: `x`, which is a vector of outcomes,
 `ntrials`, which is an integer telling how many times to repeat the
 experiment, and `probs` to specify the probabilities of the outcomes
 of `x` in a single trial.
+
+\bigskip
 
 ```{example, name="An unbalanced coin"}
 (Continued, see Example \@ref(ex:unbalanced-coin)). It was
@@ -2038,6 +2069,8 @@ What does it mean? Usually in applications we are given (or know) *a priori* pro
 some data, which we represent by the event \(A\). We want to know: how
 do we *update# \(\mathbb{P}(B_{k})\) to \(\mathbb{P}(B_{k}|A)\)? The
 answer: Bayes' Rule.
+
+\bigskip
 
 ```{example, label="misfiling-assistants",name="Misfiling Assistants"}
 In this problem,
@@ -2164,6 +2197,7 @@ rate. It is not obvious who the winner (or in this case, loser) will
 be, and the statistician needs to consult Bayes' Rule to determine the
 best course of action.
 
+\bigskip
 
 ```{example, label="misfiling-assistants-multiple"}
 Suppose the boss gets a change
@@ -2188,6 +2222,7 @@ There are not any special functions for Bayes' Rule in the `prob`
 package [@prob], but problems like the ones above are easy enough
 to do by hand.
 
+\bigskip
 
 ```{example, name="Misfiling Assistants"}
 (Continued from Example \@ref(ex:misfiling-assistants)). We store the
@@ -2207,6 +2242,7 @@ in a future calculation. We could raise `like` to a power to see how
 the posterior is affected by future document mistakes. (Do you see
 why? Think back to Section \@ref(sec-independent-events).)
 
+\bigskip
 
 ```{example}
 Let us incorporate the posterior probability (`post`) information from
@@ -2268,6 +2304,7 @@ letters \(x\), \(y\), and \(z\). Just as \(S\) is the set of all
 possible outcomes of \(E\), we call the set of all possible values of
 \(X\) the *support* of \(X\) and denote it by \(S_{X}\).
 
+\bigskip
 
 ```{example}
 Let \(E\) be the experiment of flipping a coin twice. We have seen
@@ -2288,8 +2325,7 @@ Table:  Flipping a coin twice.
 Taking a look at the second row of the table, we see that the support
 of \(X\) -- the set of all numbers that \(X\) assumes -- would be \(S_{X}= \{ 0,1,2 \}\).
 
-
-
+\bigskip
 
 ```{example}
 Let \(E\) be the experiment of flipping a coin repeatedly until
@@ -2299,6 +2335,7 @@ number of Tails before the first head}\). Then the support of \(Y\)
 would be \(S_{Y}= \{ 0,1,2,\ldots \}\).
 ```
 
+\bigskip
 
 ```{example}
 Let \(E\) be the experiment of tossing a coin in the air, and define

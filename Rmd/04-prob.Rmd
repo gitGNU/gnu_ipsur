@@ -59,8 +59,8 @@ period, *etc*.
 * Bayes' Rule and how it relates to the subjective view of probability
 * what we mean by 'random variables', and where they come from
 
-#+NAME: diagram
-```{r, echo=FALSE} :file fig/prob-diagram.ps
+
+```{r, echo=FALSE, label="diagram", fig.cap='(ref:cap-dagram)'}
 require(diagram)
 par(mex = 0.2, cex = 0.5)
 openplotmat(frame.plot=TRUE)
@@ -78,8 +78,7 @@ textellipse(mid = c(0.29,0.25), box.col = grey(0.95),
   cex = 2 )
 ```
 
-#+NAME: fig-diagram
-#+CAPTION[Two types of experiments]: \small Two types of experiments.
+(ref:cap-diagram) \small Two types of experiments.
 
 
 ## Sample Spaces {#sec-sample-spaces}
@@ -94,7 +93,7 @@ unpredictable selection of an outcome in \(S\).
 ### How to do it with R
 
 Most of the probability work in this book is done with the `prob`
-package \cite{prob}. A sample space is (usually) represented by a
+package [@prob]. A sample space is (usually) represented by a
 *data frame*, that is, a rectangular collection of variables (see
 Section [[#sub-Multivariate-Data]]). Each row of the data frame corresponds to
 an outcome of the experiment. The data frame choice is convenient both
@@ -104,13 +103,14 @@ some of the more interesting probabilistic applications we will study
 later; to handle those we will need to consider a more general *list*
 data structure. See Section [[#sub-howto-ps-objects]] for details.
 
-# +BEGIN_exampletoo
 
+```{example}
 Consider the random experiment of dropping a Styrofoam cup onto the
 floor from a height of four feet. The cup hits the ground and
 eventually comes to rest. It could land upside down, right side up, or
 it could land on its side. We represent these possible outcomes of the
 random experiment by the following.
+```
 
 ```{r, echo=TRUE}  
 S <- data.frame(lands = c("down","up","side"))
@@ -123,11 +123,11 @@ outcomes `down`, `up`, and `side`.
 Some sample spaces are so common that convenience wrappers were
 written to set them up with minimal effort. The underlying machinery
 that does the work includes the `expand.grid` function in the `base`
-package \cite{base}, `combn` in the `combinat` package
-\cite{combinat}, and `permsn` in the `prob` package
-\cite{prob}[fn:fn-seasoned].
+package [@base], `combn` in the `combinat` package
+[@combinat], and `permsn` in the `prob` package
+[@prob][^1].
 
-[fn:fn-seasoned] The seasoned R user can get the job done
+[^1]: The seasoned R user can get the job done
 without the convenience wrappers. I encourage the beginner to use them
 to get started, but I also recommend that introductory students wean
 themselves as soon as possible. The wrappers were designed for ease
@@ -207,7 +207,7 @@ equivalent to selecting a ball from an urn with six elements, labeled
 
 #### How to do it with R 
 
-The `prob` package \cite{prob} accomplishes sampling from urns with
+The `prob` package [@prob] accomplishes sampling from urns with
 the `urnsamples` \index{urnsamples@\texttt{urnsamples}}
 function, which has arguments `x`, `size`, `replace`, and
 `ordered`. The argument `x` represents the urn from which sampling is
@@ -215,12 +215,13 @@ to be done. The `size` argument tells how large the sample will
 be. The `ordered` and `replace` arguments are logical and specify how
 sampling will be performed. We will discuss each in turn.
 
-# +BEGIN_exampletoo
-<<exa-sample-urn-two-from-three>> Let our urn simply contain three
+```{example, label="sample-urn-two-from-three"}
+Let our urn simply contain three
 balls, labeled 1, 2, and 3, respectively. We are going to take a
 sample of size 2 from the urn.
+```
 
-# +END_exampletoo
+
 
 #### Ordered, With Replacement
 
@@ -318,7 +319,7 @@ even when, in fact, the call to the function was `urnsamples(..., ordered = FALS
 ## Events {#sec-events}
 
 An *event* \index{event} \(A\) is merely a collection of outcomes, or
-in other words, a subset of the sample space[fn:fn-event]. After the
+in other words, a subset of the sample space[^2]. After the
 performance of a random experiment \(E\) we say that the event \(A\)
 *occurred* if the experiment's outcome belongs to \(A\). We say that a
 bunch of events \(A_{1}\), \(A_{2}\), \(A_{3}\), ... are *mutually exclusive* \index{mutually exclusive} or *disjoint* if \(A_{i}\cap
@@ -328,7 +329,7 @@ instance, in the coin-toss experiment the events \( A = \{
 exclusive. Now would be a good time to review the algebra of sets in
 Appendix [[#sec-The-Algebra-of]].
 
-[fn:fn-event] This naive definition works for finite or countably
+[^2]: This naive definition works for finite or countably
 infinite sample spaces, but is inadequate for sample spaces in
 general. In this book, we will not address the subtleties that arise,
 but will refer the interested reader to any text on advanced
@@ -458,14 +459,13 @@ in an algebraic fashion. To this end, we have three set operations at
 our disposal: union, intersection, and difference. Below is a table
 that summarizes the pertinent information about these operations.
 
-#+CAPTION[Set operations]: Basic set operations.  The first column lists the name, the second shows the typical notation, the third describes set membership, and the fourth shows how to accomplish it with R.
-|--------------+-------------------+---------------------------+------------------|
 | Name         | Denoted           | Defined by elements       | Code             |
 |--------------+-------------------+---------------------------+------------------|
 | Union        | \(A\cup B\)       | in \(A\) or \(B\) or both | `union(A,B)`     |
 | Intersection | \(A\cap B\)       | in both \(A\) and \(B\)   | `intersect(A,B)` |
 | Difference   | \(A\backslash B\) | in \(A\) but not in \(B\) | `setdiff(A,B)`   |
-|--------------+-------------------+---------------------------+------------------|
+
+Table: Basic set operations.  The first column lists the name, the second shows the typical notation, the third describes set membership, and the fourth shows how to accomplish it with R.
 
 Some examples follow. 
 
@@ -484,13 +484,7 @@ union(A,B)
 
 ```{r, echo=TRUE}  
 intersect(A,B)
-``` 
-
-#+RESULTS:
-:    rank  suit
-: 32    7 Heart
-: 33    8 Heart
-: 34    9 Heart
+```
 
 ```{r, echo=TRUE}  
 setdiff(A,B)
@@ -510,7 +504,7 @@ are of class `ps`. See Section [[#sub-howto-ps-objects]].
 
 
 
-**Note.** When the `prob` package \cite{prob} loads you will notice a message:
+**Note.** When the `prob` package [@prob] loads you will notice a message:
 `The following object(s) are masked from package:base: intersect, setdiff`. The reason for this message is that there already exist
 methods for the functions `intersect`, `setdiff`, `subset`, and
 `union` in the `base` package which ships with
@@ -647,7 +641,7 @@ certain direction. For instance, parlor magicians may be trained to be
 quite skilled at tossing coins, and some are so skilled that they may
 toss a fair coin and get nothing but Heads, indefinitely. I have
 *seen* this. It was similarly claimed in *Bringing Down the House*
-\cite{Mezrich2003} that MIT students were accomplished enough with
+[@Mezrich2003] that MIT students were accomplished enough with
 cards to be able to cut a deck to the same location, every single
 time. In such cases, one clearly should use the additional information
 to assign \(\mathbb{P}(\mbox{Heads})\) away from the symmetry value of
@@ -697,7 +691,7 @@ sample space.
 
 #### How to do it with R
 
-In the `prob` package \cite{prob}, a probability space is an object of
+In the `prob` package [@prob], a probability space is an object of
 outcomes `S` and a vector of probabilities (called `probs`) with
 entries that correspond to each outcome in `S`. When `S` is a data
 frame, we may simply add a column called `probs` to `S` and we will be
@@ -715,8 +709,8 @@ as the number of outcomes in `x`). The specific choice of `probs`
 depends on the context of the problem, and some examples follow to
 demonstrate some of the more common choices.
 
-# +BEGIN_exampletoo
 
+```{example}
 The Equally Likely Model asserts that every outcome of the sample
 space has the same probability, thus, if a sample space has \(n\)
 outcomes, then `probs` would be a vector of length \(n\) with
@@ -724,6 +718,7 @@ identical entries \(1/n\). The quickest way to generate `probs` is
 with the `rep` function. We will start with the experiment of rolling
 a die, so that \(n=6\). We will construct the sample space, generate
 the `probs` vector, and put them together with `probspace`.
+```
 
 ```{r, echo=TRUE}   
 outcomes <- rolldie(1) 
@@ -776,13 +771,14 @@ the user to carefully consider the experiment to decide whether or not
 the outcomes are equally likely and then use `probspace` to assign the
 model.
 
-# +BEGIN_exampletoo
-<<exa-unbalanced-coin>> *An unbalanced coin.# While the `makespace`
+```{example, label="unbalanced-coin",name="An unbalanced coin"} 
+While the `makespace`
 argument to `tosscoin` is useful to represent the tossing of a *fair*
 coin, it is not always appropriate. For example, suppose our coin is
 not perfectly balanced, for instance, maybe the \(H\) side is somewhat
 heavier such that the chances of a \(H\) appearing in a single toss is
 0.70 instead of 0.5. We may set up the probability space with
+```
 
 ```{r, echo=TRUE}   
 probspace(tosscoin(1), probs = c(0.70, 0.30)) 
@@ -920,21 +916,22 @@ In other words, under the equally likely model, the probability of an
 event \(A\) is determined by the number of elementary events that
 \(A\) contains.
 
-# +BEGIN_exampletoo
 
+```{example}
 Consider the random experiment \(E\) of tossing a coin. Then the
 sample space is \(S=\{H,T\}\), and under the equally likely model,
 these two outcomes have \(\mathbb{P}(H)=\mathbb{P}(T)=1/2\). This
 model is taken when it is reasonable to assume that the coin is fair.
+```
 
 
-# +BEGIN_exampletoo
-
+```{example}
 Suppose the experiment \(E\) consists of tossing a fair coin
 twice. The sample space may be represented by \(S=\{HH,\, HT,\, TH,\,
 TT\}\). Given that the coin is fair and that the coin is tossed in an
 independent and identical manner, it is reasonable to apply the
 equally likely model.
+```
 
 What is \(\mathbb{P}(\mbox{at least 1 Head})\)? Looking at the sample
 space we see the elements \(HH\), \(HT\), and \(TH\) have at least one
@@ -949,11 +946,12 @@ obvious in this simple example that the only outcome with no Heads is
 complicated problems.
 
 
-# +BEGIN_exampletoo
-<<exa-three-child-family>> Imagine a three child family, each child
+```{example, label="three-child-family"}
+Imagine a three child family, each child
 being either Boy (\(B\)) or Girl (\(G\)). An example sequence of
 siblings would be \(BGB\). The sample space may be written \[ S =
 \left\{ BBB,\ BGB,\ GBB,\ GGB,\ BBG,\ BGG,\ GBG,\ GGG,\ \right\}.\]
+```
 
 Note that for many reasons (for instance, it turns out that girls are
 slightly more likely to be born than boys), this sample space is *not*
@@ -975,21 +973,22 @@ Thus \[ \mathbb{P}(\mbox{at most 2 Boys}) = 1 - \mathbb{P}(BBB) = 1 -
 1/8 = 7/8. \]
 
 
-# +BEGIN_exampletoo
 
+```{example}
 Consider the experiment of rolling a six-sided die, and let the
 outcome be the face showing up when the die comes to rest. Then \( S =
 \{ 1,\,2,\,3,\,4,\,5,\,6 \} \). It is usually reasonable to suppose
 that the die is fair, so that the six outcomes are equally likely.
+```
 
 
-# +BEGIN_exampletoo
-
+```{example}
 Consider a standard deck of 52 cards. These are usually labeled with
 the four *suits*: Clubs, Diamonds, Hearts, and Spades, and the 13
 *ranks*: 2, 3, 4, ..., 10, Jack (J), Queen (Q), King (K), and Ace
 (A). Depending on the game played, the Ace may be ranked below 2 or
 above King.
+```
 
 Let the random experiment \(E\) consist of drawing exactly one card
 from a well-shuffled deck, and let the outcome be the face of the
@@ -1014,8 +1013,8 @@ Addition Rule to get
 \end{eqnarray*}
 
 
-# +BEGIN_exampletoo
 
+```{example}
 Staying with the deck of cards, let another random experiment be the
 selection of a five card stud poker hand, where "five card stud"
 means that we draw exactly five cards from the deck without
@@ -1024,6 +1023,7 @@ replacement, no more, and no less. It turns out that the sample space
 for the trivial description \( S = \{ \mbox{all possible 5 card hands}
 \} \) for the time being. We will have a more precise description
 later.
+```
 
 What is \(\mathbb{P}(\mbox{Royal Flush})\), or in other words,
 \(\mathbb{P}(\mbox{A, K, Q, J, 10 all in the same suit})\)?
@@ -1036,7 +1036,7 @@ answer under the equally likely model. This is the subject of Section
 
 #### How to do it with R
 
-Probabilities are calculated in the `prob` package \cite{prob} with
+Probabilities are calculated in the `prob` package [@prob] with
 the `prob` function.
 
 Consider the experiment of drawing a card from a standard deck of
@@ -1075,9 +1075,7 @@ and `given`, which is described in Section [[#sec-Conditional-Probability]].
 *WARNING*. The `event` argument is used to define a subset of `x`,
 that is, the only outcomes used in the probability calculation will be
 those that are elements of `x` and satisfy `event` simultaneously. In
-other words, `Prob(x, event)` calculates
-
-: Prob(intersect(x, subset(x, event)))
+other words, `Prob(x, event)` calculates `Prob(intersect(x, subset(x, event)))`.
 
 Consequently, `x` should be the entire probability space in the case
 that `event` is non-null.
@@ -1104,12 +1102,12 @@ distinct ways, respectively, then the experiment may be performed in
 \(n_{1} n_{2} \cdots n_{k}\) distinct ways.
 ```
 
-# +BEGIN_exampletoo
-
+```{example}
 We would like to order a pizza. It will be sure to have cheese (and
 marinara sauce), but we may elect to add one or more of the following
 five (5) available toppings: \[ \mbox{pepperoni, sausage, anchovies,
 olives, and green peppers.}  \] How many distinct pizzas are possible?
+```
 
 There are many ways to approach the problem, but the quickest avenue
 employs the Multiplication Principle directly. We will separate the
@@ -1126,8 +1124,8 @@ the 2's to find the total number of possible pizzas: \(2 \cdot 2 \cdot
 2 \cdot 2 \cdot 2 = 2^{5} = 32\).
 
 
-# +BEGIN_exampletoo
 
+```{example}
 We would like to buy a desktop computer to study statistics. We go to
 a website to build our computer our way. Given a line of products we
 have many options to customize our computer. In particular, there are
@@ -1135,7 +1133,7 @@ have many options to customize our computer. In particular, there are
 memory, 4 hard drives of differing sizes, and 10 choices for a
 monitor. How many possible types of computer must the company be
 prepared to build? **Answer:** \(2 \cdot 3 \cdot 4 \cdot 4 \cdot 10 = 960\)
-
+```
 
 ### Ordered Samples
 
@@ -1165,25 +1163,25 @@ n! & = & n(n - 1)(n - 2) \cdots 3 \cdot 2 \cdot 1.
 The number of permutations of \(n\) elements is \(n!\).
 
 
-# +BEGIN_exampletoo
 
+```{example}
 Take a coin and flip it 7 times. How many sequences of Heads and Tails
-are possible? *Answer:# \(2^{7}=128\).
+are possible? **Answer:** \(2^{7}=128\).
+```
 
 
-# +BEGIN_exampletoo
-
+```{example}
 In a class of 20 students, we randomly select a class president, a
 class vice-president, and a treasurer. How many ways can this be
-done? *Answer:# \(20\cdot19\cdot18=6840\).
+done? **Answer:** \(20\cdot19\cdot18=6840\).
+```
 
 
-# +BEGIN_exampletoo
-
+```{example}
 We rent five movies to watch over the span of two nights. We wish to
 watch 3 movies on the first night. How many distinct sequences of 3
 movies could we possibly watch? *Answer:# \(5\cdot4\cdot3=60\).
-
+```
 
 
 ### Unordered Samples
@@ -1205,21 +1203,21 @@ plays a special role in mathematics; it is denoted
 \end{equation}
 and is read "\(n\) choose \(k\)".
 
-# +BEGIN_exampletoo
 
+```{example}
 You rent five movies to watch over the span of two nights, but only
 wish to watch 3 movies the first night. Your friend, Fred, wishes to
 borrow some movies to watch at his house on the first night. You owe
 Fred a favor, and allow him to select 2 movies from the set of 5. How
 many choices does Fred have? **Answer:** \({5 \choose 2}=10\).
+```
 
 
-# +BEGIN_exampletoo
-
+```{example}
 Place 3 six-sided dice into a cup. Next, shake the cup well and pour
 out the dice. How many distinct rolls are possible? *Answer:*
 \((6-1+3)!/[(6-1)!3!]={8 \choose 5}=56\).
-
+```
 
 #### How to do it with R
 
@@ -1242,24 +1240,24 @@ the space. The arguments are `n`, the number of (distinguishable)
 objects in the urn, `k`, the sample size, and `replace`, `ordered`, as
 above.
 
-#+NAME: tab-Sampling-k-from-n
-#+CAPTION[Sampling \(k\) from \(n\) objects with `urnsamples`]: Sampling \(k\) from \(n\) objects with `urnsamples`.
+(ref:tab-sampling-k-from-n)
+
 |                   | `ordered = TRUE`    | `ordered = FALSE`           |
 |-------------------+---------------------+-----------------------------|
 | `replace = TRUE`  | \(n^{k}\)           | \((n-1+k)! / [(n-1)!k!]\)   |
 | `replace = FALSE` | \( n! / (n-k)! \)   | \( {n \choose k} \)         |
-|-------------------+---------------------+-----------------------------|
+
+Table: Sampling \(k\) from \(n\) objects with `urnsamples`.
 
 
-# +BEGIN_exampletoo
-
+```{example}
 We will compute the number of outcomes for each of the four
 `urnsamples` examples that we saw in Example
 [[exa-sample-urn-two-from-three]]. Recall that we took a sample of size two from an
 urn with three distinguishable elements.
+```
 
-
-```{r, echo=TRUE}   
+```{r, echo=TRUE}
 nsamp(n=3, k=2, replace = TRUE, ordered = TRUE) 
 nsamp(n=3, k=2, replace = FALSE, ordered = TRUE) 
 nsamp(n=3, k=2, replace = FALSE, ordered = FALSE) 
@@ -1276,8 +1274,8 @@ vectors instead of numbers for `n`, `k`, `replace`, and `ordered`
 results in a vector of corresponding answers. This becomes
 particularly convenient for combinatorics problems.
 
-# +BEGIN_exampletoo
 
+```{example}
 There are 11 artists who each submit a portfolio containing 7
 paintings for competition in an art exhibition. Unfortunately, the
 gallery director only has space in the winners' section to accommodate
@@ -1285,10 +1283,13 @@ gallery director only has space in the winners' section to accommodate
 director decides to give the first, second, and third place winners
 each a wall to display the work of their choice. The walls boast 31
 separate lighting options apiece. How many displays are possible?
+```
 
-**Answer:** The judges will pick 3 (ranked) winners out of 11 (with `rep = FALSE`, `ord = TRUE`). Each artist will select 4 of his/her
+**Answer:** The judges will pick 3 (ranked) winners out of 11 
+(with `rep = FALSE`, `ord = TRUE`). Each artist will select 4 of his/her
 paintings from 7 for display in a row (`rep = FALSE`, `ord = TRUE`),
-and lastly, each of the 3 walls has 31 lighting possibilities (`rep = TRUE`, `ord = TRUE`). These three numbers can be calculated quickly
+and lastly, each of the 3 walls has 31 lighting possibilities 
+(`rep = TRUE`, `ord = TRUE`). These three numbers can be calculated quickly
 with
 
 ```{r, echo=TRUE, results='hide'}
@@ -1338,15 +1339,15 @@ same using `nsamp` versus `factorial` and `choose`. But the virtue of
 one-stop shop. Ultimately, it is up to the user to choose the method
 that works best for him/herself.
 
-# +BEGIN_exampletoo
-
-*The Birthday Problem.# Suppose that there are \(n\) people together
+```{example, name="The Birthday Problem"}
+Suppose that there are \(n\) people together
 in a room. Each person announces the date of his/her birthday in
 turn. The question is: what is the probability of at least one match?
 If we let the event \(A\) represent \[ A = \{ \mbox{there is at least
 one match}\}, \] then we are looking for \(\mathbb{P}(A)\), but as we
 soon will see, it will be more convenient for us to calculate
 \(\mathbb{P}(A^{c})\).
+```
 
 For starters we will ignore leap years and assume that there are only
 365 days in a year. Second, we will assume that births are equally
@@ -1401,14 +1402,13 @@ probabilities:
 
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, label="birthday",fig.cap='(ref:cap-birthday)'}
 g <- Vectorize(pbirthday.ipsur)
 plot(1:50, g(1:50), xlab = "Number of people in room", ylab = "Prob(at least one match)")
 remove(g)
 ```
 
-#+NAME: fig-birthday
-#+CAPTION[The birthday problem]: \small The birthday problem. The horizontal line is at \(p=0.50\) and the vertical line is at \(n=23\).
+(ref:cap-birthday) \small The birthday problem. The horizontal line is at \(p=0.50\) and the vertical line is at \(n=23\).
 
 
 #### How to do it with R
@@ -1460,16 +1460,16 @@ The conditional probability of \(B\) given \(A\), denoted
 We will not be discussing a conditional probability of \(B\) given
 \(A\) when \(\mathbb{P}(A)=0\), even though this theory exists, is
 well developed, and forms the foundation for the study of stochastic
-processes[fn-condprob].
+processes[^3].
 
-[fn:fn-condprob] Conditional probability in this case is defined by
+[^3]: Conditional probability in this case is defined by
 means of *conditional expectation*, a topic that is well beyond the
 scope of this text. The interested reader should consult an advanced
 text on probability theory, such as Billingsley, Resnick, or Ash
 Dooleans-Dade.
-#+END_defn
 
-# +BEGIN_exampletoo
+
+
 
 Toss a coin twice. The sample space is given by \(S=\{ HH,\ HT,\ TH,\
 TT \} \). Let \(A= \{ \mbox{a head occurs} \} \) and \(B= \{ \mbox{a
@@ -1494,18 +1494,17 @@ longer need to account for the outcome \(TT\), and the remaining three
 outcomes are equally likely with exactly two outcomes lying in the set
 \(B\).
 
-
-# +BEGIN_exampletoo
-<<exa-Toss-a-six-sided-die-twice>> Toss a six-sided die twice. The
+```{example, label="toss-a-six-sided-die-twice"}
+Toss a six-sided die twice. The
 sample space consists of all ordered pairs \((i,j)\) of the numbers
 \(1,2,\ldots,6\), that is, \( S = \{ (1,1),\ (1,2),\ldots,(6,6) \}
 \). We know from Section [[#sec-Methods-of-Counting]] that \( \# (S) =
 6^{2} = 36 \). Let \( A = \{ \mbox{outcomes match} \} \) and \( B = \{
 \mbox{sum of outcomes at least 8} \} \). The sample space may be
 represented by a matrix:
+```
 
-#+NAME: twodiceAB
-#+BEGIN_SRC R :exports both :results graphics :file fig/prob-twodiceAB.ps
+```{r, label="twodiceAB",fig.cap='(ref:cap-twodiceAB)'}
 A <- rolldie(2)
 B <- subset(A, X1==X2)
 C <- subset(A, X1+X2 > 7)
@@ -1515,8 +1514,7 @@ p <- ggplot(rbind(B, C), aes(x=X1, y=X2, label=lab))
 p + geom_text(size = 15) + xlab("First roll") + ylab("Second roll")
 ```
 
-#+NAME: fig-twodiceAB
-#+CAPTION[Rolling two dice]: \small Rolling two dice. The outcomes in A are marked with X, the outcomes in B are marked with O.
+(ref:cap-twodiceAB) \small Rolling two dice. The outcomes in A are marked with X, the outcomes in B are marked with O.
 
 
 The outcomes lying in the event \(A\) are marked with the symbol
@@ -1535,7 +1533,7 @@ that \(A\) occurred (we are on the diagonal), there are 3 out of 6
 outcomes that also fall in \(B\), thus, the probability of \(B\) given
 \(A\) is 1/2.
 
-# +END_exampletoo
+
 
 ### How to do it with R
 
@@ -1616,14 +1614,14 @@ The Multiplication Rule is very important because it allows us to find
 probabilities in random experiments that have a sequential structure,
 as the next example shows.
 
-# +BEGIN_exampletoo
-<<exa-two-cards-both-aces>> At the beginning of the section we drew
+```{example, label="two-cards-both-aces"}
+At the beginning of the section we drew
 two cards from a standard playing deck. Now we may answer our original
 question, what is \(\mathbb{P}(\mbox{both Aces})\)?  \[
 \mathbb{P}(\mbox{both Aces})=\mathbb{P}(A\cap
 B)=\mathbb{P}(A)\mathbb{P}(B|A)=\frac{4}{52}\cdot\frac{3}{51}\approx0.00452.
 \]
-
+```
 
 #### How to do it with R {#sub-howto-ps-objects}
 
@@ -1677,15 +1675,15 @@ probabilities at this point; we are limited only by the complexity of
 the event's computer representation.
 
 
-# +BEGIN_exampletoo
-<<exa-urn-7-red-3-green>> Consider an urn with 10 balls inside, 7 of
+```{example, label="urn-7-red-3-green"}
+Consider an urn with 10 balls inside, 7 of
 which are red and 3 of which are green. Select 3 balls successively
 from the urn. Let \( A = \{ 1^{\mathrm{st}} \mbox{ ball is red} \} \),
 \( B = \{ 2^{\mathrm{nd}} \mbox{ ball is red} \} \), and \( C = \{
 3^{\mathrm{rd}} \mbox{ ball is red} \} \). Then \[
 \mathbb{P}(\mbox{all 3 balls are red})=\mathbb{P}(A\cap B\cap
 C)=\frac{7}{10}\cdot\frac{6}{9}\cdot\frac{5}{8}\approx 0.2917.  \]
-
+```
 
 #### How to do it with R
 
@@ -1749,14 +1747,17 @@ Prob(N, isin(N, c("red","green","red")))
 We already knew this. It is the probability of observing two `red`'s,
 above.
 
-# +BEGIN_exampletoo
 
+```{example}
 Consider two urns, the first with 5 red balls and 3 green balls, and
 the second with 2 red balls and 6 green balls. Your friend randomly
 selects one ball from the first urn and transfers it to the second
 urn, without disclosing the color of the ball. You select one ball
 from the second urn. What is the probability that the selected ball is
-red? Let \( A = \{ \mbox{transferred ball is red} \} \) and \( B = \{
+red? 
+```
+
+Let \( A = \{ \mbox{transferred ball is red} \} \) and \( B = \{
 \mbox{selected ball is red} \} \). Write
 \begin{align*}
 B & =S\cap B\\
@@ -1773,10 +1774,11 @@ and notice that \(A\cap B\) and \(A^{c}\cap B\) are disjoint. Therefore
 (which is 7/24 in lowest terms).
 
 
-# +BEGIN_exampletoo
 
+```{example}
 We saw the `RcmdrTestDrive` data set in Chapter [[#cha-introduction-to-R]]
 in which a two-way table of the smoking status versus the gender was
+```
 
 ```{r, echo=TRUE}
 library(RcmdrPlugin.IPSUR)
@@ -1914,9 +1916,12 @@ be mutually independent may seem stringent, the good news is that for
 most of the situations considered in this book the conditions will all
 be met (or at least we will suppose that they are).
 
-# +BEGIN_exampletoo
-<<exa-toss-ten-coins>> Toss ten coins. What is the probability of
-observing at least one Head? Answer: Let \(A_{i}= \{ \mbox{the
+```{example, label="toss-ten-coins"}
+Toss ten coins. What is the probability of
+observing at least one Head? 
+```
+
+**Answer:** Let \(A_{i}= \{ \mbox{the
 }i^{\mathrm{th}}\mbox{ coin shows }H \} ,\
 i=1,2,\ldots,10\). Supposing that we toss the coins in such a way that
 they do not interfere with each other, this is one of the situations
@@ -1935,10 +1940,10 @@ which is approximately \(0.9990234\).
 
 ### How to do it with R
 
-# +BEGIN_exampletoo
-
+```{example}
 Toss ten coins. What is the probability of observing at least one
 Head?
+```
 
 ```{r, echo=TRUE}  
 S <- tosscoin(10, makespace = TRUE)
@@ -1963,9 +1968,8 @@ situation. It has three arguments: `x`, which is a vector of outcomes,
 experiment, and `probs` to specify the probabilities of the outcomes
 of `x` in a single trial.
 
-# +BEGIN_exampletoo
-
-*An unbalanced coin# (continued, see Example [[exa-unbalanced-coin]]). It was
+```{example, name="An unbalanced coin"}
+(Continued, see Example [[exa-unbalanced-coin]]). It was
 easy enough to set up the probability space for one unbalanced toss,
 however, the situation becomes more complicated when there are many
 tosses involved. Clearly, the outcome \(HHH\) should not have the same
@@ -1974,6 +1978,7 @@ probability as \(HTH\). At the same time, there is symmetry in the
 experiment in that the coin does not remember the face it shows from
 toss to toss, and it is easy enough to toss the coin in a similar way
 repeatedly.
+```
 
 We may represent tossing our unbalanced coin three times with the following: 
 
@@ -2036,17 +2041,19 @@ some data, which we represent by the event \(A\). We want to know: how
 do we *update# \(\mathbb{P}(B_{k})\) to \(\mathbb{P}(B_{k}|A)\)? The
 answer: Bayes' Rule.
 
-# +BEGIN_exampletoo
-<<exa-misfiling-assistants>> *Misfiling Assistants.# In this problem,
+```{example, label="misfiling-assistants",name="Misfiling Assistants"}
+In this problem,
 there are three assistants working at a company: Moe, Larry, and
 Curly. Their primary job duty is to file paperwork in the filing
 cabinet when papers become available. The three assistants have
 different work schedules:
+```
 
-#+CAPTION[Misfiling assistants: workload]: Misfiling assistants: workload.
 |          | Moe      | Larry    | Curly    |
 |----------+----------+----------+----------|
 | Workload | \(60\%\) | \(30\%\) | \(10\%\) |
+
+Table: Misfiling assistants: workload.
 
 That is, Moe works 60% of the time, Larry works 30% of the time, and
 Curly does the remaining 10%, and they file documents at approximately
@@ -2056,11 +2063,12 @@ filed the document} \} \] and let \(L\) and \(C\) be the events that
 Larry and Curly, respectively, filed the document. What are these
 events' respective probabilities? In the absence of additional
 information, reasonable prior probabilities would just be
-
-#+CAPTION[Misfiling assistants: prior]: Misfiling assistants: prior.
+ 
 |                   | Moe | Larry | Curly |
 |-------------------+-----+-------+-------|
 | Prior Probability | 0.6 |   0.3 |   0.1 |
+
+Table: Misfiling assistants: prior.
 
 Now, the boss comes in one day, opens up the file cabinet, and selects
 a file at random. The boss discovers that the file has been
@@ -2087,11 +2095,12 @@ And, as it turns out, the boss has information about Moe, Larry, and
 Curly's filing accuracy in the past (due to historical performance
 evaluations). The performance information may be represented by the
 following table:
-
-#+CAPTION[Misfiling assistants: misfile rate]: Misfiling assistants: misfile rate.
+ 
 |              |   Moe | Larry | Curly |
 |--------------+-------+-------+-------|
 | Misfile Rate | 0.003 | 0.007 | 0.010 |
+
+Table: Misfiling assistants: misfile rate.
 
 In other words, on the average, Moe misfiles 0.3% of the documents he
 is supposed to file. Notice that Moe was correct: he is the most
@@ -2144,20 +2153,22 @@ the document, since it incorporates the observed data that a randomly
 selected file was misplaced (which is governed by the misfile
 rate). We can use the same argument to calculate
 
-#+CAPTION[Misfiling assistants: posterior]: Misfiling assistants: posterior.
+
 |                       | Moe           | Larry         | Curly         |
 |-----------------------+---------------+---------------+---------------|
 | Posterior Probability | \(\approx0.37\) | \(\approx0.43\) | \(\approx0.20\) |
 
-The conclusion: *Larry# gets the axe. What is happening is an
+Table: Misfiling assistants: posterior.
+
+The conclusion: **Larry** gets the axe. What is happening is an
 intricate interplay between the time on the job and the misfile
 rate. It is not obvious who the winner (or in this case, loser) will
 be, and the statistician needs to consult Bayes' Rule to determine the
 best course of action.
 
 
-# +BEGIN_exampletoo
-<<exa-misfiling-assistants-multiple>> Suppose the boss gets a change
+```{example, label="misfiling-assistants-multiple"}
+Suppose the boss gets a change
 of heart and does not fire anybody. But the next day (s)he randomly
 selects another file and again finds it to be misplaced. To decide
 whom to fire now, the boss would use the same procedure, with one
@@ -2166,6 +2177,7 @@ and 10%; those are old news. Instead, she would replace the prior
 probabilities with the posterior probabilities just calculated. After
 the math she will have new posterior probabilities, updated even more
 from the day before.
+```
 
 In this way, probabilities found by Bayes' rule are always on the
 cutting edge, always updated with respect to the best information
@@ -2175,13 +2187,14 @@ available at the time.
 ### How to do it with R
 
 There are not any special functions for Bayes' Rule in the `prob`
-package \cite{prob}, but problems like the ones above are easy enough
+package [@prob], but problems like the ones above are easy enough
 to do by hand.
 
-# +BEGIN_exampletoo
 
-**Misfiling assistants** (continued from Example [[exa-misfiling-assistants]]). We store the prior probabilities and the likelihoods in
-vectors and go to town.
+```{example, name="Misfiling Assistants"}
+(Continued from Example [[exa-misfiling-assistants]]). We store the
+prior probabilities and the likelihoods in vectors and go to town.
+```
 
 ```{r, echo=TRUE}  
 prior <- c(0.6, 0.3, 0.1)
@@ -2196,12 +2209,12 @@ is affected by future document mistakes. (Do you see why? Think back
 to Section [[#sec-Independent-Events]].)
 
 
-# +BEGIN_exampletoo
-
+```{example}
 Let us incorporate the posterior probability (`post`) information from
 the last example and suppose that the assistants misfile seven more
 documents. Using Bayes' Rule, what would the new posterior
 probabilities be?
+```
 
 ```{r, echo=TRUE}  
 newprior <- post
@@ -2256,37 +2269,39 @@ letters \(x\), \(y\), and \(z\). Just as \(S\) is the set of all
 possible outcomes of \(E\), we call the set of all possible values of
 \(X\) the *support* of \(X\) and denote it by \(S_{X}\).
 
-# +BEGIN_exampletoo
 
+```{example}
 Let \(E\) be the experiment of flipping a coin twice. We have seen
 that the sample space is \( S = \{ HH,\ HT,\ TH,\ TT \} \). Now define
 the random variable \(X = \mbox{the number of heads}\). That is, for
 example, \(X(HH)=2\), while \(X(HT)=1\). We may make a table of the
 possibilities:
+```
 
-#+NAME: tab-flip-coin-twice
-#+CAPTION[Flipping a coin twice]: Flipping a coin twice.
+(ref:tab-flip-coin-twice)
+
 | \(\omega\in S\) | \(HH\) | \(HT\) | \(TH\) | \(TT\) |
 |-----------------+--------+--------+--------+--------|
 | \(X(\omega)=x\) |      2 |      1 |      1 |      0 |
+
+Table:  Flipping a coin twice.
 
 Taking a look at the second row of the table, we see that the support
 of \(X\) -- the set of all numbers that \(X\) assumes -- would be \(S_{X}= \{ 0,1,2 \} \).
 
 
 
-# +BEGIN_exampletoo
 
+```{example}
 Let \(E\) be the experiment of flipping a coin repeatedly until
 observing a Head. The sample space would be \(S= \{ H,\ TH,\ TTH,\
 TTTH,\ \ldots \} \). Now define the random variable \(Y=\mbox{the
 number of Tails before the first head}\). Then the support of \(Y\)
 would be \( S_{Y}= \{ 0,1,2,\ldots \} \).
+```
 
 
-
-# +BEGIN_exampletoo
-
+```{example}
 Let \(E\) be the experiment of tossing a coin in the air, and define
 the random variable \( Z = \mbox{the time (in seconds) until the coin
 hits the ground} \). In this case, the sample space is inconvenient to
@@ -2296,21 +2311,23 @@ short amount of time; in practice, the set \((0,\infty)\) is
 admittedly too large. However, we will find that in many circumstances
 it is mathematically convenient to study the extended set rather than
 a restricted one.
+```
 
 There are important differences between the supports of \(X\), \(Y\),
 and \(Z\). The support of \(X\) is a finite collection of elements
 that can be inspected all at once. And while the support of \(Y\)
 cannot be exhaustively written down, its elements can nevertheless be
 listed in a naturally ordered sequence. Random variables with supports
-similar to those of \(X\) and \(Y\) are called *discrete random variables*. We study these in Chapter [[#cha-Discrete-Distributions]].
+similar to those of \(X\) and \(Y\) are called *discrete random variables*. 
+We study these in Chapter [[#cha-Discrete-Distributions]].
 
 In contrast, the support of \(Z\) is a continuous interval, containing
 all rational and irrational positive real numbers. For this
-reason[fn:fn-reason], random variables with supports like \(Z\) are
+reason[^4], random variables with supports like \(Z\) are
 called *continuous random variables*, to be studied in Chapter
 [[#cha-Continuous-Distributions]].
 
-[fn:fn-reason] This isn't really the reason, but it serves as an
+[^4]: This isn't really the reason, but it serves as an
 effective litmus test at the introductory level. See Billingsley or
 Resnick.
 

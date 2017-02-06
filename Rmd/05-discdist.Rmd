@@ -300,13 +300,8 @@ having been sampled. The default option is `replace = FALSE` but for
 discrete uniforms the sampled values should be replaced. Some examples
 follow.
 
-```{example}
-
-* To roll a fair die 3000 times, do `sample(6, size = 3000, replace = TRUE)`.
-* To choose 27 random numbers from 30 to 70, do `sample(30:70, size = 27, replace = TRUE)`.
-* To flip a fair coin 1000 times, do `sample(c("H","T"), size = 1000, replace = TRUE)`.
-
-```
+**Examples.** 
+To roll a fair die 3000 times, do `sample(6, size = 3000, replace = TRUE)`. To choose 27 random numbers from 30 to 70, do `sample(30:70, size = 27, replace = TRUE)`. To flip a fair coin 1000 times, do `sample(c("H","T"), size = 1000, replace = TRUE)`.
 
 #### With the R Commander:
 
@@ -550,12 +545,11 @@ plot(X, cex = 0.2)
 (ref:cap-binom-plot-distr) \small The \textsf{binom}(`size` = 3, `prob` = 0.5) distribution from the `distr` package.
 
 
-| How to do:              | with `stats` (default)               | with `distr`         |
-|-------------------------+--------------------------------------+----------------------|
-| PMF: \(\mathbb{P}(X=x)\)       | \(\mathtt{dbinom(x,size=n,prob=p)}\) | \(\mathtt{d(X)(x)}\) |
-| CDF:  \(\mathbb{P}(X\leq x)\)  | \(\mathtt{pbinom(x,size=n,prob=p)}\) | \(\mathtt{p(X)(x)}\) |
-| Simulate \(k\) variates | \(\mathtt{rbinom(k,size=n,prob=p)}\) | \(\mathtt{r(X)(k)}\) |
-|-------------------------+--------------------------------------+----------------------|
+| How to do                     | with `stats` (default)               | with `distr`         |
+|-------------------------------+--------------------------------------+----------------------|
+| PMF: \(\mathbb{P}(X=x)\)      | \(\mathtt{dbinom(x,size=n,prob=p)}\) | \(\mathtt{d(X)(x)}\) |
+| CDF:  \(\mathbb{P}(X\leq x)\) | \(\mathtt{pbinom(x,size=n,prob=p)}\) | \(\mathtt{p(X)(x)}\) |
+| Simulate \(k\) variates       | \(\mathtt{rbinom(k,size=n,prob=p)}\) | \(\mathtt{r(X)(k)}\) |
 
 Table: Correspondence between `stats` and `distr`. We are given \(X\sim\mathsf{dbinom}(\mathtt{size}=n,\,\mathtt{prob}=p)\).  For the `distr` package we must first set \(\mathtt{X\ <-\ Binom(size=}n\mathtt{,\ prob=}p\mathtt{)}\).
 
@@ -1459,7 +1453,6 @@ Let \(X\sim\mathsf{binom}(\mathtt{size}=4,\,\mathtt{prob}=1/2)\), and let \(Y=(X
 | x               |    0 |   1 |    2 |   3 |    4 |
 |-----------------+------+-----+------+-----+------|
 | \(f_{X}(x)\)    | 1/16 | 1/4 | 6/16 | 1/4 | 1/16 |
-|-----------------+------+-----+------+-----+------|
 | \(y=(x-1)^{2}\) |    1 |   0 |    1 |   4 |    9 |
 
 Table: Transforming a discrete random variable.

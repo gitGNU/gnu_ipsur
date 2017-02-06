@@ -83,6 +83,7 @@ f_{X}(x)=\mathbb{P}(X=x),\quad x\in S_{X}.
 Since values of the PMF represent probabilities, we know from Chapter
 \@ref(cha-probability) that PMFs enjoy certain properties. In particular, all
 PMFs satisfy
+
 1. \(f_{X}(x)>0\) for \(x\in S\),
 2. \(\sum_{x\in S}f_{X}(x)=1\), and
 3. \(\mathbb{P}(X\in A)=\sum_{x\in A}f_{X}(x)\), for any event
@@ -201,7 +202,7 @@ R since operations on vectors are performed
 *element-wise* (see Section \@ref(sub-functions-and-expressions)):
 
 ```{r, echo=TRUE, results=TRUE}  
-mu <- sum(x # f)
+mu <- sum(x * f)
 mu
 ```
 
@@ -212,7 +213,7 @@ from each entry in `x`, square the answers, multiply by `f`,and
 \(\sigma^{2}\).
 
 ```{r, echo=TRUE, results=TRUE}  
-sigma2 <- sum((x-mu)^2 # f)
+sigma2 <- sum((x-mu)^2 * f)
 sigma2
 ```
 
@@ -286,7 +287,7 @@ Roll a die and  let \(X\) be the upward face showing.  Then \(m = 6\),
 
 ### How to do it with R
 
-### From the console:
+#### From the console:
 One can choose an integer at random with the `sample` function. The
 general syntax to simulate a discrete uniform random variable is
 `sample(x, size, replace = TRUE)`.
@@ -299,13 +300,15 @@ having been sampled. The default option is `replace = FALSE` but for
 discrete uniforms the sampled values should be replaced. Some examples
 follow.
 
-### Examples
+```{example}
 
 * To roll a fair die 3000 times, do `sample(6, size = 3000, replace = TRUE)`.
 * To choose 27 random numbers from 30 to 70, do `sample(30:70, size = 27, replace = TRUE)`.
 * To flip a fair coin 1000 times, do `sample(c("H","T"), size = 1000, replace = TRUE)`.
 
-### With the R Commander:
+```
+
+#### With the R Commander:
 
 Follow the sequence 
 1. `Probability` \(\triangleright\) 
@@ -735,8 +738,8 @@ These are also known as *raw moments* and are sometimes denoted
 \bigskip
 
 ```{example}
-Let \(X \sim \mathsf{binom}(\mathtt{size} = n,\,\mathtt{prob} = p)
-\mbox{ with $M(t) = (q + p \mathrm{e}^{t})^{n}$}\).
+Let \(X \sim \mathsf{binom}(\mathtt{size} = n,\,\mathtt{prob} = p)\)
+with \(M(t) = (q + p \mathrm{e}^{t})^{n}\).
 ```
 
 We calculated the mean and variance of a binomial random variable in
@@ -1269,8 +1272,8 @@ M_{X}(t)=\left(\frac{p}{1-q\mathrm{e}^{t}}\right)^{r},\quad \mbox{for $q\mathrm{
 \end{equation}
 We see that \(q\mathrm{e}^{t}<1\) when \(t<-\ln(1-p)\).
 
-Let \(X\sim\mathsf{nbinom}(\mathtt{size}=r,\mathtt{prob}=p)\mbox{ with
-$M(t)=p^{r}(1-q\mathrm{e}^{t})^{-r}$}\). We proclaimed above the
+Let \(X\sim\mathsf{nbinom}(\mathtt{size}=r,\mathtt{prob}=p)\) with
+\(M(t)=p^{r}(1-q\mathrm{e}^{t})^{-r}\). We proclaimed above the
 values of the mean and variance. Now we are equipped with the tools to
 find these directly.
 \begin{alignat*}{1}

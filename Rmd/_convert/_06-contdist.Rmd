@@ -1,3 +1,70 @@
+
+# Continuous Distributions                                         :contdist:
+:PROPERTIES:
+:tangle: R/06-contdist.R
+:CUSTOM_ID: cha-Continuous-Distributions
+:END:
+
+```{r, echo=FALSE, eval=FALSE}
+#    IPSUR: Introduction to Probability and Statistics Using R
+#    Copyright (C) 2014  G. Jay Kerns
+#
+#    Chapter: Continuous Distributions
+#
+#    This file is part of IPSUR.
+#
+#    IPSUR is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    IPSUR is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with IPSUR.  If not, see <http://www.gnu.org/licenses/>.
+```
+
+```{r, echo=FALSE, include=FALSE}
+# This chapter's package dependencies
+library(distrEx)
+library(actuar)
+```
+
+#+LaTeX: \noindent 
+The focus of the last chapter was on random variables whose support
+can be written down in a list of values (finite or countably
+infinite), such as the number of successes in a sequence of Bernoulli
+trials. Now we move to random variables whose support is a whole range
+of values, say, an interval \((a,b)\). It is shown in later classes
+that it is impossible to write all of the numbers down in a list;
+there are simply too many of them.
+
+This chapter begins with continuous random variables and the
+associated PDFs and CDFs The continuous uniform distribution is
+highlighted, along with the Gaussian, or normal, distribution. Some
+mathematical details pave the way for a catalogue of models.
+
+The interested reader who would like to learn more about any of the
+assorted discrete distributions mentioned below should take a look at
+/Continuous Univariate Distributions, Volumes 1/ and /2/ by Johnson
+/et al/ \cite{Johnson1994,Johnson1995}.
+
+*What do I want them to know?*
+- how to choose a reasonable continuous model under a variety of
+  physical circumstances
+- basic correspondence between continuous versus discrete random
+  variables
+- the general tools of the trade for manipulation of continuous random
+  variables, integration, /etc/.
+- some details on a couple of continuous models, and exposure to a
+  bunch of other ones
+- how to make new continuous random variables from old ones
+
+
+
 ## Continuous Random Variables
 :PROPERTIES:
 :CUSTOM_ID: sec-continuous-random-variables

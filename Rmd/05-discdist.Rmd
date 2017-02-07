@@ -25,6 +25,10 @@
 ```{r, echo=FALSE, include=FALSE}
 # This chapter's package dependencies
 library(distrEx)
+distroptions("WarningSim" = FALSE)   
+         # switches off warnings as to (In)accuracy due to simulations
+distroptions("WarningArith" = FALSE) 
+         # switches off warnings as to arithmetics
 ```
 
 In this chapter we introduce discrete random variables, those who take
@@ -1075,12 +1079,12 @@ with repeated observations of \(X\) we would expect about 0.34
 defectives on the average. To see how our sample reflects the true
 mean, we can compute the sample mean
 
-:  Rcmdr> mean(Simset2$hyper.sim1, na.rm=TRUE)
-:  [1] 0.340344
-
-:  Rcmdr> sd(Simset2$hyper.sim1, na.rm=TRUE)
-:  [1] 0.5584982
-:  ...
+    Rcmdr> mean(Simset2$hyper.sim1, na.rm=TRUE)
+    [1] 0.340344
+    
+    Rcmdr> sd(Simset2$hyper.sim1, na.rm=TRUE)
+    [1] 0.5584982
+    ...
 
 We see that when given many independent observations of \(X\), the
 sample mean is very close to the true mean \(\mu\). We can repeat the

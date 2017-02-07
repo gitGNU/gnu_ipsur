@@ -49,7 +49,7 @@ a dart on a board, how many red lights you encounter on the drive
 home, how many ants traverse a certain patch of sidewalk over a short
 period, *etc*.
 
- *What do I want them to know?*
+**What do I want them to know?**
 
 * that there are multiple interpretations of probability, and the
   methods used depend somewhat on the philosophy chosen
@@ -333,7 +333,7 @@ instance, in the coin-toss experiment the events \(A = \{
 exclusive. Now would be a good time to review the algebra of sets in
 Appendix \@ref(sec-the-algebra-of).
 
-[^prob-2]: This naive definition works for finite or countably
+[^prob-2]: This na\"{\i}ve definition works for finite or countably
 infinite sample spaces, but is inadequate for sample spaces in
 general. In this book, we will not address the subtleties that arise,
 but will refer the interested reader to any text on advanced
@@ -866,7 +866,7 @@ be the chance of rolling a 1 plus the chance of rolling a 2.
 
 For any events \(A\) and \(B\),
 
-1. <<enu-prop-prob-complement>> \(\mathbb{P}(A^{c})=1-\mathbb{P}(A)\).
+1. \label{enu-prop-prob-complement} \(\mathbb{P}(A^{c})=1-\mathbb{P}(A)\).
    **Proof:**
    Since \(A\cup A^{c}=S\) and \(A\cap A^{c}=\emptyset\), we have
    \[

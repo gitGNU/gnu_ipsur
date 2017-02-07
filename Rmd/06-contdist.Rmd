@@ -26,6 +26,10 @@
 # This chapter's package dependencies
 library(distrEx)
 library(actuar)
+distroptions("WarningSim" = FALSE)   
+         # switches off warnings as to (In)accuracy due to simulations
+distroptions("WarningArith" = FALSE) 
+         # switches off warnings as to arithmetics
 ```
 
 The focus of the last chapter was on random variables whose support

@@ -877,9 +877,9 @@ capture the *symmetry* between them.
 
 ```{example}
 Let \(X\) and \(Y\) have joint PDF
-\begin{multline}
+\[
 f_{X,Y}(x,y)=(1+\alpha)\lambda^{2}\mathrm{e}^{-\lambda(x+y)}+\alpha(2\lambda)^{2}\mathrm{e}^{-2\lambda(x+y)}-2\alpha\lambda^{2}\left(\mathrm{e}^{-\lambda(2x+y)}+\mathrm{e}^{-\lambda(x+2y)}\right).
-\end{multline}
+\]
 It is straightforward and tedious to check that \(\iint f=1\). We may
 see immediately that \(f_{X,Y}(x,y)=f_{X,Y}(y,x)\) for all \((x,y)\),
 which confirms that \(X\) and \(Y\) are exchangeable. Here, \(\alpha\)
@@ -1524,6 +1524,8 @@ print(cloud(probs ~ X1 + X2, data = S, type = c("p","h"), lwd = 2,
 ```{block, type="xca",label="xca-prove-cov-shortcut"}
 Prove that \(\mbox{Cov}(X,Y)=\mathbb{E}(XY)-(\mathbb{E} X)(\mathbb{E} Y).\)
 ```
+
+\bigskip
 
 ```{block, type="xca",label="xca-sum-indep-chisq"} 
 Suppose

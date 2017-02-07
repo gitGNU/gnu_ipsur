@@ -188,7 +188,7 @@ Another way to do it is with the `scatterplot3d` function in the
 `scatterplot3d` package [@scatterplot3d]. The code follows, and
 the result is shown in Figure \@ref(fig:3D-scatterplot-trees).
 
-```{r, label="3D-scatterplot-trees",fig.cap='(ref:3D-scatterplot-trees)'}
+```{r, label="3D-scatterplot-trees",fig.cap='(ref:cap-3D-scatterplot-trees)'}
 s3d <- with(trees, scatterplot3d(Girth, Height, Volume, pch = 16, 
                                  highlight.3d = TRUE, angle = 60))
 ```

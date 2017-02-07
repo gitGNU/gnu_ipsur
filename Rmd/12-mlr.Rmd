@@ -237,7 +237,7 @@ equations" \index{normal equations}
 \end{equation}
 
 In the case that \(\mathbf{X}^{\mathrm{T}}\mathbf{X}\) is
-invertible[^1], we may solve the equation for \(\upbeta\) to
+invertible[^mlr-1], we may solve the equation for \(\upbeta\) to
 get the maximum likelihood estimator of \(\upbeta\) which we denote by
 \(\mathbf{b}\):
 \begin{equation}
@@ -245,7 +245,7 @@ get the maximum likelihood estimator of \(\upbeta\) which we denote by
 \mathbf{b}=\left(\mathbf{X}^{\mathrm{T}}\mathbf{X}\right)^{-1}\mathbf{X}^{\mathrm{T}}\mathbf{Y}.
 \end{equation}
 
-[^1]: We can find solutions of the normal equations even when
+[^mlr-1]: We can find solutions of the normal equations even when
 \(\mathbf{X}^{\mathrm{T}}\mathbf{X}\) is not of full rank, but the
 topic falls outside the scope of this book. The interested reader can
 consult an advanced text such as Rao [@Rao1999].
@@ -532,10 +532,10 @@ intervals for \(\beta_{i}\) with an interval that looks like
 \begin{equation}
 b_{i}\pm\mathsf{t}_{\alpha/2}(\mathtt{df}=n-p-1)S_{b_{i}}.
 \end{equation}
-The degrees of freedom for the Student's \(t\) distribution[^2]
+The degrees of freedom for the Student's \(t\) distribution[^mlr-2]
 are the same as the denominator of \(S^{2}\).
 
-[^2]: We are taking great leaps over the mathematical
+[^mlr-2]: We are taking great leaps over the mathematical
 details. In particular, we have yet to show that \(s^{2}\) has a
 chi-square distribution and we have not even come close to showing
 that \(b_{i}\) and \(s_{b_{i}}\) are independent. But these are
@@ -776,9 +776,9 @@ that there is a significant relationship between \(Y\) and \(x_{i}\)
 *in the regression model* \(Y\sim(x_{1},\ldots,x_{p})\). This last
 part of the sentence is very important because the significance of the
 variable \(x_{i}\) sometimes depends on the presence of other
-independent variables in the model[^3].
+independent variables in the model[^mlr-3].
 
-[^3]: In other words, a variable might be highly significant
+[^mlr-3]: In other words, a variable might be highly significant
 one moment but then fail to be significant when another variable is
 added to the model. When this happens it often indicates a problem
 with the explanatory variables, such as *multicollinearity*. See
@@ -850,9 +850,9 @@ estimates. Therefore, we should usually rescale the independent
 variable to have mean zero (and even variance one if we wish) *before*
 fitting the model. That is, we replace the \(x_{i}\)'s with
 \(x_{i}-\overline{x}\) (or \((x_{i}-\overline{x})/s\)) before fitting
-the model[^4].
+the model[^mlr-4].
 
-[^4]: Rescaling the data gets the job done but a better way to
+[^mlr-4]: Rescaling the data gets the job done but a better way to
 avoid the multicollinearity introduced by the higher order terms is
 with *orthogonal polynomials*, whose coefficients are chosen just
 right so that the polynomials are not correlated with each other. This
@@ -865,21 +865,21 @@ orthogonal polynomials in action can be run with `example(cars)`.
 
 There are multiple ways to fit a quadratic model to the variables
 `Volume` and `Girth` using R.
+
 1. One way would be to square the values for `Girth` and save them in
    a vector `Girthsq`. Next, fit the linear model `Volume ~ Girth +
    Girthsq`.
 2. A second way would be to use the *insulate* function in
-   R, denoted by `I`:
-   : Volume ~ Girth + I(Girth^2)
+   R, denoted by `I`: `Volume ~ Girth + I(Girth^2)`
    The second method is shorter than the first but the end result is
    the same. And once we calculate and store the fitted model (in,
    say, `treesquad.lm`) all of the previous comments regarding
    R apply.
 3. A third and "right" way to do it is with orthogonal polynomials:
-   :  Volume ~ poly(Girth, degree = 2)
+   `Volume ~ poly(Girth, degree = 2)`
    See `?poly` and `?cars` for more information. Note that we can
-   recover the approach in 2 with `poly(Girth, degree = 2, raw =
-   TRUE)`.
+   recover the approach in 2 with `poly(Girth, degree = 2, raw = TRUE)`.
+
 
 \bigskip
 
@@ -964,7 +964,7 @@ In Example \@ref(ex:mlr-trees-poly-no-rescale) of Section \@ref(sec-partial-f-st
 
 **Note:** The `trees` data do not have any qualitative explanatory
 variables, so we will construct one for illustrative
-purposes[^5].  We will leave the `Girth` variable alone,
+purposes[^mlr-5].  We will leave the `Girth` variable alone,
 but we will replace the variable `Height` by a new variable `Tall`
 which indicates whether or not the cherry tree is taller than a
 certain threshold (which for the sake of argument will be the sample
@@ -983,7 +983,7 @@ trees$Tall[1:5]
 Note that `Tall` is automatically generated to be a factor with the
 labels in the correct order. See `?cut` for more.
 
-[^5]: This procedure of replacing a continuous variable by a
+[^mlr-5]: This procedure of replacing a continuous variable by a
 discrete/qualitative one is called *binning*, and is almost *never*
 the right thing to do. We are in a bind at this point, however,
 because we have invested this chapter in the `trees` data and I do not
@@ -1044,7 +1044,7 @@ with `Tall = yes` and trees with `Tall = no`.
 ```{block2, type="rem"}
 We were somewhat disingenuous when we defined the dummy variable
 `Tallyes` because, in truth, R defines `Tallyes`
-automatically without input from the user[^6]. Indeed, the
+automatically without input from the user[^mlr-6]. Indeed, the
 author fit the model beforehand and wrote the discussion afterward
 with the knowledge of what R would do so that the output
 the reader saw would match what (s)he had previously read. The way
@@ -1054,7 +1054,7 @@ this book. The interested reader should see Neter et al
 [@Neter1996] or Fox [@Fox1997] for more.
 ```
 
-[^6]: That is, R by default handles contrasts
+[^mlr-6]: That is, R by default handles contrasts
 according to its internal settings which may be customized by the user
 for fine control. Given that we will not investigate contrasts further
 in this book it does not serve the discussion to delve into those

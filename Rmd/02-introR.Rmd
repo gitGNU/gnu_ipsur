@@ -320,10 +320,7 @@ Note that you can just type `(1i)^2` to get the same answer. The
 `NaN` \index{NaN@\texttt{NaN}} stands for "not a number"; it is
 represented internally as `double` \index{double}.
 
-### Vectors
-:PROPERTIES:
-:CUSTOM_ID: sub-Vectors
-:END:
+### Vectors {#sub-vectors}
 
 All of this time we have been manipulating vectors of length 1. Now
 let us move to vectors with multiple entries.
@@ -355,7 +352,7 @@ of values, say, stored in a text file or spreadsheet. You may copy and
 paste them all at the `1:` prompt, and R will store all
 of the values instantly in the vector `x`.
 
-*Repeated data; regular patterns:# the `seq` \index{seq@\texttt{seq}}
+*Repeated data; regular patterns:* the `seq` \index{seq@\texttt{seq}}
 function will generate all sorts of sequences of numbers. It has the
 arguments `from`, `to`, `by`, and `length.out` which can be set in
 concert with one another. We will do a couple of examples to show you
@@ -681,8 +678,8 @@ entered commands.
   file located in the working directory called
   `.RData` \index{.RData@\texttt{.RData}}. This file is then
   automatically loaded the next time R starts (in which
-  case R will say `[previously saved workspace
-  restored]`). This is a valuable feature for experienced users of
+  case R will say `[previously saved workspace restored]`). 
+  This is a valuable feature for experienced users of
   R, but I find that it causes more trouble than it saves
   with beginners.
 

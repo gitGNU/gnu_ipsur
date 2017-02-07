@@ -53,14 +53,14 @@ that \(Y\) depends in *some* way on \(x\). Some typical examples of
 
 Given information about the relationship between \(x\) and \(Y\), we
 would like to *predict* future values of \(Y\) for particular values
-of \(x\). This turns out to be a difficult problem[^1], so
+of \(x\). This turns out to be a difficult problem[^slr-1], so
 instead we first tackle an easier problem: we estimate \(\mathbb{E}Y\). How can we accomplish this? Well, we know that \(Y\) depends
 somehow on \(x\), so it stands to reason that
 \begin{equation}
 \mathbb{E} Y = \mu(x),\ \mbox{a function of }x.
 \end{equation}
 
-[^1]: Yogi Berra once said, "It is always difficult to make
+[^slr-1]: Yogi Berra once said, "It is always difficult to make
 predictions, especially about the future."
 
 But we should be able to say more than that. To focus our efforts we
@@ -139,9 +139,9 @@ are independent, but we also assume that their distributions have the
 same spread. In mathematical terms this means that the normal
 densities all along the line have identical standard deviations --
 there is no "fanning out" or "scrunching in" of the normal densities
-as \(x\) increases[^2].
+as \(x\) increases[^slr-2].
 
-[^2]: In practical terms, this constant variance assumption is
+[^slr-2]: In practical terms, this constant variance assumption is
 often violated, in that we often observe scatterplots that fan out
 from the line as \(x\) gets large or small. We say under those
 circumstances that the data show *heteroscedasticity*. There are
@@ -475,9 +475,9 @@ For a point estimate of \(\sigma^{2}\) we use the *mean square error*
 S^{2}=\frac{SSE}{n-2},
 \end{equation}
 and we estimate \(\sigma\) with the *standard error*
-\(S=\sqrt{S^{2}}\)[^3].
+\(S=\sqrt{S^{2}}\)[^slr-3].
 
-[^3]: Be careful not to confuse the mean square error \(S^{2}\)
+[^slr-3]: Be careful not to confuse the mean square error \(S^{2}\)
 with the sample variance \(S^{2}\) in Chapter
 \ref{cha-Describing-Data-Distributions}. Other notation the reader may
 encounter is the lowercase \(s^{2}\) or the bulky \(MSE\).
@@ -1475,7 +1475,7 @@ The \(DFFITS\) are good for measuring the influence on a single fitted
 value, but we may want to measure the influence an observation has on
 all of the fitted values simultaneously. The statistics used for
 measuring this are Cook's distances which may be
-calculated[^4] by the formula
+calculated[^slr-4] by the formula
 \begin{equation}
 \label{eq-slr-cooks-distance}
 D_{i}=\frac{E_{i}^{2}}{(p+1)S^{2}}\cdot\frac{h_{ii}}{(1-h_{ii})^{2}},\quad i=1,2,\ldots,n.
@@ -1489,7 +1489,7 @@ To assess the significance of \(D\), we compare to quantiles of an
 of thumb is to classify observations falling higher than the
 \(50^{\mathrm{th}}\) percentile as being extreme.
 
-[^4]: Cook's distances are actually defined by a different
+[^slr-4]: Cook's distances are actually defined by a different
 formula than the one shown. The formula in Equation
 \eqref{eq-slr-cooks-distance} is algebraically equivalent to the
 defining formula and is, in the author's opinion, more transparent.

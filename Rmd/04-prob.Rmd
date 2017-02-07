@@ -127,9 +127,9 @@ written to set them up with minimal effort. The underlying machinery
 that does the work includes the `expand.grid` function in the `base`
 package [@base], `combn` in the `combinat` package
 [@combinat], and `permsn` in the `prob` package
-[@prob][^1].
+[@prob][^prob-1].
 
-[^1]: The seasoned R user can get the job done
+[^prob-1]: The seasoned R user can get the job done
 without the convenience wrappers. I encourage the beginner to use them
 to get started, but I also recommend that introductory students wean
 themselves as soon as possible. The wrappers were designed for ease
@@ -323,7 +323,7 @@ even when, in fact, the call to the function was `urnsamples(..., ordered = FALS
 ## Events {#sec-events}
 
 An *event* \index{event} \(A\) is merely a collection of outcomes, or
-in other words, a subset of the sample space[^2]. After the
+in other words, a subset of the sample space[^prob-2]. After the
 performance of a random experiment \(E\) we say that the event \(A\)
 *occurred* if the experiment's outcome belongs to \(A\). We say that a
 bunch of events \(A_{1}\), \(A_{2}\), \(A_{3}\), ... are *mutually exclusive* \index{mutually exclusive} or *disjoint* if \(A_{i}\cap
@@ -333,7 +333,7 @@ instance, in the coin-toss experiment the events \(A = \{
 exclusive. Now would be a good time to review the algebra of sets in
 Appendix \@ref(sec-the-algebra-of).
 
-[^2]: This naive definition works for finite or countably
+[^prob-2]: This naive definition works for finite or countably
 infinite sample spaces, but is inadequate for sample spaces in
 general. In this book, we will not address the subtleties that arise,
 but will refer the interested reader to any text on advanced
@@ -1492,9 +1492,9 @@ The conditional probability of \(B\) given \(A\), denoted
 We will not be discussing a conditional probability of \(B\) given
 \(A\) when \(\mathbb{P}(A)=0\), even though this theory exists, is
 well developed, and forms the foundation for the study of stochastic
-processes[^3].
+processes[^prob-3].
 
-[^3]: Conditional probability in this case is defined by
+[^prob-3]: Conditional probability in this case is defined by
 means of *conditional expectation*, a topic that is well beyond the
 scope of this text. The interested reader should consult an advanced
 text on probability theory, such as Billingsley, Resnick, or Ash
@@ -2387,11 +2387,11 @@ We study these in Chapter \@ref(cha-discrete-distributions).
 
 In contrast, the support of \(Z\) is a continuous interval, containing
 all rational and irrational positive real numbers. For this
-reason[^4], random variables with supports like \(Z\) are
+reason[^prob-4], random variables with supports like \(Z\) are
 called *continuous random variables*, to be studied in Chapter
 \@ref(cha-continuous-distributions).
 
-[^4]: This isn't really the reason, but it serves as an
+[^prob-4]: This isn't really the reason, but it serves as an
 effective litmus test at the introductory level. See Billingsley [@Billingsley1995] or
 Resnick [@Resnick1999].
 

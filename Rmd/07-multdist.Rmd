@@ -114,9 +114,9 @@ f_{Y}(y)=\sum_{x\in S_{Y}}f_{X,Y}(x,y).
 Given the joint PMF we may recover the marginal PMFs, but the converse
 is not true. Even if we have *both* marginal distributions they are
 not sufficient to determine the joint PMF; more information is
-needed[^1].
+needed[^multdist-1].
 
-[^1]: We are not at a total loss, however. There are Frechet
+[^multdist-1]: We are not at a total loss, however. There are Frechet
 bounds which pose limits on how large (and small) the joint
 distribution must be at each point.
 
@@ -267,7 +267,7 @@ of \(V\) is the list of totals in the bottom "margin".
 
 Continuing the reasoning for the discrete case, given two continuous
 random variables \(X\) and \(Y\) there similarly
-exists[^2] a function \(f_{X,Y}(x,y)\) associated with
+exists[^multdist-2] a function \(f_{X,Y}(x,y)\) associated with
 \(X\) and \(Y\) called the *joint probability density function* of
 \(X\) and \(Y\). Every joint PDF satisfies
 \begin{equation}
@@ -292,7 +292,7 @@ and the marginal PDF of \(Y\) may be found with
 f_{Y}(y)=\int_{S_{X}}f_{X,Y}(x,y)\,\mathrm{d} x, \quad y \in S_{Y}.
 \end{equation}
 
-[^2]: Strictly speaking, the joint density function
+[^multdist-2]: Strictly speaking, the joint density function
 does not necessarily exist. But the joint CDF always exists.
 
 \bigskip
@@ -1017,7 +1017,7 @@ Second, the conditional variance of \(Y|x\) is independent of \(x\).
 ### How to do it with R
 
 The multivariate normal distribution is implemented in both the
-`mvtnorm` package [@mvtnorm:1] and the `mnormt` package
+`mvtnorm` package [@mvtnorm] and the `mnormt` package
 [@mnormt]. We use the `mvtnorm` package in this book simply
 because it is a dependency of another package used in the book.
 

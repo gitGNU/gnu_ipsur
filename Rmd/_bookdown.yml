@@ -1,1 +1,2 @@
-before_chapter_script: prelim.R
+before_chapter_script: "prelim.R"
+

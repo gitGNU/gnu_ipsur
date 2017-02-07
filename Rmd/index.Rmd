@@ -5,7 +5,6 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: ["IPSUR.bib", "Rpackages.bib"]
-link-citations: yes
-output: bookdown::pdf_book
+link-citations: true
 description: "This is an Introduction to Probability and Statistics Using R."
 ---

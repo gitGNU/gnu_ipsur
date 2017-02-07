@@ -559,7 +559,7 @@ Table: Correspondence between `stats` and `distr`. We are given \(X\sim\mathsf{d
 ### The Expectation Operator {#sub-expectation-operator}
 
 We next generalize some of the concepts from Section
-\@ref(sub-mean-variance-sd). There we saw that every[^1] PMF has
+\@ref(sub-mean-variance-sd). There we saw that every[^discdist-1] PMF has
 two important numbers associated with it:
 
 \begin{equation}
@@ -572,7 +572,7 @@ increases without bound. For this reason we call \(\mu\) the *expected
 value* of \(X\) and we write \(\mu=\mathbb{E} X\), where
 \(\mathbb{E}\) is an *expectation operator*.
 
-[^1]: Not every, only those PMFs for which the (potentially infinite) series converges.
+[^discdist-1]: Not every, only those PMFs for which the (potentially infinite) series converges.
 
 \bigskip
 
@@ -715,7 +715,7 @@ M'(0)=\sum_{x\in S}x\mathrm{e}^{0}f(x)=\sum_{x\in S}xf(x)=\mu=\mathbb{E} X.
 \end{equation}
 Similarly, \(M''(t) = \sum x^{2} \mathrm{e}^{tx} f(x)\) so that
 \(M''(0) = \mathbb{E} X^{2}\). And in general, we can
-see[^2] that
+see[^discdist-2] that
 \begin{equation}
 M_{X}^{(r)}(0)=\mathbb{E} X^{r}=\mbox{\(r^{\mathrm{th}}\) moment of \(X\) about the origin.}
 \end{equation}
@@ -727,7 +727,7 @@ These are also known as *raw moments* and are sometimes denoted
 \mu_{r}=\mathbb{E}(X-\mu)^{r},\quad r=1,2,\ldots
 \end{equation}
 
-[^2]: We are glossing over some significant mathematical details in our derivation. Suffice it to say that when the MGF exists in a neighborhood of \(t=0\), the exchange of differentiation and summation is valid in that neighborhood, and our remarks hold true.
+[^discdist-2]: We are glossing over some significant mathematical details in our derivation. Suffice it to say that when the MGF exists in a neighborhood of \(t=0\), the exchange of differentiation and summation is valid in that neighborhood, and our remarks hold true.
 
 \bigskip
 
@@ -873,7 +873,7 @@ plot(ecdf(x))
 (ref:cap-empirical-cdf) \small The empirical CDF.
 
 
-See Figure \@ref(fig:empirical-CDF). The graph is of a
+See Figure \@ref(fig:empirical-cdf). The graph is of a
 right-continuous function with jumps exactly at the locations stored
 in `x`. There are no repeated values in `x` so all of the jumps are
 equal to \(1/5=0.2\).

@@ -77,6 +77,7 @@ Quantitative data are any data that measure or are associated with a
 measurement of the quantity of something. They invariably assume
 numerical values. Quantitative data can be further subdivided into two
 categories.
+
 * *Discrete data* take values in a finite or countably infinite set of
   numbers, that is, all possible values could (at least in principle)
   be written down in an ordered list. Examples include: counts, number
@@ -184,7 +185,7 @@ available methods.
            if there are no repeats then this method is identical to
            overplot.
 
-See Figure \@ref(fig-stripcharts), which was produced by the following code.
+See Figure \@ref(fig:stripcharts), which was produced by the following code.
 
 ```{r, echo=TRUE, eval=FALSE}
 stripchart(precip, xlab="rainfall")
@@ -246,7 +247,7 @@ a histogram says.
 There are many ways to plot histograms in R, and one of
 the easiest is with the `hist` \index{hist@\texttt{hist}}
 function. The following code produces the plots in Figure
-\@ref(fig-histograms).
+\@ref(fig:histograms).
 
 ```{r, echo=TRUE, eval=FALSE}
 hist(precip, main = "")
@@ -379,7 +380,7 @@ Brockwell and Davis [@Brockwell1991] give the annual measurements
 of the level (in feet) of Lake Huron from 1875--1972. The data are
 stored in the time series `LakeHuron`. \index{Data
 sets!LakeHuron@\texttt{LakeHuron}} See `?LakeHuron`. Figure
-\@ref(fig-indpl-lakehuron) was produced with the following code:
+\@ref(fig:indpl-lakehuron) was produced with the following code:
 ```
 
 ```{r, echo=TRUE, eval=FALSE}

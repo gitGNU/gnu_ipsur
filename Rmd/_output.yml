@@ -3,5 +3,7 @@ bookdown::pdf_book:
     in_header: preamble.tex
     after_body: backmatter.tex
   latex_engine: pdflatex
+  dev: "cairo_pdf"
   citation_package: biblatex
   keep_tex: yes
+

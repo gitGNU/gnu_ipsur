@@ -58,24 +58,24 @@ do inference in the form of hypothesis tests in the next chapter.
   confidence intervals for basic experimental designs
 * the concept of margin of error and its relationship to sample size
 
-## Point Estimation {#sec-point-Estimation}
+## Point Estimation {#sec-point-estimation}
 
 
 The following example is how I was introduced to maximum likelihood.
 
 \bigskip
 
-```{example, label="how-many-fish"}
-Suppose we have a small pond in our backyard,
+```{example, label="how-many-fish", name="Fishing, part one"}
+Imagine there is a small pond in our backyard,
 and in the pond there live some fish. We would like to know how many
 fish live in the pond. How can we estimate this? One procedure
 developed by researchers is the capture-recapture method. Here is how
 it works.
 ```
 
-We will fish from the pond and suppose that we capture \(M=7\)
-fish. On each caught fish we attach an unobtrusive tag to the fish's
-tail, and release it back into the water.
+We go fishing, and on each fish that we catch we attach 
+an unobtrusive tag to its tail, and release it back into the water. 
+Suppose on this day that we capture \(M=7\) fish in total.
 
 Next, we wait a few days for the fish to remix and become accustomed
 to their new tag. Then we go fishing again. On the second trip some of
@@ -123,6 +123,9 @@ biggest? We can answer this question with a plot of
 \(\mathbb{P}(X=x)\) versus \(F\). See Figure
 \@ref(fig:capture-recapture).
 
+The graph shows that \(\hat{F}=9\) is the number of fish with the maximum likelihood, and that is what we will take for our estimate of the number of fish in the the pond.
+
+
 
 ```{r, echo=FALSE, label="capture-recapture",fig.cap='(ref:cap-capture-recapture)'}
 heights = rep(0, 16)
@@ -135,11 +138,11 @@ lines(9, heights[9], type = "h", lwd = 2)
 points(9, 0, pch = 4, lwd = 3, cex = 2)
 ```
 
-(ref:cap-capture-recapture) \small A plot of maximum likelihood for the capture-recapture experiment.
+(ref:cap-capture-recapture) \small A plot of maximum likelihood for the capture-recapture experiment.  We see that \(\hat{F}=9\) is the number of fish that results in the maximum  likelihood for the observed data.
 
 \bigskip
 
-```{example, label="bass-bluegill"}
+```{example, label="bass-bluegill", name="Fishing, part two"}
 In the last example we were only concerned with
 how many fish were in the pond, but now, we will ask a different
 question. Suppose it is known that there are only two species of fish
@@ -159,8 +162,8 @@ will simply note the species of any caught fish before returning it to
 the pond.
 
 Suppose we catch \(n\) fish. Let \[ X_{i} = \begin{cases} 1, &
-\mbox{if the \(i\mathrm{th}\) fish is a bass,}\\ 0, & \mbox{if the
-\(i\mathrm{th}\) fish is a bluegill.} \end{cases} \] Since we are
+\mbox{if the \(i^{\text{th}}\) fish is a bass,}\\ 0, & \mbox{if the
+\(i^{\text{th}}\) fish is a bluegill.} \end{cases} \] Since we are
 returning the fish to the pond once caught, we may think of this as a
 sampling scheme with replacement where the proportion of bass \(p\)
 does not change. Given that we allow the fish sufficient time to "mix"
@@ -188,7 +191,7 @@ curve(x^4*(1-x)^3, 0, 1, add = TRUE)
 curve(x^3*(1-x)^4, 0, 1, add = TRUE)
 ```
 
-(ref:cap-fishing-part-two) \small Assorted likelihood functions for fishing, part two.   Three graphs are shown of \(L\) when \(\sum x_{i}\) equals 3, 4, and 5, respectively, from left to right. We pick an \(L\) that matches the observed data and then maximize \(L\) as a function of \(p\). If \(\sum x_{i}=4\), then the maximum appears to occur somewhere around \(p \approx 0.6\).
+(ref:cap-fishing-part-two) \small Assorted likelihood functions for Fishing, part two.   Three graphs are shown of \(L\) when \(\sum x_{i}\) equals 3, 4, and 5, respectively, from left to right. We pick an \(L\) that matches the observed data and then maximize \(L\) as a function of \(p\). If \(\sum x_{i}=4\), then the maximum appears to occur somewhere around \(p \approx 0.6\).
 
 
 We want the value of \(p\) which has the highest likelihood, that is,
@@ -216,7 +219,7 @@ the maximum likelihood estimator (MLE) of \(p\) and is denoted
 ```{block, type="remark"}
 Strictly speaking we have only shown that the derivative equals zero
 at \(\hat{p}\), so it is theoretically possible that the critical
-value \(\hat{p}=\overline{x}\) is located at a minimum[^estimate-02]
+value \(\hat{p}=\overline{x}\) is located at a minimum[^est-2]
 instead of a maximum! We should be thorough and check that \(L'>0\)
 when \(p<\overline{x}\) and \(L'<0\) when \(p>\overline{x}\). Then by
 the First Derivative Test (Theorem \@ref(thm:first-derivative-test)) we could
@@ -227,10 +230,7 @@ likelihood estimator, and not a minimum likelihood estimator.
 The result is shown in Figure \@ref(fig:species-mle).
 
 
-[^estimate-02]: We can tell from the graph that our value of \(\hat{p}\)
-is a maximum instead of a minimum so we do not really need to worry
-for this example. Other examples are not so easy, however, and we
-should be careful to be cognizant of this extra step.
+[^est-2]: We can tell from the graph that our value of \(\hat{p}\) is a maximum instead of a minimum so we do not really need to worry for this example. Other examples are not so easy, however, and we should be careful to be cognizant of this extra step.
 
 
 ```{r, echo=FALSE, label="species-mle",fig.cap='(ref:cap-species-mle)'}
@@ -249,7 +249,7 @@ points(mle, 0, pch = 4, lwd = 2, cex = 2, col = "red")
 text(mle, mleobj/6, substitute(hat(theta)==a, list(a=round(mle, 4))), cex = 2, pos = 4)
 ```
 
-(ref:cap-species-mle) \small Species maximum likelihood.
+(ref:cap-species-mle) \small Species maximum likelihood.  Here we see that \(\hat{theta} \approx 0.44\) is the proportion of bass with the maximum likelihood.
 
 In general, we have a family of PDFs \(f(x|\theta)\) indexed by a
 parameter \(\theta\) in some parameter space \(\Theta\). We want to
@@ -301,17 +301,17 @@ Some comments about maximum likelihood estimators:
   are optimized by some calculus acrobatics. In practice, however,
   likelihood functions are sometimes nasty in which case we are
   obliged to use numerical methods to find maxima (if there are any).
-* MLEs are just one of _many_ possible estimators. One of the more
-  popular alternatives are the *method of moments estimators*; see
-  Casella and Berger [@Casella2002] for more.
 
 ```
+
+MLEs are just one of _many_ possible estimators. One of the more
+popular alternatives are the *method of moments estimators*; see Casella and Berger [@Casella2002] for more.
 
 Notice, in Example \@ref(ex:bass-bluegill) we had \(X_{i}\) IID
 \(\mathsf{binom}(\mathtt{size}=1,\,\mathtt{prob}=p)\), and we saw that
 the MLE was \(\hat{p}=\overline{X}\). But further
 \begin{eqnarray*}
-\mathbb{E}\overline{X} & = & \mathbb{E}\frac{X_{1}+X_{2}+\cdots+X_{n}}{n},\\
+\mathbb{E}\overline{X} & = & \mathbb{E}\left(\frac{X_{1}+X_{2}+\cdots+X_{n}}{n}\right),\\
  & = & \frac{1}{n}\left(\mathbb{E} X_{1}+\mathbb{E} X_{2}+\cdots+\mathbb{E} X_{n}\right),\\
  & = & \frac{1}{n}\left(np\right),\\
  & = & p,
@@ -335,7 +335,7 @@ then the statistic \(s(X_{1},X_{2},\ldots,X_{n})\) is said to be an
 Let \(X_{1}\), \(X_{2}\), ... , \(X_{n}\) be
 an \(SRS(n)\) from a
 \(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\)
-distribution. It can be shown (in Exercise [[xca-norm-mu-sig-MLE]]) that
+distribution. It can be shown (in Exercise \@ref(xca-norm-mu-sig-mle)) that
 if \(\mbox{$\theta$}=(\mu,\sigma^{2})\) then the MLE of \(\theta\) is
 \begin{equation}
 \hat{\theta}=(\hat{\mu},\hat{\sigma}^{2}),
@@ -344,6 +344,8 @@ where \(\hat{\mu}=\overline{X}\) and
 \begin{equation}
 \hat{\sigma^{2}}=\frac{1}{n}\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)^{2}=\frac{n-1}{n}S^{2}.
 \end{equation}
+```
+
 We of course know from \@ref{pro:mean-sd-xbar} that \(\hat{\mu}\) is
 unbiased. What about \(\hat{\sigma^{2}}\)? Let us check:
 \begin{eqnarray*}
@@ -353,8 +355,6 @@ unbiased. What about \(\hat{\sigma^{2}}\)? Let us check:
  & = & \frac{\sigma^{2}}{n}(n-1),
 \end{eqnarray*}
 from which we may conclude two things:
-```
-
 
 * \(\hat{\sigma^{2}}\) is a biased estimator of \(\sigma^{2}\), and
 * \(S^{2}=n\hat{\sigma^{2}}/(n-1)\) is an unbiased estimator of
@@ -364,7 +364,7 @@ from which we may conclude two things:
 
 One of the most common questions in an introductory statistics class
 is, "Why do we divide by \(n-1\) when we compute the sample variance?
-Why do we not divide by \(n\)?" We see now that division by \(n\)
+It's an average, right? So why do we not divide by \(n\)?" We see now that division by \(n\)
 amounts to the use of a *biased* estimator for \(\sigma^{2}\), that
 is, if we divided by \(n\) then on the average we would
 *underestimate* the true value of \(\sigma^{2}\). We use \(n-1\) so
@@ -774,6 +774,7 @@ temp <- with(PlantGrowth, z.test(weight, stdev = 0.7))
 temp
 ```
 
+BLANK
 
 The confidence interval bounds are shown in the sixth line down of the
 output (please disregard all of the additional output information for
@@ -959,11 +960,11 @@ where \(\hat{p}_{1}=Y_{1}/n_{1}\) and \(\hat{p}_{2}=Y_{2}/n_{2}\).
 When estimating a single proportion, one-sided intervals are sometimes
 needed. They take the form
 \begin{equation}
-\left[0,\ \hat{p}+z_{\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\right]
+\left[0,\ \hat{p}+z_{\alpha}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\right]
 \end{equation}
 or
 \begin{equation}
-\left[\hat{p}-z_{\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}},\ 1\right]
+\left[\hat{p}-z_{\alpha}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}},\ 1\right]
 \end{equation}
 or in other words, we know in advance that the true proportion is
 restricted to the interval \([0,1]\), so we can truncate our

@@ -29,3 +29,4 @@ cexlab <- 1.5
 # global knitr configuration
 library(knitr)
 opts_chunk$set(comment=NA)
+opts_knit$set(width = 60)

@@ -263,7 +263,7 @@ distribution of \(U\) is the list of totals in the right "margin" of
 the Table \@ref(tab-max-sum-joint-pmf), and the marginal distribution
 of \(V\) is the list of totals in the bottom "margin".
 
-
+\newpage
 
 Continuing the reasoning for the discrete case, given two continuous
 random variables \(X\) and \(Y\) there similarly

@@ -186,7 +186,9 @@
 % Page setup
 %\usepackage[paperwidth=7.44in,paperheight=9.69in]{geometry}
 %\geometry{verbose,tmargin=1in,bmargin=1in,outer=1.25in,inner=0.75in}
-\geometry{paperwidth=6in,paperheight=9in, margin=0.55in}
+%\geometry{paperwidth=6in,paperheight=9in, margin=0.55in}
+%\geometry{paperwidth=6in,paperheight=9in, margin=0.75in}
+\geometry{paperwidth=6in,paperheight=9in,tmargin=0.75in,bmargin=0.75in,outer=0.5in,inner=0.75in}
 \pagestyle{headings}
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{1}
@@ -1005,7 +1007,7 @@ function (x, y)
     y <- as.vector(y)
     unique(y[match(as.vector(x), y, 0L)])
 }
-<bytecode: 0x15a7ef0>
+<bytecode: 0x32be710>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1024,7 +1026,7 @@ instance, typing \texttt{rev} \index{rev@\texttt{rev}} says
 \begin{verbatim}
 function (x) 
 UseMethod("rev")
-<bytecode: 0x1c84e40>
+<bytecode: 0x39e4e40>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1057,7 +1059,7 @@ does. For example, the \texttt{default} method can be viewed with
 \begin{verbatim}
 function (x) 
 if (length(x)) x[length(x):1L] else x
-<bytecode: 0x2372a18>
+<bytecode: 0x3fe7b90>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1076,7 +1078,7 @@ example, if we try to look at the code for \texttt{wilcox.test}
 \begin{verbatim}
 function (x, ...) 
 UseMethod("wilcox.test")
-<bytecode: 0x1b62df0>
+<bytecode: 0x38c2df0>
 <environment: namespace:stats>
 \end{verbatim}
 
@@ -2096,7 +2098,7 @@ packages!qcc@\texttt{qcc}} package \autocite{qcc}. See Figure
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{pareto.chart}\NormalTok{(}\KeywordTok{table}\NormalTok{(state.division), }\DataTypeTok{ylab=}\StringTok{"Frequency"}\NormalTok{, }\DataTypeTok{cex.lab =} \NormalTok{cexlab)}
+\KeywordTok{pareto.chart}\NormalTok{(}\KeywordTok{table}\NormalTok{(state.division), }\DataTypeTok{ylab=}\StringTok{"Frequency"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2832,7 +2834,7 @@ argument which is \texttt{FALSE} by default.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-56}{}{\label{ex:unnamed-chunk-56}}We
+\protect\hypertarget{ex:unnamed-chunk-57}{}{\label{ex:unnamed-chunk-57}}We
 said earlier that the \texttt{discoveries} data looked positively
 skewed; let's see what the statistics say:
 \EndKnitrBlock{example}
@@ -3149,7 +3151,7 @@ function.
 \bigskip
 
 \BeginKnitrBlock{example}[Lengths of Major North American Rivers]
-\protect\hypertarget{ex:unnamed-chunk-61}{}{\label{ex:unnamed-chunk-61}
+\protect\hypertarget{ex:unnamed-chunk-62}{}{\label{ex:unnamed-chunk-62}
 \iffalse (Lengths of Major North American Rivers) \fi }We will look for
 potential outliers in the \texttt{rivers} data.
 \EndKnitrBlock{example}
@@ -3217,7 +3219,7 @@ observation, and each column is a variable.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-64}{}{\label{ex:unnamed-chunk-64}}Suppose
+\protect\hypertarget{ex:unnamed-chunk-65}{}{\label{ex:unnamed-chunk-65}}Suppose
 we have two vectors \texttt{x} and \texttt{y} and we want to make a data
 frame out of them.
 \EndKnitrBlock{example}
@@ -3534,8 +3536,8 @@ I am thinking here about the \texttt{Statistics} \(\triangleright\)
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{_main_files/figure-latex/unnamed-chunk-70-1.pdf}
-\caption{\label{fig:unnamed-chunk-70}\small Scatterplot of Petal width versus length in the
+\includegraphics{_main_files/figure-latex/unnamed-chunk-71-1.pdf}
+\caption{\label{fig:unnamed-chunk-71}\small Scatterplot of Petal width versus length in the
 \texttt{iris} data.}
 \end{figure}
 
@@ -3651,8 +3653,8 @@ It is sometimes nice to set
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{_main_files/figure-latex/unnamed-chunk-72-1.pdf}
-\caption{\label{fig:unnamed-chunk-72}\small Boxplots of \texttt{weight} by \texttt{feed}
+\includegraphics{_main_files/figure-latex/unnamed-chunk-73-1.pdf}
+\caption{\label{fig:unnamed-chunk-73}\small Boxplots of \texttt{weight} by \texttt{feed}
 type in the \texttt{chickwts} data.}
 \end{figure}
 
@@ -3669,8 +3671,8 @@ type in the \texttt{chickwts} data.}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{_main_files/figure-latex/unnamed-chunk-74-1.pdf}
-\caption{\label{fig:unnamed-chunk-74}\small Histograms of \texttt{age} by \texttt{education}
+\includegraphics{_main_files/figure-latex/unnamed-chunk-75-1.pdf}
+\caption{\label{fig:unnamed-chunk-75}\small Histograms of \texttt{age} by \texttt{education}
 level from the \texttt{infert} data.}
 \end{figure}
 
@@ -3687,8 +3689,8 @@ level from the \texttt{infert} data.}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{_main_files/figure-latex/unnamed-chunk-76-1.pdf}
-\caption{\label{fig:unnamed-chunk-76}\small An \texttt{xyplot} of \texttt{Petal.Length}
+\includegraphics{_main_files/figure-latex/unnamed-chunk-77-1.pdf}
+\caption{\label{fig:unnamed-chunk-77}\small An \texttt{xyplot} of \texttt{Petal.Length}
 versus \texttt{Petal.Width} by \texttt{Species} in the \texttt{iris}
 data.}
 \end{figure}
@@ -3707,8 +3709,8 @@ data.}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{_main_files/figure-latex/unnamed-chunk-78-1.pdf}
-\caption{\label{fig:unnamed-chunk-78}\small A \texttt{coplot} of \texttt{conc} versus
+\includegraphics{_main_files/figure-latex/unnamed-chunk-79-1.pdf}
+\caption{\label{fig:unnamed-chunk-79}\small A \texttt{coplot} of \texttt{conc} versus
 \texttt{uptake} by \texttt{Type} and \texttt{Treatment}.}
 \end{figure}
 
@@ -3973,7 +3975,7 @@ details.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-88}{}{\label{ex:unnamed-chunk-88}}Consider
+\protect\hypertarget{ex:unnamed-chunk-89}{}{\label{ex:unnamed-chunk-89}}Consider
 the random experiment of dropping a Styrofoam cup onto the floor from a
 height of four feet. The cup hits the ground and eventually comes to
 rest. It could land upside down, right side up, or it could land on its
@@ -4907,7 +4909,7 @@ follow to demonstrate some of the more common choices.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-116}{}{\label{ex:unnamed-chunk-116}}The
+\protect\hypertarget{ex:unnamed-chunk-117}{}{\label{ex:unnamed-chunk-117}}The
 Equally Likely Model asserts that every outcome of the sample space has
 the same probability, thus, if a sample space has \(n\) outcomes, then
 \texttt{probs} would be a vector of length \(n\) with identical entries
@@ -5184,7 +5186,7 @@ contains.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-122}{}{\label{ex:unnamed-chunk-122}}Consider
+\protect\hypertarget{ex:unnamed-chunk-123}{}{\label{ex:unnamed-chunk-123}}Consider
 the random experiment \(E\) of tossing a coin. Then the sample space is
 \(S=\{H,T\}\), and under the equally likely model, these two outcomes
 have \(\mathbb{P}(H)=\mathbb{P}(T)=1/2\). This model is taken when it is
@@ -5194,7 +5196,7 @@ reasonable to assume that the coin is fair.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-123}{}{\label{ex:unnamed-chunk-123}}Suppose
+\protect\hypertarget{ex:unnamed-chunk-124}{}{\label{ex:unnamed-chunk-124}}Suppose
 the experiment \(E\) consists of tossing a fair coin twice. The sample
 space may be represented by \(S=\{HH,\, HT,\, TH,\, TT\}\). Given that
 the coin is fair and that the coin is tossed in an independent and
@@ -5245,7 +5247,7 @@ Thus \[ \mathbb{P}(\mbox{at most 2 Boys}) = 1 - \mathbb{P}(BBB) = 1 -
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-124}{}{\label{ex:unnamed-chunk-124}}Consider
+\protect\hypertarget{ex:unnamed-chunk-125}{}{\label{ex:unnamed-chunk-125}}Consider
 the experiment of rolling a six-sided die, and let the outcome be the
 face showing up when the die comes to rest. Then
 \(S = \{ 1,\,2,\,3,\,4,\,5,\,6 \}\). It is usually reasonable to suppose
@@ -5255,7 +5257,7 @@ that the die is fair, so that the six outcomes are equally likely.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-125}{}{\label{ex:unnamed-chunk-125}}Consider
+\protect\hypertarget{ex:unnamed-chunk-126}{}{\label{ex:unnamed-chunk-126}}Consider
 a standard deck of 52 cards. These are usually labeled with the four
 \emph{suits}: Clubs, Diamonds, Hearts, and Spades, and the 13
 \emph{ranks}: 2, 3, 4, \ldots{}, 10, Jack (J), Queen (Q), King (K), and
@@ -5289,7 +5291,7 @@ Addition Rule to get
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-126}{}{\label{ex:unnamed-chunk-126}}Staying
+\protect\hypertarget{ex:unnamed-chunk-127}{}{\label{ex:unnamed-chunk-127}}Staying
 with the deck of cards, let another random experiment be the selection
 of a five card stud poker hand, where ``five card stud'' means that we
 draw exactly five cards from the deck without replacement, no more, and
@@ -5382,7 +5384,7 @@ skilled at counting outcomes in events of all kinds.
 \bigskip
 
 \BeginKnitrBlock{proposition}[The Multiplication Principle]
-\protect\hypertarget{prp:unnamed-chunk-130}{}{\label{prp:unnamed-chunk-130}
+\protect\hypertarget{prp:unnamed-chunk-131}{}{\label{prp:unnamed-chunk-131}
 \iffalse (The Multiplication Principle) \fi }Suppose that an experiment
 is composed of two successive steps. Further suppose that the first step
 may be performed in \(n_{1}\) distinct ways while the second step may be
@@ -5397,7 +5399,7 @@ respectively, then the experiment may be performed in
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-131}{}{\label{ex:unnamed-chunk-131}}We
+\protect\hypertarget{ex:unnamed-chunk-132}{}{\label{ex:unnamed-chunk-132}}We
 would like to order a pizza. It will be sure to have cheese (and
 marinara sauce), but we may elect to add one or more of the following
 five (5) available toppings: \[ \mbox{pepperoni, sausage, anchovies,
@@ -5421,7 +5423,7 @@ the 2's to find the total number of possible pizzas:
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-132}{}{\label{ex:unnamed-chunk-132}}We
+\protect\hypertarget{ex:unnamed-chunk-133}{}{\label{ex:unnamed-chunk-133}}We
 would like to buy a desktop computer to study statistics. We go to a
 website to build our computer our way. Given a line of products we have
 many options to customize our computer. In particular, there are 2
@@ -5440,7 +5442,7 @@ we observe?
 \bigskip
 
 \BeginKnitrBlock{proposition}
-\protect\hypertarget{prp:unnamed-chunk-133}{}{\label{prp:unnamed-chunk-133}}The
+\protect\hypertarget{prp:unnamed-chunk-134}{}{\label{prp:unnamed-chunk-134}}The
 number of ways in which one may select an ordered sample of \(k\)
 subjects from a population that has \(n\) distinguishable members is
 
@@ -5468,7 +5470,7 @@ n! & = & n(n - 1)(n - 2) \cdots 3 \cdot 2 \cdot 1.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-134}{}{\label{ex:unnamed-chunk-134}}Take
+\protect\hypertarget{ex:unnamed-chunk-135}{}{\label{ex:unnamed-chunk-135}}Take
 a coin and flip it 7 times. How many sequences of Heads and Tails are
 possible? \textbf{Answer:} \(2^{7}=128\).
 \EndKnitrBlock{example}
@@ -5476,7 +5478,7 @@ possible? \textbf{Answer:} \(2^{7}=128\).
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-135}{}{\label{ex:unnamed-chunk-135}}In
+\protect\hypertarget{ex:unnamed-chunk-136}{}{\label{ex:unnamed-chunk-136}}In
 a class of 20 students, we randomly select a class president, a class
 vice-president, and a treasurer. How many ways can this be done?
 \textbf{Answer:} \(20\cdot19\cdot18=6840\).
@@ -5485,7 +5487,7 @@ vice-president, and a treasurer. How many ways can this be done?
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-136}{}{\label{ex:unnamed-chunk-136}}We
+\protect\hypertarget{ex:unnamed-chunk-137}{}{\label{ex:unnamed-chunk-137}}We
 rent five movies to watch over the span of two nights. We wish to watch
 3 movies on the first night. How many distinct sequences of 3 movies
 could we possibly watch? *Answer:\# \(5\cdot4\cdot3=60\).
@@ -5494,7 +5496,7 @@ could we possibly watch? *Answer:\# \(5\cdot4\cdot3=60\).
 \subsection{Unordered Samples}\label{unordered-samples}
 
 \BeginKnitrBlock{proposition}
-\protect\hypertarget{prp:unnamed-chunk-137}{}{\label{prp:unnamed-chunk-137}}The
+\protect\hypertarget{prp:unnamed-chunk-138}{}{\label{prp:unnamed-chunk-138}}The
 number of ways in which one may select an unordered sample of \(k\)
 subjects from a population that has \(n\) distinguishable members is
 
@@ -5520,7 +5522,7 @@ and is read ``\(n\) choose \(k\)''.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-138}{}{\label{ex:unnamed-chunk-138}}You
+\protect\hypertarget{ex:unnamed-chunk-139}{}{\label{ex:unnamed-chunk-139}}You
 rent five movies to watch over the span of two nights, but only wish to
 watch 3 movies the first night. Your friend, Fred, wishes to borrow some
 movies to watch at his house on the first night. You owe Fred a favor,
@@ -5531,7 +5533,7 @@ does Fred have? \textbf{Answer:} \({5 \choose 2}=10\).
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-139}{}{\label{ex:unnamed-chunk-139}}Place
+\protect\hypertarget{ex:unnamed-chunk-140}{}{\label{ex:unnamed-chunk-140}}Place
 3 six-sided dice into a cup. Next, shake the cup well and pour out the
 dice. How many distinct rolls are possible? \textbf{Answer:}
 \((6-1+3)!/[(6-1)!3!]={8 \choose 5}=56\).
@@ -5580,7 +5582,7 @@ size, and \texttt{replace}, \texttt{ordered}, as above.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-140}{}{\label{ex:unnamed-chunk-140}}We
+\protect\hypertarget{ex:unnamed-chunk-141}{}{\label{ex:unnamed-chunk-141}}We
 will compute the number of outcomes for each of the four
 \texttt{urnsamples} examples that we saw in Example
 \ref{ex:sample-urn-two-from-three}. Recall that we took a sample of size
@@ -5642,7 +5644,7 @@ combinatorics problems.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-142}{}{\label{ex:unnamed-chunk-142}}There
+\protect\hypertarget{ex:unnamed-chunk-143}{}{\label{ex:unnamed-chunk-143}}There
 are 11 artists who each submit a portfolio containing 7 paintings for
 competition in an art exhibition. Unfortunately, the gallery director
 only has space in the winners' section to accommodate 12 paintings in a
@@ -5735,7 +5737,7 @@ the method that works best for him/herself.
 \bigskip
 
 \BeginKnitrBlock{example}[The Birthday Problem]
-\protect\hypertarget{ex:unnamed-chunk-149}{}{\label{ex:unnamed-chunk-149}
+\protect\hypertarget{ex:unnamed-chunk-150}{}{\label{ex:unnamed-chunk-150}
 \iffalse (The Birthday Problem) \fi }Suppose that there are \(n\) people
 together in a room. Each person announces the date of his/her birthday
 in turn. The question is: what is the probability of at least one match?
@@ -5827,8 +5829,8 @@ sequence of commands.
 \end{Shaded}
 
 There is a \texttt{Birthday\ problem} item in the \texttt{Probability}
-menu of \texttt{RcmdrPlugin.IPSUR}. In the base R version, one can
-compute approximate probabilities for the more general case of
+menu \newline of \texttt{RcmdrPlugin.IPSUR}. In the base R version, one
+can compute approximate probabilities for the more general case of
 probabilities other than 1/2, for differing total number of days in the
 year, and even for more than two matches.
 
@@ -5852,7 +5854,7 @@ for these two situations we write \[
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-151}{}{\label{def:unnamed-chunk-151}}The
+\protect\hypertarget{def:unnamed-chunk-152}{}{\label{def:unnamed-chunk-152}}The
 conditional probability of \(B\) given \(A\), denoted
 \(\mathbb{P}(B|A)\), is defined by
 
@@ -6018,7 +6020,7 @@ just like regular probabilities when the conditioned event is fixed.
 \bigskip
 
 \BeginKnitrBlock{theorem}
-\protect\hypertarget{thm:unnamed-chunk-156}{}{\label{thm:unnamed-chunk-156}}For
+\protect\hypertarget{thm:unnamed-chunk-157}{}{\label{thm:unnamed-chunk-157}}For
 any fixed event \(A\) with \(\mathbb{P}(A)>0\),
 
 \begin{enumerate}
@@ -6044,7 +6046,7 @@ immediate:
 \bigskip
 
 \BeginKnitrBlock{proposition}
-\protect\hypertarget{prp:unnamed-chunk-157}{}{\label{prp:unnamed-chunk-157}}For
+\protect\hypertarget{prp:unnamed-chunk-158}{}{\label{prp:unnamed-chunk-158}}For
 any events \(A\), \(B\), and \(C\) with \(\mathbb{P}(A)>0\),
 
 \begin{enumerate}
@@ -6266,7 +6268,7 @@ We already knew this. It is the probability of observing two
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-165}{}{\label{ex:unnamed-chunk-165}}Consider
+\protect\hypertarget{ex:unnamed-chunk-166}{}{\label{ex:unnamed-chunk-166}}Consider
 two urns, the first with 5 red balls and 3 green balls, and the second
 with 2 red balls and 6 green balls. Your friend randomly selects one
 ball from the first urn and transfers it to the second urn, without
@@ -6297,7 +6299,7 @@ and notice that \(A\cap B\) and \(A^{c}\cap B\) are disjoint. Therefore
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-166}{}{\label{ex:unnamed-chunk-166}}We
+\protect\hypertarget{ex:unnamed-chunk-167}{}{\label{ex:unnamed-chunk-167}}We
 saw the \texttt{RcmdrTestDrive} data set in Chapter
 \ref{cha-introduction-to-R} in which a two-way table of the smoking
 status versus the gender was
@@ -6372,7 +6374,7 @@ The coin does not remember the result of the first toss.
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-168}{}{\label{def:unnamed-chunk-168}}Events
+\protect\hypertarget{def:unnamed-chunk-169}{}{\label{def:unnamed-chunk-169}}Events
 \(A\) and \(B\) are said to be \emph{independent} if
 
 \begin{equation}
@@ -6411,7 +6413,7 @@ It can be shown that when \(\mathbb{P}(A),\
 \bigskip
 
 \BeginKnitrBlock{proposition}
-\protect\hypertarget{prp:unnamed-chunk-169}{}{\label{prp:unnamed-chunk-169}}If
+\protect\hypertarget{prp:unnamed-chunk-170}{}{\label{prp:unnamed-chunk-170}}If
 the events \(A\) and \(B\) are independent then
 
 \begin{itemize}
@@ -6443,7 +6445,7 @@ note that the Multiplication Rule, Equation
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-171}{}{\label{def:unnamed-chunk-171}}The
+\protect\hypertarget{def:unnamed-chunk-172}{}{\label{def:unnamed-chunk-172}}The
 events \(A\), \(B\), and \(C\) are \emph{mutually independent} if the
 following four conditions are met:
 
@@ -6498,7 +6500,7 @@ which is approximately \(0.9990234\).
 \subsection{How to do it with R}\label{how-to-do-it-with-r-17}
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-172}{}{\label{ex:unnamed-chunk-172}}Toss
+\protect\hypertarget{ex:unnamed-chunk-173}{}{\label{ex:unnamed-chunk-173}}Toss
 ten coins. What is the probability of observing at least one Head?
 \EndKnitrBlock{example}
 
@@ -6533,7 +6535,7 @@ probabilities of the outcomes of \texttt{x} in a single trial.
 \bigskip
 
 \BeginKnitrBlock{example}[An unbalanced coin]
-\protect\hypertarget{ex:unnamed-chunk-174}{}{\label{ex:unnamed-chunk-174}
+\protect\hypertarget{ex:unnamed-chunk-175}{}{\label{ex:unnamed-chunk-175}
 \iffalse (An unbalanced coin) \fi }(Continued, see Example
 \ref{ex:unbalanced-coin}). It was easy enough to set up the probability
 space for one unbalanced toss, however, the situation becomes more
@@ -6590,7 +6592,7 @@ becomes available.
 \bigskip
 
 \BeginKnitrBlock{theorem}[Bayes' Rule]
-\protect\hypertarget{thm:unnamed-chunk-176}{}{\label{thm:unnamed-chunk-176}
+\protect\hypertarget{thm:unnamed-chunk-177}{}{\label{thm:unnamed-chunk-177}
 \iffalse (Bayes' Rule) \fi }Let \(B_{1}\), \(B_{2}\), \ldots{},
 \(B_{n}\) be mutually exclusive and exhaustive and let \(A\) be an event
 with \(\mathbb{P}(A)>0\). Then
@@ -6801,7 +6803,7 @@ enough to do by hand.
 \bigskip
 
 \BeginKnitrBlock{example}[Misfiling Assistants]
-\protect\hypertarget{ex:unnamed-chunk-178}{}{\label{ex:unnamed-chunk-178}
+\protect\hypertarget{ex:unnamed-chunk-179}{}{\label{ex:unnamed-chunk-179}
 \iffalse (Misfiling Assistants) \fi }Continued from Example
 \ref{ex:misfiling-assistants}. We store the prior probabilities and the
 likelihoods in vectors and go to town.
@@ -6829,7 +6831,7 @@ power to see how the posterior is affected by future document mistakes.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-180}{}{\label{ex:unnamed-chunk-180}}Let
+\protect\hypertarget{ex:unnamed-chunk-181}{}{\label{ex:unnamed-chunk-181}}Let
 us incorporate the posterior probability (\texttt{post}) information
 from the last example and suppose that the assistants misfile seven more
 documents. Using Bayes' Rule, what would the new posterior probabilities
@@ -6890,7 +6892,7 @@ each outcome \(\omega\) in the sample space we associate a number
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-183}{}{\label{def:unnamed-chunk-183}}A
+\protect\hypertarget{def:unnamed-chunk-184}{}{\label{def:unnamed-chunk-184}}A
 \emph{random variable} \(X\) is a function \(X:S\to\mathbb{R}\) that
 associates to each outcome \(\omega\in S\) exactly one number
 \(X(\omega)=x\).
@@ -6905,7 +6907,7 @@ possible outcomes of \(E\), we call the set of all possible values of
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-184}{}{\label{ex:unnamed-chunk-184}}Let
+\protect\hypertarget{ex:unnamed-chunk-185}{}{\label{ex:unnamed-chunk-185}}Let
 \(E\) be the experiment of flipping a coin twice. We have seen that the
 sample space is \(S = \{ HH,\ HT,\ TH,\ TT \}\). Now define the random
 variable \(X = \mbox{the number of heads}\). That is, for example,
@@ -6936,7 +6938,7 @@ Taking a look at the second row of the table, we see that the support of
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-185}{}{\label{ex:unnamed-chunk-185}}Let
+\protect\hypertarget{ex:unnamed-chunk-186}{}{\label{ex:unnamed-chunk-186}}Let
 \(E\) be the experiment of flipping a coin repeatedly until observing a
 Head. The sample space would be \(S= \{ H,\ TH,\ TTH,\
 TTTH,\ \ldots \}\). Now define the random variable
@@ -6947,7 +6949,7 @@ of \(Y\) would be \(S_{Y}= \{ 0,1,2,\ldots \}\).
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-186}{}{\label{ex:unnamed-chunk-186}}Let
+\protect\hypertarget{ex:unnamed-chunk-187}{}{\label{ex:unnamed-chunk-187}}Let
 \(E\) be the experiment of tossing a coin in the air, and define the
 random variable
 \(Z = \mbox{the time (in seconds) until the coin hits the ground}\). In
@@ -7472,14 +7474,12 @@ get \((m+1)/2\). To get the variance we first calculate
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-203}{}{\label{ex:unnamed-chunk-203}}Roll
+\protect\hypertarget{ex:unnamed-chunk-204}{}{\label{ex:unnamed-chunk-204}}Roll
 a die and let \(X\) be the upward face showing. Then \(m = 6\),
 \(\mu = 7/2 = 3.5\), and \(\sigma^{2} = (6^{2} - 1)/12 = 35/12\).
 \EndKnitrBlock{example}
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-20}
-
-\subsubsection{From the console:}\label{from-the-console}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-20}
 
 One can choose an integer at random with the \texttt{sample} function.
 The general syntax to simulate a discrete uniform random variable is
@@ -7499,37 +7499,6 @@ random numbers from 30 to 70, do
 \texttt{sample(30:70,\ size\ =\ 27,\ replace\ =\ TRUE)}. To flip a fair
 coin 1000 times, do
 \texttt{sample(c("H","T"),\ size\ =\ 1000,\ replace\ =\ TRUE)}.
-
-\subsubsection{With the R Commander:}\label{with-the-r-commander}
-
-Follow the sequence 1. \texttt{Probability} \(\triangleright\) 2.
-\texttt{Discrete\ Distributions} \(\triangleright\) 3.
-\texttt{Discrete\ Uniform\ distribution} \(\triangleright\) 4.
-\texttt{Simulate\ Discrete\ uniform\ variates...}.
-
-Suppose we would like to roll a fair die 3000 times. In the
-\texttt{Number\ of\ samples} field we enter \texttt{1}. Next, we
-describe what interval of integers to be sampled. Since there are six
-faces numbered 1 through 6, we set \texttt{from\ =\ 1}, we set
-\texttt{to\ =\ 6}, and set \texttt{by\ =\ 1} (to indicate that we travel
-from 1 to 6 in increments of 1 unit). We will generate a list of 3000
-numbers selected from among 1, 2, \ldots{}, 6, and we store the results
-of the simulation. For the time being, we select
-\texttt{New\ Data\ set}. Click \texttt{OK}.
-
-Since we are defining a new data set, the R Commander requests a name
-for the data set. The default name is \texttt{Simset1}, although in
-principle you could name it whatever you like (according to R's rules
-for object names). We wish to have a list that is 3000 long, so we set
-\texttt{Sample\ Size\ =\ 3000} and click \texttt{OK}.
-
-In the R Console window, the R Commander should tell you that
-\texttt{Simset1} has been initialized, and it should also alert you that
-\texttt{There\ was\ 1\ discrete\ uniform\ variate\ sample\ stored\ in\ Simset\ 1.}.
-To take a look at the rolls of the die, we click
-\texttt{View\ data\ set} and a window opens.
-
-The default name for the variable is \texttt{disunif.sim1}.
 
 \section{The Binomial Distribution}\label{sec-binom-dist}
 
@@ -7597,7 +7566,7 @@ A similar argument shows that \(\mathbb{E} X(X - 1) = n(n - 1)p^{2}\)
 \end{alignat*}
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-204}{}{\label{ex:unnamed-chunk-204}}A
+\protect\hypertarget{ex:unnamed-chunk-205}{}{\label{ex:unnamed-chunk-205}}A
 four-child family. Each child may be either a boy (\(B\)) or a girl
 (\(G\)). For simplicity we suppose that
 \(\mathbb{P}(B)=\mathbb{P}(G)=1/2\) and that the genders of the children
@@ -7619,7 +7588,7 @@ examples.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-205}{}{\label{ex:unnamed-chunk-205}}We
+\protect\hypertarget{ex:unnamed-chunk-206}{}{\label{ex:unnamed-chunk-206}}We
 can calculate it in R Commander under the
 \texttt{Binomial\ Distribution} menu with the
 \texttt{Binomial\ probabilities} menu item.
@@ -7650,7 +7619,7 @@ table is complete. We can read off the answer to be
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-207}{}{\label{ex:unnamed-chunk-207}}Roll
+\protect\hypertarget{ex:unnamed-chunk-208}{}{\label{ex:unnamed-chunk-208}}Roll
 12 dice simultaneously, and let \(X\) denote the number of 6's that
 appear. We wish to find the probability of getting seven, eight, or nine
 6's. If we let \(S=\{ \mbox{get a 6 on one roll} \}\), then
@@ -7746,7 +7715,7 @@ shown in Figure \ref{fig:binom-cdf-base}.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-209}{}{\label{ex:unnamed-chunk-209}}Another
+\protect\hypertarget{ex:unnamed-chunk-210}{}{\label{ex:unnamed-chunk-210}}Another
 way to do Example \ref{ex:toss-coin-3-withr} is with the \texttt{distr}
 family of packages. They use an object oriented approach to random
 variables, that is, a random variable is stored in an object \texttt{X},
@@ -7855,7 +7824,7 @@ of \(X\) and we write \(\mu=\mathbb{E} X\), where \(\mathbb{E}\) is an
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-212}{}{\label{def:unnamed-chunk-212}}More
+\protect\hypertarget{def:unnamed-chunk-213}{}{\label{def:unnamed-chunk-213}}More
 generally, given a function \(g\) we define the \emph{expected value of}
 \(g(X)\) by
 
@@ -7915,7 +7884,7 @@ g(x) f_{X}(x) = c \mathbb{E} g(X).  \]
 \subsection{Moment Generating Functions}\label{sub-mgfs}
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-214}{}{\label{def:unnamed-chunk-214}}Given
+\protect\hypertarget{def:unnamed-chunk-215}{}{\label{def:unnamed-chunk-215}}Given
 a random variable \(X\), its \emph{moment generating function}
 (abbreviated MGF) is defined by the formula
 
@@ -7939,7 +7908,7 @@ We will calculate the MGF for the two distributions introduced above.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-215}{}{\label{ex:unnamed-chunk-215}}Find
+\protect\hypertarget{ex:unnamed-chunk-216}{}{\label{ex:unnamed-chunk-216}}Find
 the MGF for \(X\sim\mathsf{disunif}(m)\). Since \(f(x) = 1/m\), the MGF
 takes the form \[ M(t) = \sum_{x = 1}^{m} \mathrm{e}^{tx}
 \frac{1}{m} = \frac{1}{m}(\mathrm{e}^{t} + \mathrm{e}^{2t} + \cdots +
@@ -7949,7 +7918,7 @@ takes the form \[ M(t) = \sum_{x = 1}^{m} \mathrm{e}^{tx}
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-216}{}{\label{ex:unnamed-chunk-216}}Find
+\protect\hypertarget{ex:unnamed-chunk-217}{}{\label{ex:unnamed-chunk-217}}Find
 the MGF for \(X\sim\mathsf{binom}(\mathtt{size}=n,\,\mathtt{prob}=p)\).
 \EndKnitrBlock{example}
 
@@ -7983,7 +7952,7 @@ We will see an example of Theorem \ref{thm:mgf-unique} in action.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-217}{}{\label{ex:unnamed-chunk-217}}Suppose
+\protect\hypertarget{ex:unnamed-chunk-218}{}{\label{ex:unnamed-chunk-218}}Suppose
 we encounter a random variable which has MGF \[
 M_{X}(t)=(0.3+0.7\mathrm{e}^{t})^{13}.
 \] Then \(X\sim\mathsf{binom}(\mathtt{size}=13,\,\mathtt{prob}=0.7)\).
@@ -8038,7 +8007,7 @@ moments} \(\mu_{r}\) defined by
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-218}{}{\label{ex:unnamed-chunk-218}}Let
+\protect\hypertarget{ex:unnamed-chunk-219}{}{\label{ex:unnamed-chunk-219}}Let
 \(X \sim \mathsf{binom}(\mathtt{size} = n,\,\mathtt{prob} = p)\) with
 \(M(t) = (q + p \mathrm{e}^{t})^{n}\).
 \EndKnitrBlock{example}
@@ -8163,7 +8132,7 @@ valid even when the observed values are repeated.
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-222}{}{\label{def:unnamed-chunk-222}}The
+\protect\hypertarget{def:unnamed-chunk-223}{}{\label{def:unnamed-chunk-223}}The
 \emph{empirical cumulative distribution function} \(F_{n}\) (written
 ECDF) \index{Empirical distribution} is the probability distribution
 that places probability mass \(1/n\) on each of the values \(x_{1}\),
@@ -8349,7 +8318,7 @@ below.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-226}{}{\label{ex:unnamed-chunk-226}}Suppose
+\protect\hypertarget{ex:unnamed-chunk-227}{}{\label{ex:unnamed-chunk-227}}Suppose
 in a certain shipment of 250 Pentium processors there are 17 defective
 processors. A quality control consultant randomly collects 5 processors
 for inspection to determine whether or not they are defective. Let \(X\)
@@ -8414,8 +8383,9 @@ probability with the \texttt{lower.tail} argument to \texttt{phyper}.
 [1] 0.03863065
 \end{verbatim}
 
-In general, the \texttt{lower.tail\ =\ FALSE} option computes
-\(\mathbb{P}(X > x)\) forgiven \(x\).
+In general, the \texttt{phyper(x,\ ...,\ lower.tail\ =\ FALSE)}
+command\\
+computes \(\mathbb{P}(X > x)\) for given \(x\).
 
 \textbf{Generate \(100,000\) observations of the random variable \(X\).}
 Here \texttt{rhyper} comes to he rescue.
@@ -8428,7 +8398,7 @@ Here \texttt{rhyper} comes to he rescue.
 
 Our simulations are stored in the vector \texttt{x}. We could take a
 look at a histogram of \texttt{x} if we like (omitted). We know from our
-formulas that \(\mu=K\cdot M/(M+N)=5*17/250=0.34\). We can check our
+formulas that \(\mu=K\cdot M/(M+N)=5\cdot17/250=0.34\). We can check our
 formulas using the fact that with repeated observations of \(X\) we
 would expect about 0.34 defectives on the average. To see how our sample
 reflects the true mean, we can compute the sample mean:
@@ -8551,7 +8521,7 @@ We will find in the next section that the mean and variance are
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-234}{}{\label{ex:unnamed-chunk-234}}The
+\protect\hypertarget{ex:unnamed-chunk-235}{}{\label{ex:unnamed-chunk-235}}The
 Pittsburgh Steelers place kicker, Jeff Reed, made 81.2\% of his
 attempted field goals in his career up to 2006. Assuming that his
 successive field goal attempts are approximately Bernoulli trials, find
@@ -8629,7 +8599,7 @@ since \(|q|=|1-p|<1\).
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-237}{}{\label{ex:unnamed-chunk-237}}We
+\protect\hypertarget{ex:unnamed-chunk-238}{}{\label{ex:unnamed-chunk-238}}We
 flip a coin repeatedly and let \(X\) count the number of Tails until we
 get seven Heads. What is \(\mathbb{P}(X=5)?\) \emph{Solution}: We know
 that \(X\sim\mathsf{nbinom}(\mathtt{size}=7,\,\mathtt{prob}=1/2)\).\\
@@ -8691,7 +8661,7 @@ Finally we may say \(\sigma^{2} = M''(0) - [M'(0)]^{2} = rq/p^{2}.\)
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-239}{}{\label{ex:unnamed-chunk-239}}A
+\protect\hypertarget{ex:unnamed-chunk-240}{}{\label{ex:unnamed-chunk-240}}A
 random variable has MGF \[
 M_{X}(t)=\left(\frac{0.19}{1-0.81\mathrm{e}^{t}}\right)^{31}.
 \] Then \(X\sim\mathsf{nbinom}(\mathtt{size}=31,\,\mathtt{prob}=0.19)\).
@@ -8779,7 +8749,7 @@ If \(X\) counts the number of events in the interval \([0,t]\) and
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-241}{}{\label{ex:unnamed-chunk-241}}On
+\protect\hypertarget{ex:unnamed-chunk-242}{}{\label{ex:unnamed-chunk-242}}On
 the average, five cars arrive at a particular car wash every hour. Let
 \(X\) count the number of cars that arrive from 10AM to 11AM. Then
 \(X\sim\mathsf{pois}(\mathtt{lambda}=5)\). Also, \(\mu=\sigma^{2}=5\).
@@ -8787,12 +8757,22 @@ What is the probability that no car arrives during this period?
 \emph{Solution}: The probability that no car arrives is \[
 \mathbb{P}(X=0)=\mathrm{e}^{-5}\frac{5^{0}}{0!}=\mathrm{e}^{-5}\approx0.0067.
 \]
-\EndKnitrBlock{example}
+\EndKnitrBlock{example} We get this in R with
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dpois}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DataTypeTok{lambda =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.006737947
+\end{verbatim}
 
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-242}{}{\label{ex:unnamed-chunk-242}}Suppose
+\protect\hypertarget{ex:unnamed-chunk-244}{}{\label{ex:unnamed-chunk-244}}Suppose
 the car wash above is in operation from 8AM to 6PM, and we let \(Y\) be
 the number of customers that appear in this period. Since this period
 covers a total of 10 hours, from Remark \ref{rem-poisson-process} we get
@@ -8828,7 +8808,7 @@ simple substitution.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-244}{}{\label{ex:unnamed-chunk-244}}Let
+\protect\hypertarget{ex:unnamed-chunk-246}{}{\label{ex:unnamed-chunk-246}}Let
 \(X\sim\mathsf{nbinom}(\mathtt{size}=r,\,\mathtt{prob}=p)\). We saw in
 \ref{sec-other-discrete-distributions} that \(X\) represents the number
 of failures until \(r\) successes in a sequence of Bernoulli trials.
@@ -8863,7 +8843,7 @@ all the \(x\)'s that are mapped to that \(y\).
 \bigskip
 
 \BeginKnitrBlock{proposition}
-\protect\hypertarget{prp:unnamed-chunk-245}{}{\label{prp:unnamed-chunk-245}}Let
+\protect\hypertarget{prp:unnamed-chunk-247}{}{\label{prp:unnamed-chunk-247}}Let
 \(X\) be a discrete random variable with PMF \(f_{X}\) supported on the
 set \(S_{X}\). Let \(Y=h(X)\) for some function \(h\). Then \(Y\) has
 PMF \(f_{Y}\) defined by
@@ -8876,7 +8856,7 @@ f_{Y}(y)=\sum_{\{x\in S_{X}|\, h(x)=y\}}f_{X}(x)
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-246}{}{\label{ex:unnamed-chunk-246}}Let
+\protect\hypertarget{ex:unnamed-chunk-248}{}{\label{ex:unnamed-chunk-248}}Let
 \(X\sim\mathsf{binom}(\mathtt{size}=4,\,\mathtt{prob}=1/2)\), and let
 \(Y=(X-1)^{2}\). Consider the following table:
 \EndKnitrBlock{example}
@@ -8931,7 +8911,7 @@ not one-to-one. The method is the same for more complicated problems.
 \bigskip
 
 \BeginKnitrBlock{proposition}
-\protect\hypertarget{prp:unnamed-chunk-247}{}{\label{prp:unnamed-chunk-247}}If
+\protect\hypertarget{prp:unnamed-chunk-249}{}{\label{prp:unnamed-chunk-249}}If
 \(X\) is a random variable with \(\mathbb{E} X=\mu\) and
 \(\mbox{Var}(X)=\sigma^{2}\), then the mean and variance of \(Y=mX+b\)
 is
@@ -9349,7 +9329,7 @@ packages!distr@\texttt{distr}} package \autocite{distr} way.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-255}{}{\label{ex:unnamed-chunk-255}}Let
+\protect\hypertarget{ex:unnamed-chunk-257}{}{\label{ex:unnamed-chunk-257}}Let
 \(X\) have PDF \(f(x)=3x^{2}\), \(0<x<1\) and find
 \(\mathbb{P}(0.14\leq X\leq0.71)\). (We will ignore that \(X\) is a beta
 random variable for the sake of argument.)
@@ -9375,7 +9355,7 @@ variance.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-257}{}{\label{ex:unnamed-chunk-257}}Let
+\protect\hypertarget{ex:unnamed-chunk-259}{}{\label{ex:unnamed-chunk-259}}Let
 \(X\) have PDF \(f(x)=3/x^{4}\), \(x>1\). We may integrate the function
 \(g(x) = x \cdot f(x)= 3/x^3\) from zero to infinity to get the mean of
 \(X\).
@@ -9398,7 +9378,7 @@ Compare this to the answer we got in Example \ref{ex:cont-pdf-3x4}. Use
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-259}{}{\label{ex:unnamed-chunk-259}}Let
+\protect\hypertarget{ex:unnamed-chunk-261}{}{\label{ex:unnamed-chunk-261}}Let
 us redo Example \ref{ex:cont-pdf3x2} with the \texttt{distr} package.
 \EndKnitrBlock{example}
 
@@ -9472,7 +9452,7 @@ same probability associated with them.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-262}{}{\label{ex:unnamed-chunk-262}}Choose
+\protect\hypertarget{ex:unnamed-chunk-264}{}{\label{ex:unnamed-chunk-264}}Choose
 a number in \([0,1]\) at random, and let \(X\) be the number chosen.
 Then \(X\sim\mathsf{unif}(\mathtt{min}=0,\,\mathtt{max}=1)\). The mean
 of \(X\sim\mathsf{unif}(\mathtt{min}=a,\,\mathtt{max}=b)\) is relatively
@@ -9525,7 +9505,7 @@ normal CDF: for \(-\infty<z<\infty\),
 \bigskip
 
 \BeginKnitrBlock{proposition}
-\protect\hypertarget{prp:unnamed-chunk-263}{}{\label{prp:unnamed-chunk-263}}If
+\protect\hypertarget{prp:unnamed-chunk-265}{}{\label{prp:unnamed-chunk-265}}If
 \(X\sim\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\) then
 
 \begin{equation}
@@ -9553,7 +9533,7 @@ M_{Z}(t)=\mathrm{e}^{t^{2}/2},\quad -\infty < t < \infty.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-264}{}{\label{ex:unnamed-chunk-264}}The
+\protect\hypertarget{ex:unnamed-chunk-266}{}{\label{ex:unnamed-chunk-266}}The
 MGF of \(X\sim\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\) is
 then not difficult either because \[ Z=\frac{X-\mu}{\sigma},\mbox{ or
 rewriting, }X=\sigma Z+\mu.  \] Therefore \[
@@ -9579,7 +9559,7 @@ M_{Y}(t)=\mathrm{e}^{ta}M_{X}(bt).
 \bigskip
 
 \BeginKnitrBlock{example}[The 68-95-99.7 Rule]
-\protect\hypertarget{ex:unnamed-chunk-266}{}{\label{ex:unnamed-chunk-266}
+\protect\hypertarget{ex:unnamed-chunk-268}{}{\label{ex:unnamed-chunk-268}
 \iffalse (The 68-95-99.7 Rule) \fi }We saw in Section
 \ref{sub-measures-of-spread} that when an empirical distribution is
 approximately bell shaped there are specific proportions of the
@@ -9679,7 +9659,7 @@ its own.
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-270}{}{\label{def:unnamed-chunk-270}}The
+\protect\hypertarget{def:unnamed-chunk-272}{}{\label{def:unnamed-chunk-272}}The
 \emph{quantile function}\footnote{The precise definition of the quantile
   function is \(Q_{X}(p)=\inf \{ x:\ F_{X}(x)\geq p \}\), so at least it
   is well defined (though perhaps infinite) for the values \(p=0\) and
@@ -9728,7 +9708,7 @@ special case and has its own special notation.
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-272}{}{\label{def:unnamed-chunk-272}}For
+\protect\hypertarget{def:unnamed-chunk-274}{}{\label{def:unnamed-chunk-274}}For
 \(0<\alpha<1\), the symbol \(z_{\alpha}\) denotes the unique solution of
 the equation \(\mathbb{P} ( Z > z_{\alpha}) = \alpha\), where
 \(Z \sim \mathsf{norm}(\mathtt{mean} = 0,\,\mathtt{sd} = 1)\). It can be
@@ -9751,7 +9731,7 @@ function.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-273}{}{\label{ex:unnamed-chunk-273}}Back
+\protect\hypertarget{ex:unnamed-chunk-275}{}{\label{ex:unnamed-chunk-275}}Back
 to Example \ref{ex:iq-quantile-state-problem}, we are looking for
 \(Q_{X}(0.99)\), where
 \(X\sim\mathsf{norm}(\mathtt{mean}=100,\,\mathtt{sd}=15)\). It could not
@@ -9773,7 +9753,7 @@ Compare this answer to the one obtained earlier with \texttt{uniroot}.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-275}{}{\label{ex:unnamed-chunk-275}}Find
+\protect\hypertarget{ex:unnamed-chunk-277}{}{\label{ex:unnamed-chunk-277}}Find
 the values \(z_{0.025}\), \(z_{0.01}\), and \(z_{0.005}\) (these will
 play an important role from Chapter \ref{cha-estimation} onward).
 \EndKnitrBlock{example}
@@ -9927,7 +9907,7 @@ last quantity with respect to \(y\) will yield the PDF of \(Y\).
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-279}{}{\label{ex:unnamed-chunk-279}}Suppose
+\protect\hypertarget{ex:unnamed-chunk-281}{}{\label{ex:unnamed-chunk-281}}Suppose
 \(X\sim\mathsf{unif}(\mathtt{min}=0,\,\mathtt{max}=1)\) and suppose that
 we let \(Y=-\ln\, X\). What is the PDF of \(Y\)?
 \EndKnitrBlock{example}
@@ -9959,7 +9939,7 @@ of the exponential family of distributions, see Section
 \bigskip
 
 \BeginKnitrBlock{proposition}[The Probability Integral Transform]
-\protect\hypertarget{prp:unnamed-chunk-280}{}{\label{prp:unnamed-chunk-280}
+\protect\hypertarget{prp:unnamed-chunk-282}{}{\label{prp:unnamed-chunk-282}
 \iffalse (The Probability Integral Transform) \fi }Given a continuous
 random variable \(X\) with strictly increasing CDF \(F_{X}\), let the
 random variable \(Y\) be defined by \(Y=F_{X}(X)\). Then the
@@ -10241,7 +10221,7 @@ When \(\alpha\) is an integer this distribution is also known as the
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-287}{}{\label{ex:unnamed-chunk-287}}At
+\protect\hypertarget{ex:unnamed-chunk-289}{}{\label{ex:unnamed-chunk-289}}At
 a car wash, two customers arrive per hour on the average. We decide to
 measure how long it takes until the third customer arrives. If \(Y\)
 denotes this random time then
@@ -10487,7 +10467,7 @@ uniform.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-290}{}{\label{ex:unnamed-chunk-290}}Calculate
+\protect\hypertarget{ex:unnamed-chunk-292}{}{\label{ex:unnamed-chunk-292}}Calculate
 the first four raw moments for
 \(X\sim\mathsf{gamma}(\mathtt{shape}=13,\,\mathtt{rate}=1)\) and plot
 the moment generating function.
@@ -11090,6 +11070,8 @@ Equation \eqref{eq-marginal-pmf}, so that the marginal distribution of
 \ref{tab-max-sum-joint-pmf}, and the marginal distribution of \(V\) is
 the list of totals in the bottom ``margin''.
 
+\newpage
+
 Continuing the reasoning for the discrete case, given two continuous
 random variables \(X\) and \(Y\) there similarly exists\footnote{Strictly
   speaking, the joint density function does not necessarily exist. But
@@ -11339,7 +11321,7 @@ help us quantify the dependence between \(X\) and \(Y\).
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-303}{}{\label{def:unnamed-chunk-303}}The
+\protect\hypertarget{def:unnamed-chunk-305}{}{\label{def:unnamed-chunk-305}}The
 \emph{covariance} of \(X\) and \(Y\) is
 
 \begin{equation}
@@ -11396,7 +11378,7 @@ We will do a continuous example so that you can see how it works.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-304}{}{\label{ex:unnamed-chunk-304}}Let
+\protect\hypertarget{ex:unnamed-chunk-306}{}{\label{ex:unnamed-chunk-306}}Let
 us find the covariance of the variables \((X,Y)\) from Example
 \ref{ex:joint-pdf}. The expected value of \(X\) is \[ \mathbb{E}
 X=\int_{0}^{1}x\cdot\frac{6}{5}\left(x+\frac{1}{3}\right)\mathrm{d}
@@ -11464,7 +11446,7 @@ BLANK
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-306}{}{\label{ex:unnamed-chunk-306}}Let
+\protect\hypertarget{ex:unnamed-chunk-308}{}{\label{ex:unnamed-chunk-308}}Let
 the joint PMF of \(X\) and \(Y\) be given by \[
 f_{X,Y}(x,y) =
 \]
@@ -11501,7 +11483,7 @@ Compare the above expression to Equation \eqref{eq-bayes-rule}.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-307}{}{\label{ex:unnamed-chunk-307}}Suppose
+\protect\hypertarget{ex:unnamed-chunk-309}{}{\label{ex:unnamed-chunk-309}}Suppose
 the parameter \(\theta\) is the \(\mathbb{P}(\mbox{Heads})\) for a
 biased coin. It could be any value from 0 to 1. Perhaps we have some
 prior information about this coin, for example, maybe we have seen this
@@ -11603,7 +11585,7 @@ then we say that \(X\) and \(Y\) are independent.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-309}{}{\label{ex:unnamed-chunk-309}}In
+\protect\hypertarget{ex:unnamed-chunk-311}{}{\label{ex:unnamed-chunk-311}}In
 Example \ref{ex:toss-two-dice-joint-pmf} we considered the random
 experiment of rolling a fair die twice. There we found the joint PMF to
 be \[
@@ -11620,7 +11602,7 @@ f_{Y}(y).
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-310}{}{\label{ex:unnamed-chunk-310}}In
+\protect\hypertarget{ex:unnamed-chunk-312}{}{\label{ex:unnamed-chunk-312}}In
 Example \ref{ex:max-sum-two-dice} we considered the same experiment but
 different random variables \(U\) and \(V\). We can prove that \(U\) and
 \(V\) are not independent if we can find a single pair \((u,v)\) where
@@ -11714,7 +11696,7 @@ distribution of sums of random variables.
 \bigskip
 
 \BeginKnitrBlock{corollary}
-\protect\hypertarget{cor:unnamed-chunk-313}{}{\label{cor:unnamed-chunk-313}}If
+\protect\hypertarget{cor:unnamed-chunk-315}{}{\label{cor:unnamed-chunk-315}}If
 \(X\) and \(Y\) are independent, then the moment generating function of
 \(X+Y\) is
 
@@ -11737,7 +11719,7 @@ Let us take a look at some examples of the corollary in action.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-315}{}{\label{ex:unnamed-chunk-315}}Let
+\protect\hypertarget{ex:unnamed-chunk-317}{}{\label{ex:unnamed-chunk-317}}Let
 \(X\sim\mathsf{binom}(\mathtt{size}=n_{1},\,\mathtt{prob}=p)\) and
 \(Y\sim\mathsf{binom}(\mathtt{size}=n_{2},\,\mathtt{prob}=p)\) be
 independent. Then \(X+Y\) has MGF \[ M_{X+Y}(t)=M_{X}(t)\,
@@ -11751,7 +11733,7 @@ distribution. Therefore,
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-316}{}{\label{ex:unnamed-chunk-316}}Let
+\protect\hypertarget{ex:unnamed-chunk-318}{}{\label{ex:unnamed-chunk-318}}Let
 \(X\sim\mathsf{norm}(\mathtt{mean}=\mu_{1},\,\mathtt{sd}=\sigma_{1})\)
 and
 \(Y\sim\mathsf{norm}(\mathtt{mean}=\mu_{2},\,\mathtt{sd}=\sigma_{2})\)
@@ -11834,7 +11816,7 @@ to capture the \emph{symmetry} between them.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-318}{}{\label{ex:unnamed-chunk-318}}Let
+\protect\hypertarget{ex:unnamed-chunk-320}{}{\label{ex:unnamed-chunk-320}}Let
 \(X\) and \(Y\) have joint PDF \[
 f_{X,Y}(x,y)=(1+\alpha)\lambda^{2}\mathrm{e}^{-\lambda(x+y)}+\alpha(2\lambda)^{2}\mathrm{e}^{-2\lambda(x+y)}-2\alpha\lambda^{2}\left(\mathrm{e}^{-\lambda(2x+y)}+\mathrm{e}^{-\lambda(x+2y)}\right).
 \] It is straightforward and tedious to check that \(\iint f=1\). We may
@@ -11875,7 +11857,7 @@ distribution. We will take this as a proof of the following proposition.
 \bigskip
 
 \BeginKnitrBlock{proposition}
-\protect\hypertarget{prp:unnamed-chunk-319}{}{\label{prp:unnamed-chunk-319}}If
+\protect\hypertarget{prp:unnamed-chunk-321}{}{\label{prp:unnamed-chunk-321}}If
 \(X\) and \(Y\) are IID (with common marginal distribution \(F\)) then
 \(X\) and \(Y\) are exchangeable.
 \EndKnitrBlock{proposition}
@@ -12113,7 +12095,7 @@ just fine\ldots{} do you see the connection between Equations
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-326}{}{\label{ex:unnamed-chunk-326}}Let
+\protect\hypertarget{ex:unnamed-chunk-328}{}{\label{ex:unnamed-chunk-328}}Let
 \((X,Y)\sim\mathsf{mvnorm}(\mathtt{mean}=\mathbf{0}_{2\times1},\,\mathtt{sigma}=\mathbf{I}_{2\times2})\)
 and consider the transformation
 
@@ -12296,7 +12278,7 @@ variables. Here it is in one of its simplest forms.
 \bigskip
 
 \BeginKnitrBlock{theorem}[De Finetti's Theorem]
-\protect\hypertarget{thm:unnamed-chunk-330}{}{\label{thm:unnamed-chunk-330}
+\protect\hypertarget{thm:unnamed-chunk-332}{}{\label{thm:unnamed-chunk-332}
 \iffalse (De Finetti's Theorem) \fi }Let \(X_{1}\), \(X_{2}\), \ldots{}
 be a sequence of \(\mathsf{binom}(\mathtt{size}=1,\,\mathtt{prob}=p)\)
 random variables such that \((X_{1},\ldots,X_{k})\) are exchangeable for
@@ -12459,7 +12441,7 @@ distribution is the same as a
 \bigskip
 
 \BeginKnitrBlock{example}[Dinner with Barack Obama]
-\protect\hypertarget{ex:unnamed-chunk-332}{}{\label{ex:unnamed-chunk-332}
+\protect\hypertarget{ex:unnamed-chunk-334}{}{\label{ex:unnamed-chunk-334}
 \iffalse (Dinner with Barack Obama) \fi }During the 2008 U.S.
 presidential primary, Barack Obama offered to have dinner with three
 randomly selected monetary contributors to his campaign. Imagine the
@@ -12845,7 +12827,7 @@ X_{1},\, X_{2},\,\ldots,X_{n}\mbox{ which are IID \(f(x| \theta )\).}
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-341}{}{\label{def:unnamed-chunk-341}}Given
+\protect\hypertarget{def:unnamed-chunk-343}{}{\label{def:unnamed-chunk-343}}Given
 the observed data \(x_{1}\), \(x_{2}\),\ldots{}, \(x_{n}\), the
 \emph{likelihood function} \(L\) is defined by \[
 L(\theta)=\prod_{i=1}^{n}f(x_{i}|\theta),\quad \theta\in\Theta.  \]
@@ -12860,7 +12842,7 @@ or the Second Derivative Test \(\left(L''(\hat{\theta})<0\right)\).
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-342}{}{\label{def:unnamed-chunk-342}}A
+\protect\hypertarget{def:unnamed-chunk-344}{}{\label{def:unnamed-chunk-344}}A
 value \(\theta\) that maximizes \(L\) is called a \emph{maximum
 likelihood estimator} (MLE) and is denoted \(\hat{\theta}\). It is a
 function of the sample,
@@ -12917,7 +12899,7 @@ estimator is exactly right.
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-344}{}{\label{def:unnamed-chunk-344}}Let
+\protect\hypertarget{def:unnamed-chunk-346}{}{\label{def:unnamed-chunk-346}}Let
 \(s(X_{1},X_{2},\ldots,X_{n})\) be a statistic which estimates
 \(\theta\). If \[ \mathbb{E} s(X_{1},X_{2},\ldots,X_{n})=\theta, \] then
 the statistic \(s(X_{1},X_{2},\ldots,X_{n})\) is said to be an
@@ -13058,7 +13040,7 @@ For multiparameter problems we may use a similar approach by way of the
 \bigskip
 
 \BeginKnitrBlock{example}[Plant Growth]
-\protect\hypertarget{ex:unnamed-chunk-348}{}{\label{ex:unnamed-chunk-348}
+\protect\hypertarget{ex:unnamed-chunk-350}{}{\label{ex:unnamed-chunk-350}
 \iffalse (Plant Growth) \fi }We will investigate the \texttt{weight}
 variable of the \texttt{PlantGrowth} data. We will suppose that the
 weights constitute a random observations \(X_{1}\), \(X_{2}\), \ldots{}
@@ -13193,7 +13175,7 @@ But now consider the following string of equivalent inequalities: \[
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-352}{}{\label{def:unnamed-chunk-352}}The
+\protect\hypertarget{def:unnamed-chunk-354}{}{\label{def:unnamed-chunk-354}}The
 interval
 
 \begin{equation}
@@ -13398,7 +13380,7 @@ BLANK
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-359}{}{\label{ex:unnamed-chunk-359}}Give
+\protect\hypertarget{ex:unnamed-chunk-361}{}{\label{ex:unnamed-chunk-361}}Give
 some data with \(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) an \(SRS(n)\)
 from a \(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\)
 distribution. Maybe small sample?
@@ -13518,7 +13500,7 @@ and satisfy
 BLANK
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-362}{}{\label{ex:unnamed-chunk-362}}Small
+\protect\hypertarget{ex:unnamed-chunk-364}{}{\label{ex:unnamed-chunk-364}}Small
 sample, some data with \(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) an
 \(SRS(n)\) from a
 \(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\) distribution.
@@ -13918,7 +13900,7 @@ equation and solve for \(n\).
 BLANK
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-371}{}{\label{ex:unnamed-chunk-371}}Given
+\protect\hypertarget{ex:unnamed-chunk-373}{}{\label{ex:unnamed-chunk-373}}Given
 a situation, given \(\sigma\), given \(E\), we would like to know how
 big \(n\) has to be to ensure that \(\overline{X}\pm5\) is a 95\%
 confidence interval for \(\mu\).
@@ -14183,7 +14165,7 @@ increases\footnote{In practical terms, this constant variance assumption
 \bigskip
 
 \BeginKnitrBlock{example}[Speed and stopping distance of cars]
-\protect\hypertarget{ex:unnamed-chunk-381}{}{\label{ex:unnamed-chunk-381}
+\protect\hypertarget{ex:unnamed-chunk-383}{}{\label{ex:unnamed-chunk-383}
 \iffalse (Speed and stopping distance of cars) \fi }We will use the data
 frame \texttt{cars} \index{Data
 sets!cars@\texttt{cars}} from the \texttt{datasets} package
@@ -14870,7 +14852,7 @@ argument. The general syntax follows.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-397}{}{\label{ex:unnamed-chunk-397}}We
+\protect\hypertarget{ex:unnamed-chunk-399}{}{\label{ex:unnamed-chunk-399}}We
 will find confidence and prediction intervals for the stopping distance
 of a car travelling 5, 6, and 21 mph (note from the graph that there are
 no collected data for these speeds). We have computed \texttt{cars.lm}
@@ -14925,7 +14907,7 @@ The type of interval is dictated by the \texttt{interval} argument
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-403}{}{\label{ex:unnamed-chunk-403}}Using
+\protect\hypertarget{ex:unnamed-chunk-405}{}{\label{ex:unnamed-chunk-405}}Using
 the \texttt{cars} data,
 \EndKnitrBlock{example}
 
@@ -16255,7 +16237,7 @@ Y_{i}=\beta_{0}+\beta_{1}x_{1i}+\beta_{2}x_{2i}+\cdots+\beta_{p}x_{pi}+\epsilon_
 \bigskip
 
 \BeginKnitrBlock{example}[Girth, Height, and Volume for Black Cherry trees]
-\protect\hypertarget{ex:unnamed-chunk-430}{}{\label{ex:unnamed-chunk-430}
+\protect\hypertarget{ex:unnamed-chunk-432}{}{\label{ex:unnamed-chunk-432}
 \iffalse (Girth, Height, and Volume for Black Cherry trees)
 \fi }\index{Data sets!trees@\texttt{trees}} Measurements were made of
 the girth, height, and volume of timber in 31 felled black cherry trees.
@@ -16362,8 +16344,8 @@ follows, and the result is shown in Figure
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{s3d <-}\StringTok{ }\KeywordTok{with}\NormalTok{(trees, }\KeywordTok{scatterplot3d}\NormalTok{(Girth, Height, Volume, }\DataTypeTok{pch =} \DecValTok{16}\NormalTok{, }
-                                 \DataTypeTok{highlight.3d =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{angle =} \DecValTok{60}\NormalTok{))}
+\NormalTok{s3d <-}\StringTok{ }\KeywordTok{with}\NormalTok{(trees, }\KeywordTok{scatterplot3d}\NormalTok{(Girth, Height, Volume, }
+            \DataTypeTok{pch =} \DecValTok{16}\NormalTok{, }\DataTypeTok{highlight.3d =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{angle =} \DecValTok{60}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -16594,7 +16576,7 @@ which is just a fancy way to write
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-437}{}{\label{ex:unnamed-chunk-437}}If
+\protect\hypertarget{ex:unnamed-chunk-439}{}{\label{ex:unnamed-chunk-439}}If
 we wanted to predict the average volume of black cherry trees that have
 \texttt{Girth\ =\ 15} in and are \texttt{Height\ =\ 77} ft tall then we
 would use the estimate
@@ -16640,7 +16622,8 @@ different locations).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{new <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Girth =} \KeywordTok{c}\NormalTok{(}\FloatTok{9.1}\NormalTok{, }\FloatTok{11.6}\NormalTok{, }\FloatTok{12.5}\NormalTok{), }\DataTypeTok{Height =} \KeywordTok{c}\NormalTok{(}\DecValTok{69}\NormalTok{, }\DecValTok{74}\NormalTok{, }\DecValTok{87}\NormalTok{))}
+\NormalTok{new <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Girth =} \KeywordTok{c}\NormalTok{(}\FloatTok{9.1}\NormalTok{, }\FloatTok{11.6}\NormalTok{, }\FloatTok{12.5}\NormalTok{), }
+                  \DataTypeTok{Height =} \KeywordTok{c}\NormalTok{(}\DecValTok{69}\NormalTok{, }\DecValTok{74}\NormalTok{, }\DecValTok{87}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -16910,7 +16893,8 @@ need to specify values of the independent variables in the data frame
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{new <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Girth =} \KeywordTok{c}\NormalTok{(}\FloatTok{9.1}\NormalTok{, }\FloatTok{11.6}\NormalTok{, }\FloatTok{12.5}\NormalTok{), }\DataTypeTok{Height =} \KeywordTok{c}\NormalTok{(}\DecValTok{69}\NormalTok{, }\DecValTok{74}\NormalTok{, }\DecValTok{87}\NormalTok{))}
+\NormalTok{new <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Girth =} \KeywordTok{c}\NormalTok{(}\FloatTok{9.1}\NormalTok{, }\FloatTok{11.6}\NormalTok{, }\FloatTok{12.5}\NormalTok{), }
+                  \DataTypeTok{Height =} \KeywordTok{c}\NormalTok{(}\DecValTok{69}\NormalTok{, }\DecValTok{74}\NormalTok{, }\DecValTok{87}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -17301,7 +17285,7 @@ There are multiple ways to fit a quadratic model to the variables
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-456}{}{\label{ex:unnamed-chunk-456}}We
+\protect\hypertarget{ex:unnamed-chunk-458}{}{\label{ex:unnamed-chunk-458}}We
 will fit the quadratic model to the \texttt{trees} data and display the
 results with \texttt{summary}, being careful to rescale the data before
 fitting the model. We may rescale the \texttt{Girth} variable to have
@@ -17310,7 +17294,8 @@ zero mean and unit variance on-the-fly with the \texttt{scale} function.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{treesquad.lm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Volume ~}\StringTok{ }\KeywordTok{scale}\NormalTok{(Girth) +}\StringTok{ }\KeywordTok{I}\NormalTok{(}\KeywordTok{scale}\NormalTok{(Girth)^}\DecValTok{2}\NormalTok{), }\DataTypeTok{data =} \NormalTok{trees)}
+\NormalTok{treesquad.lm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(Volume ~}\StringTok{ }\KeywordTok{scale}\NormalTok{(Girth) +}\StringTok{ }\KeywordTok{I}\NormalTok{(}\KeywordTok{scale}\NormalTok{(Girth)^}\DecValTok{2}\NormalTok{), }
+                   \DataTypeTok{data =} \NormalTok{trees)}
 \KeywordTok{summary}\NormalTok{(treesquad.lm)}
 \end{Highlighting}
 \end{Shaded}
@@ -17731,7 +17716,7 @@ model and the reduced model then compare the answers with the
 \bigskip
 
 \BeginKnitrBlock{example}[The Trees data]
-\protect\hypertarget{ex:unnamed-chunk-467}{}{\label{ex:unnamed-chunk-467}
+\protect\hypertarget{ex:unnamed-chunk-469}{}{\label{ex:unnamed-chunk-469}
 \iffalse (The Trees data) \fi }For the \texttt{trees} data, let us fit a
 polynomial regression model and for the sake of argument we will ignore
 our own good advice and fail to rescale the explanatory variables.
@@ -17968,7 +17953,8 @@ predictions back to the original scale (by exponentiating with
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{treesNonlin.lm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{log}\NormalTok{(Volume) ~}\StringTok{ }\KeywordTok{log}\NormalTok{(Girth) +}\StringTok{ }\KeywordTok{log}\NormalTok{(Height), }\DataTypeTok{data =} \NormalTok{trees)}
+\NormalTok{treesNonlin.lm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{log}\NormalTok{(Volume) ~}\StringTok{ }\KeywordTok{log}\NormalTok{(Girth) +}\StringTok{ }
+\StringTok{                       }\KeywordTok{log}\NormalTok{(Height), }\DataTypeTok{data =} \NormalTok{trees)}
 \KeywordTok{summary}\NormalTok{(treesNonlin.lm)}
 \end{Highlighting}
 \end{Shaded}
@@ -18025,8 +18011,10 @@ back to the original scale after prediction.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{new <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Girth =} \KeywordTok{c}\NormalTok{(}\FloatTok{9.1}\NormalTok{, }\FloatTok{11.6}\NormalTok{, }\FloatTok{12.5}\NormalTok{), }\DataTypeTok{Height =} \KeywordTok{c}\NormalTok{(}\DecValTok{69}\NormalTok{, }\DecValTok{74}\NormalTok{, }\DecValTok{87}\NormalTok{))}
-\KeywordTok{exp}\NormalTok{(}\KeywordTok{predict}\NormalTok{(treesNonlin.lm, }\DataTypeTok{newdata =} \NormalTok{new, }\DataTypeTok{interval =} \StringTok{"confidence"}\NormalTok{))}
+\NormalTok{new <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Girth =} \KeywordTok{c}\NormalTok{(}\FloatTok{9.1}\NormalTok{, }\FloatTok{11.6}\NormalTok{, }\FloatTok{12.5}\NormalTok{), }
+                  \DataTypeTok{Height =} \KeywordTok{c}\NormalTok{(}\DecValTok{69}\NormalTok{, }\DecValTok{74}\NormalTok{, }\DecValTok{87}\NormalTok{))}
+\KeywordTok{exp}\NormalTok{(}\KeywordTok{predict}\NormalTok{(treesNonlin.lm, }\DataTypeTok{newdata =} \NormalTok{new, }
+            \DataTypeTok{interval =} \StringTok{"confidence"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 

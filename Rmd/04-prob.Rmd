@@ -1456,7 +1456,8 @@ abline(v = 23, lty = 2)
 remove(g)
 ```
 
-There is a `Birthday problem` item in the `Probability` menu of
+
+There is a `Birthday problem` item in the `Probability` menu \newline of
 `RcmdrPlugin.IPSUR`. In the base R version, one can
 compute approximate probabilities for the more general case of
 probabilities other than 1/2, for differing total number of days in

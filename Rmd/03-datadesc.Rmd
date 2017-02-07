@@ -599,7 +599,12 @@ packages!qcc@\texttt{qcc}} package [@qcc]. See Figure
 \@ref(fig:pareto-chart). The code follows.
 ```
 
-```{r, label="pareto-chart", fig.cap='(ref:cap-pareto)'}
+
+```{r, eval = FALSE}
+pareto.chart(table(state.division), ylab="Frequency")
+```
+
+```{r, echo=FALSE, label="pareto-chart", fig.cap='(ref:cap-pareto)'}
 pareto.chart(table(state.division), ylab="Frequency", cex.lab = cexlab)
 ```
 

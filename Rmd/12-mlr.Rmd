@@ -189,8 +189,8 @@ Another way to do it is with the `scatterplot3d` function in the
 the result is shown in Figure \@ref(fig:3D-scatterplot-trees).
 
 ```{r, label="3D-scatterplot-trees",fig.cap='(ref:cap-3D-scatterplot-trees)'}
-s3d <- with(trees, scatterplot3d(Girth, Height, Volume, pch = 16, 
-                                 highlight.3d = TRUE, angle = 60))
+s3d <- with(trees, scatterplot3d(Girth, Height, Volume, 
+            pch = 16, highlight.3d = TRUE, angle = 60))
 ```
 
 (ref:cap-3D-scatterplot-trees) \small A 3D scatterplot with regression plane for the `trees` data.
@@ -403,7 +403,8 @@ independent variables in the data frame `new`, which has two columns
 predictions at three different locations).
 
 ```{r, echo=TRUE, results='hide'} 
-new <- data.frame(Girth = c(9.1, 11.6, 12.5), Height = c(69, 74, 87))
+new <- data.frame(Girth = c(9.1, 11.6, 12.5), 
+                  Height = c(69, 74, 87))
 ```
 
 We can view the locations at which we will predict:
@@ -605,7 +606,8 @@ need to specify values of the independent variables in the data frame
 repeat here for illustration).
 
 ```{r, echo=TRUE, results='hide'} 
-new <- data.frame(Girth = c(9.1, 11.6, 12.5), Height = c(69, 74, 87))
+new <- data.frame(Girth = c(9.1, 11.6, 12.5), 
+                  Height = c(69, 74, 87))
 ```
 
 Confidence intervals are given by
@@ -891,7 +893,8 @@ mean and unit variance on-the-fly with the `scale` function.
 ```
 
 ```{r, echo=TRUE} 
-treesquad.lm <- lm(Volume ~ scale(Girth) + I(scale(Girth)^2), data = trees)
+treesquad.lm <- lm(Volume ~ scale(Girth) + I(scale(Girth)^2), 
+                   data = trees)
 summary(treesquad.lm)
 ```
 
@@ -1327,7 +1330,8 @@ predictions back to the original scale (by exponentiating with `exp`)
 to make sense.
 
 ```{r, echo=TRUE} 
-treesNonlin.lm <- lm(log(Volume) ~ log(Girth) + log(Height), data = trees)
+treesNonlin.lm <- lm(log(Volume) ~ log(Girth) + 
+                       log(Height), data = trees)
 summary(treesNonlin.lm)
 ```
 
@@ -1350,8 +1354,10 @@ predictions just as before. Remember to transform the response
 variable back to the original scale after prediction.
 
 ```{r, echo=TRUE} 
-new <- data.frame(Girth = c(9.1, 11.6, 12.5), Height = c(69, 74, 87))
-exp(predict(treesNonlin.lm, newdata = new, interval = "confidence"))
+new <- data.frame(Girth = c(9.1, 11.6, 12.5), 
+                  Height = c(69, 74, 87))
+exp(predict(treesNonlin.lm, newdata = new, 
+            interval = "confidence"))
 ```
 
 

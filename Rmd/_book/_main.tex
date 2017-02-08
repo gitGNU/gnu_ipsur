@@ -1007,7 +1007,7 @@ function (x, y)
     y <- as.vector(y)
     unique(y[match(as.vector(x), y, 0L)])
 }
-<bytecode: 0x30ba8e8>
+<bytecode: 0x2f02dd0>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1026,7 +1026,7 @@ instance, typing \texttt{rev} \index{rev@\texttt{rev}} says
 \begin{verbatim}
 function (x) 
 UseMethod("rev")
-<bytecode: 0x2003e40>
+<bytecode: 0x1debe40>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1059,7 +1059,7 @@ does. For example, the \texttt{default} method can be viewed with
 \begin{verbatim}
 function (x) 
 if (length(x)) x[length(x):1L] else x
-<bytecode: 0x2e243a8>
+<bytecode: 0x2c66790>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1078,7 +1078,7 @@ example, if we try to look at the code for \texttt{wilcox.test}
 \begin{verbatim}
 function (x, ...) 
 UseMethod("wilcox.test")
-<bytecode: 0x1ee1df0>
+<bytecode: 0x1cc9df0>
 <environment: namespace:stats>
 \end{verbatim}
 
@@ -14090,11 +14090,12 @@ get you started:
   \textbf{Null hypothesis:} it is an ordinary deck of playing cards,
   shuffled thoroughly.
 \item
-  \textbf{Alternative hypothesis:} either it is a trick deck of cards,
-  or the instructor did some fancy shufflework.
+  \textbf{Alternative hypothesis:} something funny is going on. Either
+  it is a trick deck of cards, or the instructor is doing some fancy
+  shufflework.
 \item
-  **Observed \url{data:**} a sequence of draws from the deck, five reds
-  in a row.
+  **Observed \url{data:**} the sequence of draws from the deck, five
+  reds in a row.
 \end{itemize}
 
 If it were truly an ordinary, well-shuffled deck of cards, the
@@ -14269,7 +14270,7 @@ approximately, and the approximation gets better as the sample size gets
 bigger. Another way to write this is
 
 \begin{equation}
-Z = \frac{\hat{p} - p_{0}}{sqrt{p_{0}(1 - p_{0})/n}}  \sim \mathsf{norm}(\mathtt{mean} = 0, \mathtt{sd} = 1).
+Z = \frac{\hat{p} - p_{0}}{\sqrt{p_{0}(1 - p_{0})/n}}  \sim \mathsf{norm}(\mathtt{mean} = 0, \mathtt{sd} = 1).
 \end{equation}
 
 (ref:tab-ztest-one-sample-prop)
@@ -14300,20 +14301,20 @@ sample.}\tabularnewline
   A simple random sample from a Bernoulli population
 \item
   The sample size \(n\) is large
-
-  \begin{itemize}
-  \tightlist
-  \item
-    need at least 15 successes and at least 15 failures
-  \end{itemize}
+\item
+  need at least 15 successes and at least 15 failures
 \end{itemize}
 
+\bigskip
+
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-382}{}{\label{ex:unnamed-chunk-382}}Find
+\protect\hypertarget{ex:unnamed-chunk-383}{}{\label{ex:unnamed-chunk-383}}Find
 1. The null and alternative hypotheses, 2. Check your assumptions, 3.
 Define a critical region with an \(\alpha=0.05\) significance level, 4.
 Calculate the value of the test statistic and state your conclusion.
 \EndKnitrBlock{example}
+
+\bigskip
 
 \BeginKnitrBlock{example}
 \protect\hypertarget{ex:prop-test-pvalue-a}{}{\label{ex:prop-test-pvalue-a}}Suppose
@@ -14453,12 +14454,12 @@ name: it is called the \emph{p-value} of the test.
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-387}{}{\label{def:unnamed-chunk-387}}The
+\protect\hypertarget{def:unnamed-chunk-388}{}{\label{def:unnamed-chunk-388}}The
 \emph{p-value}, or \emph{observed significance level}, of a hypothesis
 test is the probability when the null hypothesis is true of obtaining
 the observed value of the test statistic (such as \(\hat{p}\)) or values
 more extreme -- meaning, in the direction of the alternative
-hypothesis\footnote{Bickel and Doksum \cite{Bickel2001} state the
+hypothesis\footnote{Bickel and Doksum \autocite{Bickel2001} state the
   definition particularly well: the \(p\)-value is ``the smallest level
   of significance \(\alpha\) at which an experimenter using the test
   statistic \(T\) would reject \(H_{0}\) on the basis of the observed
@@ -14468,7 +14469,7 @@ hypothesis\footnote{Bickel and Doksum \cite{Bickel2001} state the
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-388}{}{\label{ex:unnamed-chunk-388}}Calculate
+\protect\hypertarget{ex:unnamed-chunk-389}{}{\label{ex:unnamed-chunk-389}}Calculate
 the \(p\)-value for the test in Examples \ref{ex:prop-test-pvalue-A} and
 \ref{ex:prop-test-pvalue-B}.
 \EndKnitrBlock{example}
@@ -14507,6 +14508,8 @@ Thus, another way to phrase our significance test procedure is: we will
 reject \(H_{0}\) at the \(\alpha\)-level of significance if the
 \(p\)-value is less than \(\alpha\).
 
+\bigskip
+
 \begin{remark}
 If we have two populations with proportions \(p_{1}\) and \(p_{2}\) then
 we can test the null hypothesis \(H_{0}:\,p_{1} = p_{2}\). In that which
@@ -14538,7 +14541,6 @@ follows,
 
 \begin{longtable}[]{@{}lll@{}}
 \caption{Hypothesis tests, difference in population proportions, large
-sample{]}: Hypothesis tests, difference in population proportions, large
 sample.}\tabularnewline
 \toprule
 \(H_{0}\) & \(H_{a}\) & Rejection Region\tabularnewline
@@ -14590,12 +14592,12 @@ Do the following to make the plot.
 \bigskip
 
 \begin{remark}
-\emph{Remark}: In the above we set \texttt{correct\ =\ FALSE} to tell
-the computer that we did not want to use Yates' continuity correction
-(reference BLANK). It is customary to use Yates when the expected
-frequency of successes is less than 10. (reference BLANK) You can use it
-all of the time, but you will have a decrease in power. For large
-samples the correction does not matter.
+In the above we set \texttt{correct\ =\ FALSE} to tell the computer that
+we did not want to use Yates' continuity correction (reference BLANK).
+It is customary to use Yates when the expected frequency of successes is
+less than 10. (reference BLANK) You can use it all of the time, but you
+will have a decrease in power. For large samples the correction does not
+matter.
 \end{remark}
 
 \subsubsection{With the R Commander}\label{with-the-r-commander}
@@ -14678,13 +14680,17 @@ sample.}\tabularnewline
 \bottomrule
 \end{longtable}
 
+\bigskip
+
 \begin{remark}
 If \(\sigma\) is unknown but \(n\) is large then we can use the
 \(z\)-test.
 \end{remark}
 
+\bigskip
+
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-394}{}{\label{ex:unnamed-chunk-394}}In
+\protect\hypertarget{ex:unnamed-chunk-395}{}{\label{ex:unnamed-chunk-395}}In
 this example we
 
 \begin{enumerate}
@@ -14702,19 +14708,13 @@ this example we
 \EndKnitrBlock{example}
 
 \begin{remark}
-\begin{itemize}
-\tightlist
-\item
-  Another name for a \(p\)-value is \emph{tail-end probability}. We
-  reject \(H_{0}\) when the \(p\)-value is small.
-\item
-  The quantity \(\sigma/\sqrt{n}\), when \(\sigma\) is known, is called
-  the \emph{standard error of the sample mean}. In general, if we have
-  an estimator \(\hat{\theta}\) then \(\sigma_{\hat{\theta}}\) is called
-  the \emph{standard error} of \(\hat{\theta}\). We usually need to
-  estimate \(\sigma_{\hat{\theta}}\) with
-  \(\hat{\sigma_{\hat{\theta}}}\).
-\end{itemize}
+Another name for a \(p\)-value is \emph{tail-end probability}. We reject
+\(H_{0}\) when the \(p\)-value is small. The quantity
+\(\sigma/\sqrt{n}\), when \(\sigma\) is known, is called the
+\emph{standard error of the sample mean}. In general, if we have an
+estimator \(\hat{\theta}\) then \(\sigma_{\hat{\theta}}\) is called the
+\emph{standard error} of \(\hat{\theta}\). We usually need to estimate
+\(\sigma_{\hat{\theta}}\) with \(\hat{\sigma_{\hat{\theta}}}\).
 \end{remark}
 
 \subsubsection{How to do it with R}\label{how-to-do-it-with-r-40}
@@ -14745,8 +14745,8 @@ mean of x
  2.133586 
 \end{verbatim}
 
-The \texttt{RcmdrPlugin.IPSUR} package \cite{RcmdrPlugin.IPSUR} does not
-have a menu for \texttt{z.test} yet.
+The \texttt{RcmdrPlugin.IPSUR} package \autocite{RcmdrPlugin.IPSUR} does
+not have a menu for \texttt{z.test} yet.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -14769,6 +14769,26 @@ mean of x
  1.208197 
 \end{verbatim}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{t.test}\NormalTok{(x, }\DataTypeTok{mu =} \DecValTok{0}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{"greater"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{_main_files/figure-latex/ttest-plot-1.pdf}
+\caption{\label{fig:ttest-plot}\small A plot of the results from a Student's t
+test. This graph was generated by code based on joint work with Prof
+Richard Heiberger and uses the \texttt{normal.and.t.dist} function in
+the \texttt{HH} package \autocite{HH}.}
+\end{figure}
+
+
+
+
+
+
 \subsubsection{With the R Commander}\label{with-the-r-commander-1}
 
 Your data should be in a single numeric column (a variable) of the
@@ -14785,7 +14805,7 @@ We know that under \(H_{0}\), \[ X^{2} = \frac{(n -
 here.
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-398}{}{\label{ex:unnamed-chunk-398}}Give
+\protect\hypertarget{ex:unnamed-chunk-399}{}{\label{ex:unnamed-chunk-399}}Give
 some data and a hypothesis. BLANK
 
 \begin{itemize}
@@ -14801,7 +14821,7 @@ some data and a hypothesis. BLANK
 
 I am thinking about \texttt{sigma.test}
 \index{sigma.test@\texttt{sigma.test}} in the \texttt{TeachingDemos}
-package \cite{TeachingDemos}.
+package \autocite{TeachingDemos}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -14874,6 +14894,8 @@ the result will have a
 \(\mathsf{norm}(\mathtt{mean} = 0,\,\mathtt{sd} = 1)\) distribution when
 \(H_{0}:\,\mu_{X} = \mu_{Y}\) is true.
 \end{remark}
+
+\bigskip
 
 \begin{remark}
 Even if the values of \(\sigma_{X}\) and \(\sigma_{Y}\) are not known,
@@ -14985,8 +15007,7 @@ mean of the differences
                   -1.58 
 \end{verbatim}
 
-\section{Other Hypothesis Tests
-\{\#sec-other-hypothesis-tests}\label{other-hypothesis-tests-sec-other-hypothesis-tests}
+\section{Other Hypothesis Tests}\label{sec-other-hypothesis-tests}
 
 \subsection{Kolmogorov-Smirnov Goodness-of-Fit
 Test}\label{sub-kolmogorov-smirnov-goodness-of-fit-test}
@@ -15037,8 +15058,8 @@ where \(\mathbf{m}_{\mathrm{n}\times1}\) and
 covariance matrix, respectively, of the order statistics from an
 \(\mathsf{mvnorm} \left(\mathtt{mean} = \mathbf{0},\,\mathtt{sigma} = \mathbf{I}\right)\)
 distribution. This test statistic \(W\) was published in 1965 by (you
-guessed it): Shapiro and Wilk\cite{Wilk1965}. In contrast to most other
-test statistics we know, we reject \(H_{0}\) if \(W\) is too
+guessed it): Shapiro and Wilk \autocite{Wilk1965}. In contrast to most
+other test statistics we know, we reject \(H_{0}\) if \(W\) is too
 \emph{small}.
 
 \subsubsection{How to do it with R}\label{how-to-do-it-with-r-44}
@@ -15058,8 +15079,6 @@ W = 0.96359, p-value = 0.7545
 \end{verbatim}
 
 \section{Analysis of Variance}\label{sec-analysis-of-variance}
-
-:END:
 
 \subsection{How to do it with R}\label{how-to-do-it-with-r-45}
 
@@ -15232,8 +15251,8 @@ The power function of a test for a parameter \(\theta\) is \[
 I am thinking about \texttt{replicate}
 \index{replicate@\texttt{replicate}} here, and also \texttt{power.examp}
 \index{power.examp@\texttt{power.examp}} from the \texttt{TeachingDemos}
-package \cite{TeachingDemos}. There is an even better plot in upcoming
-work from the \texttt{HH} package \cite{HH}.
+package \autocite{TeachingDemos}. There is an even better plot in
+upcoming work from the \texttt{HH} package \autocite{HH}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -15244,35 +15263,38 @@ work from the \texttt{HH} package \cite{HH}.
 \begin{figure}[htbp]
 \centering
 \includegraphics{_main_files/figure-latex/power-examp-1.pdf}
-\caption{\label{fig:power-examp}(ref:cap-fig-power-examp)}
+\caption{\label{fig:power-examp}\small A plot of significance level and power.
+This graph was generated by the \texttt{power.examp} function from the
+\texttt{TeachingDemos} package.}
 \end{figure}
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The plot corresponds to the hypothesis test \(H_{0}:\,\mu=\mu_{0}\)
+versus \(H_{1}:\,\mu=\mu_{1}\) (where \(\mu_{0}=0\) and \(\mu_{1}=1\),
+by default) based on a single observation
+\(X\sim\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\). The top
+graph is of the \(H_{0}\) density while the bottom is of the \(H_{1}\)
+density. The significance level is set at \(\alpha=0.05\), the sample
+size is \(n=1\), and the standard deviation is \(\sigma=1\). The pink
+area is the significance level, and the critical value
+\(z_{0.05}\approx1.645\) is marked at the left boundary -- this defines
+the rejection region. When \(H_{0}\) is true, the probability of falling
+in the rejection region is exactly \(\alpha=0.05\). The same rejection
+region is marked on the bottom graph, and the probability of falling in
+it (when \(H_{1}\) is true) is the blue area shown at the top of the
+display to be approximately \(0.26\). This probability represents the
+\emph{power} to detect a non-null mean value of \(\mu=1\). With the
+command the \texttt{run.power.examp()} at the command line the same plot
+opens, but in addition, there are sliders available that allow the user
+to interactively change the sample size \(n\), the standard deviation
+\(\sigma\), the true difference between the means \(\mu_{1}-\mu_{0}\),
+and the significance level \(\alpha\). By playing around the student can
+investigate the effect each of the aforementioned parameters has on the
+statistical power. Note that you need the \texttt{tkrplot} package
+\autocite{tkrplot} for \texttt{run.power.examp}.
 
 \section{Exercises}\label{exercises-7}
 
@@ -15431,7 +15453,7 @@ increases\footnote{In practical terms, this constant variance assumption
 \bigskip
 
 \BeginKnitrBlock{example}[Speed and stopping distance of cars]
-\protect\hypertarget{ex:unnamed-chunk-417}{}{\label{ex:unnamed-chunk-417}
+\protect\hypertarget{ex:unnamed-chunk-418}{}{\label{ex:unnamed-chunk-418}
 \iffalse (Speed and stopping distance of cars) \fi }We will use the data
 frame \texttt{cars} \index{Data
 sets!cars@\texttt{cars}} from the \texttt{datasets} package
@@ -16118,7 +16140,7 @@ argument. The general syntax follows.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-433}{}{\label{ex:unnamed-chunk-433}}We
+\protect\hypertarget{ex:unnamed-chunk-434}{}{\label{ex:unnamed-chunk-434}}We
 will find confidence and prediction intervals for the stopping distance
 of a car travelling 5, 6, and 21 mph (note from the graph that there are
 no collected data for these speeds). We have computed \texttt{cars.lm}
@@ -16173,7 +16195,7 @@ The type of interval is dictated by the \texttt{interval} argument
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-439}{}{\label{ex:unnamed-chunk-439}}Using
+\protect\hypertarget{ex:unnamed-chunk-440}{}{\label{ex:unnamed-chunk-440}}Using
 the \texttt{cars} data,
 \EndKnitrBlock{example}
 
@@ -17503,7 +17525,7 @@ Y_{i}=\beta_{0}+\beta_{1}x_{1i}+\beta_{2}x_{2i}+\cdots+\beta_{p}x_{pi}+\epsilon_
 \bigskip
 
 \BeginKnitrBlock{example}[Girth, Height, and Volume for Black Cherry trees]
-\protect\hypertarget{ex:unnamed-chunk-466}{}{\label{ex:unnamed-chunk-466}
+\protect\hypertarget{ex:unnamed-chunk-467}{}{\label{ex:unnamed-chunk-467}
 \iffalse (Girth, Height, and Volume for Black Cherry trees)
 \fi }\index{Data sets!trees@\texttt{trees}} Measurements were made of
 the girth, height, and volume of timber in 31 felled black cherry trees.
@@ -17842,7 +17864,7 @@ which is just a fancy way to write
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-473}{}{\label{ex:unnamed-chunk-473}}If
+\protect\hypertarget{ex:unnamed-chunk-474}{}{\label{ex:unnamed-chunk-474}}If
 we wanted to predict the average volume of black cherry trees that have
 \texttt{Girth\ =\ 15} in and are \texttt{Height\ =\ 77} ft tall then we
 would use the estimate
@@ -18551,7 +18573,7 @@ There are multiple ways to fit a quadratic model to the variables
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-492}{}{\label{ex:unnamed-chunk-492}}We
+\protect\hypertarget{ex:unnamed-chunk-493}{}{\label{ex:unnamed-chunk-493}}We
 will fit the quadratic model to the \texttt{trees} data and display the
 results with \texttt{summary}, being careful to rescale the data before
 fitting the model. We may rescale the \texttt{Girth} variable to have
@@ -18982,7 +19004,7 @@ model and the reduced model then compare the answers with the
 \bigskip
 
 \BeginKnitrBlock{example}[The Trees data]
-\protect\hypertarget{ex:unnamed-chunk-503}{}{\label{ex:unnamed-chunk-503}
+\protect\hypertarget{ex:unnamed-chunk-504}{}{\label{ex:unnamed-chunk-504}
 \iffalse (The Trees data) \fi }For the \texttt{trees} data, let us fit a
 polynomial regression model and for the sake of argument we will ignore
 our own good advice and fail to rescale the explanatory variables.

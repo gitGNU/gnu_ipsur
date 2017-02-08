@@ -10,8 +10,7 @@ genXdata <- function(n, nvar = 1,
                      varnames = paste("x", 1:length(mu), sep = ""),
                      roundto = NULL
                      ){
-  require(MASS)
-  tmp <- as.data.frame(mvrnorm(n, mu = mu, Sigma = Sigma))
+  tmp <- as.data.frame(MASS::mvrnorm(n, mu = mu, Sigma = Sigma))
   names(tmp) <- varnames
   if (!is.null(roundto)){
     tmp <- round(tmp, roundto)
@@ -19,8 +18,8 @@ genXdata <- function(n, nvar = 1,
   tmp
 }
 
-genXdata(10, nvar = 3, roundto = 2)
-X = genXdata(10, nvar = 3, roundto = 2)
+# genXdata(10, nvar = 3, roundto = 2)
+# X = genXdata(10, nvar = 3, roundto = 2)
 
 #######################################################
 # logistic regression data
@@ -35,13 +34,13 @@ genLogRegData <- function(xdata,
   xdata
 }
 
-
-params <- c(1,2,3,4)
-require(MASS)
-xmean <- Null(params)[ , 1]
-X = genXdata(10, mu = m, roundto = 2)
-genLogRegData(X, beta = params)
-
+# 
+# params <- c(1,2,3,4)
+# require(MASS)
+# xmean <- Null(params)[ , 1]
+# X = genXdata(10, mu = m, roundto = 2)
+# genLogRegData(X, beta = params)
+# 
 
 ######################################################3
 # contingency tables
@@ -70,8 +69,7 @@ genIndepTable <- function(n = sample(100:500, size = 1),
   if (nfixed && (sum(tmp) > n)){
     # gotta get rid of extra rows
     tmp <- as.data.frame(tmp)
-    require(reshape)
-    tmp <- with(tmp, untable(tmp, Freq))
+    tmp <- with(tmp, reshape::untable(tmp, Freq))
     tmp[ , "Freq"] <- NULL
     tmp <- tmp[sample(1:dim(tmp)[1], size = n, replace = FALSE),]
     rownames(tmp) <- 1:n
@@ -81,8 +79,7 @@ genIndepTable <- function(n = sample(100:500, size = 1),
   if (as.df){
     tmp <- as.data.frame(tmp)
     if (untable){
-      require(reshape)
-      tmp <- with(tmp, untable(tmp, Freq))
+      tmp <- with(tmp, reshape::untable(tmp, Freq))
       tmp[ , "Freq"] <- NULL
       rownames(tmp) <- 1:dim(tmp)[1]
     }
@@ -94,24 +91,24 @@ genIndepTable <- function(n = sample(100:500, size = 1),
   }
 }
   
-
-genIndepTable(n = 100)
-genIndepTable(n = 100, nfixed = TRUE)
-genIndepTable(n = 100, nfixed = TRUE, as.df = TRUE)
-genIndepTable(n = 100, nfixed = TRUE, as.df = TRUE, untable = FALSE)
-
-tmp = genIndepTable(n = 10, nfixed = TRUE, as.df = TRUE)
-tmp
-
-model.matrix(~., data = tmp)
-tmp2 = as.data.frame(model.matrix(~ X*Y, data = tmp))
-tmp2
-
-genLogRegData(tmp2)
-
-A = genIndepTable(n = 500, nfixed = TRUE, as.df = TRUE)
-chisq.test(xtabs(~., data = A))
-
+# 
+# genIndepTable(n = 100)
+# genIndepTable(n = 100, nfixed = TRUE)
+# genIndepTable(n = 100, nfixed = TRUE, as.df = TRUE)
+# genIndepTable(n = 100, nfixed = TRUE, as.df = TRUE, untable = FALSE)
+# 
+# tmp = genIndepTable(n = 10, nfixed = TRUE, as.df = TRUE)
+# tmp
+# 
+# model.matrix(~., data = tmp)
+# tmp2 = as.data.frame(model.matrix(~ X*Y, data = tmp))
+# tmp2
+# 
+# genLogRegData(tmp2)
+# 
+# A = genIndepTable(n = 500, nfixed = TRUE, as.df = TRUE)
+# chisq.test(xtabs(~., data = A))
+# 
 
 
 ######################################################3
@@ -139,8 +136,7 @@ gen2wayTable <- function(n = sample(100:500, size = 1),
   if (nfixed && (sum(tmp) > n)){
     # gotta get rid of extra rows
     tmp <- as.data.frame(tmp)
-    require(reshape)
-    tmp <- with(tmp, untable(tmp, Freq))
+    tmp <- with(tmp, reshape::untable(tmp, Freq))
     tmp[ , "Freq"] <- NULL
     tmp <- tmp[sample(1:dim(tmp)[1], size = n, replace = FALSE),]
     rownames(tmp) <- 1:n
@@ -150,8 +146,7 @@ gen2wayTable <- function(n = sample(100:500, size = 1),
   if (as.df){
     tmp <- as.data.frame(tmp)
     if (untable){
-      require(reshape)
-      tmp <- with(tmp, untable(tmp, Freq))
+      tmp <- with(tmp, reshape::untable(tmp, Freq))
       tmp[ , "Freq"] <- NULL
       rownames(tmp) <- 1:dim(tmp)[1]
     }
@@ -163,15 +158,15 @@ gen2wayTable <- function(n = sample(100:500, size = 1),
   }
 }
 
-
-gen2wayTable(n = 100)
-gen2wayTable(n = 100, nfixed = TRUE)
-gen2wayTable(n = 100, nfixed = TRUE, as.df = TRUE)
-gen2wayTable(n = 100, nfixed = TRUE, as.df = TRUE, untable = FALSE)
-
-w = matrix(c(8, 5, 3, 2, 5, 5), nrow = 2)
-
-B = gen2wayTable(n = 300, pmatrix = w, addmargins = FALSE)
-chisq.test(B)
-
+# 
+# gen2wayTable(n = 100)
+# gen2wayTable(n = 100, nfixed = TRUE)
+# gen2wayTable(n = 100, nfixed = TRUE, as.df = TRUE)
+# gen2wayTable(n = 100, nfixed = TRUE, as.df = TRUE, untable = FALSE)
+# 
+# w = matrix(c(8, 5, 3, 2, 5, 5), nrow = 2)
+# 
+# B = gen2wayTable(n = 300, pmatrix = w, addmargins = FALSE)
+# chisq.test(B)
+# 
 

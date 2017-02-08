@@ -4,7 +4,6 @@
 
 ###################################################
 plot.htest <- function (x, hypoth.or.conf = 'Hypoth',...) { 
-    require("HH")
     if (x$method == "1-sample proportions test with continuity correction" || x$method == "1-sample proportions test without continuity correction"){
         mu <- x$null.value
         obs.mean <- x$estimate
@@ -102,7 +101,7 @@ plot.htest <- function (x, hypoth.or.conf = 'Hypoth',...) {
         }
     }
     
-    normal.and.t.dist(mu.H0 = mu, obs.mean = obs.mean,
+    HH::normal.and.t.dist(mu.H0 = mu, obs.mean = obs.mean,
                       std.dev = std.dev, n = n,
                       deg.freedom = deg.freedom,
                       alpha.right = alpha.right,

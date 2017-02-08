@@ -1,4 +1,4 @@
-ED <- structure(list(phase = structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+ED <- structure(list(model = structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 
 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 
 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
@@ -90,7 +90,7 @@ ED <- structure(list(phase = structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L,
 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 1L, 2L, 2L, 
 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L), .Label = c("N", 
-"Y"), class = "factor"), Present = c(FALSE, FALSE, FALSE, FALSE, 
+"Y"), class = "factor"), visit = c(FALSE, FALSE, FALSE, FALSE, 
 FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 
 FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 
 FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, 
@@ -107,6 +107,6 @@ TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
 TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, 
 TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, 
 TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, 
-TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)), .Names = c("phase", 
-"los", "age", "gender", "cci", "LACE", "readmit", "ED", "Present"
+TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)), .Names = c("model", 
+"los", "age", "gender", "cci", "LACE", "readmit", "ED", "visit"
 ), row.names = c(NA, -164L), class = "data.frame")

@@ -2,3 +2,8 @@
 
 # Export all names
 exportPattern(".")
+
+#
+importFrom("stats", "rbinom", "xtabs")
+importFrom("utils", "URLencode", "browseURL")
+

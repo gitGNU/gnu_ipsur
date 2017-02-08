@@ -6,5 +6,3 @@ bookdown::pdf_book:
   dev: "cairo_pdf"
   citation_package: biblatex
   keep_tex: yes
-bookdown::epub_book: default
-bookdown::gitbook: default

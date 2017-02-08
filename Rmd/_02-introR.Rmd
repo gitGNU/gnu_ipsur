@@ -1,4 +1,4 @@
-# An Introduction to R {#cha-introduction-to-R}                                           
+# An Introduction to R {#cha-introduction-to-r}                                           
 
 ```{r, echo=FALSE, eval=FALSE}
 #    IPSUR: Introduction to Probability and Statistics Using R
@@ -25,7 +25,7 @@
 Every R book I have ever seen has had a section/chapter
 that is an introduction to R, and so does this one.  The
 goal of this chapter is for a person to get up and running, ready for
-the material that follows.  See Section \@ref(sec-External-Resources) for links
+the material that follows.  See Section \@ref(sec-external-resources) for links
 to other material which the reader may find useful.
 
 **What do I want them to know?**
@@ -41,7 +41,7 @@ to other material which the reader may find useful.
 * Other little shortcuts I am usually asked when introducing
   R.
 
-## Downloading and Installing R {#sec-download-install-R}
+## Downloading and Installing R {#sec-download-install-r}
 
 The instructions for obtaining R largely depend on the
 user's hardware and operating system. The R Project has
@@ -136,7 +136,7 @@ of all available packages in your library.
 For complete, precise information regarding installation of
 R and add-on packages, see the [R Installation and Administration manual](http://cran.r-project.org/manuals.html).
 
-## Communicating with R {#sec-Communicating-with-R}
+## Communicating with R {#sec-communicating-with-r}
 
 ### One line at a time
 
@@ -219,7 +219,7 @@ I have used and enjoyed.
      list. One such plugin is the `RcmdrPlugin.IPSUR` package
      [@RcmdrPlugin.IPSUR] which accompanies this text.
 
-## Basic R Operations and Concepts {#sec-Basic-R-Operations}
+## Basic R Operations and Concepts {#sec-basic-r-operations}
 
 The R developers have written an introductory document
 entitled "An Introduction to R". There is a sample
@@ -233,7 +233,7 @@ R. Almost every book about R begins with a
 section like the one below; look around to see all sorts of things
 that can be done at this most basic level.
 
-### Arithmetic {#sub-Arithmetic}
+### Arithmetic {#sub-arithmetic}
 
 ```{r, echo=TRUE, results=TRUE}  
 2 + 3       # add
@@ -264,7 +264,7 @@ necessarily reliable). Above notice the `sqrt`
 `exp` \index{exp@\texttt{exp}} function for powers of
 \(\mathrm{e}\), Euler's number.
 
-### Assignment, Object names, and Data types {#sub-Assignment-Object-names}
+### Assignment, Object names, and Data types {#sub-assignment-object-names}
 
 It is often convenient to assign numbers and values to variables
 (objects) to be used later. The proper way to assign values to a
@@ -284,7 +284,7 @@ When choosing a variable name you can use letters, numbers, dots
 "\texttt{.}", or underscore "\texttt{\_}" characters. You cannot
 use mathematical operators, and a leading dot may not be followed by a
 number. Examples of valid names are: `x`, `x1`, `y.value`, and
-`!y_hat`. (More precisely, the set of allowable characters in object
+`y_hat`. (More precisely, the set of allowable characters in object
 names depends on one's particular system and locale; see An
 Introduction to R for more discussion on this.)
 
@@ -292,16 +292,11 @@ Objects can be of many *types*, *modes*, and *classes*. At this level,
 it is not necessary to investigate all of the intricacies of the
 respective types, but there are some with which you need to become
 familiar:
-* integer: the values \(0\), \(\pm1\), \(\pm2\), ...; these are
-              represented exactly by R.
-* double: real numbers (rational and irrational); these numbers are
-             not represented exactly (save integers or fractions with
-             a denominator that is a power of 2, see
-              @Venables2010 ).
+
+* integer: the values \(0\), \(\pm1\), \(\pm2\), ...; these are represented exactly by R.
+* double: real numbers (rational and irrational); these numbers are not represented exactly (save integers or fractions with a denominator that is a power of 2, see [@Venables2010]).
 * character: elements that are wrapped with pairs of `"` or ';
-* logical: includes `TRUE`, `FALSE`, and `NA` (which are reserved
-              words); the `NA` \index{NA@\texttt{NA}} stands
-              for "not available", *i.e.*, a missing value.
+* logical: includes `TRUE`, `FALSE`, and `NA` (which are reserved words); the `NA` \index{NA@\texttt{NA}} stands for "not available", *i.e.*, a missing value.
 
 You can determine an object's type with the `typeof`
 \index{typeof@\texttt{typeof}} function. In addition to the above,
@@ -341,7 +336,7 @@ The elements of a vector are usually coerced by R to the
 the most general type of any of the elements, so if you do `c(1, "2")`
 then the result will be `c("1", "2")`.
 
-**A shorter way:** \index{scan@\texttt{scan}}: The `scan` method is
+**A shorter way:** \index{scan@\texttt{scan}} The `scan` method is
 useful when the data are stored somewhere else. For instance, you may
 type `x <- scan()` at the command prompt and R will
 display `1:` to indicate that it is waiting for the first data
@@ -352,7 +347,7 @@ of values, say, stored in a text file or spreadsheet. You may copy and
 paste them all at the `1:` prompt, and R will store all
 of the values instantly in the vector `x`.
 
-*Repeated data; regular patterns:* the `seq` \index{seq@\texttt{seq}}
+**Repeated data; regular patterns:** the `seq` \index{seq@\texttt{seq}}
 function will generate all sorts of sequences of numbers. It has the
 arguments `from`, `to`, `by`, and `length.out` which can be set in
 concert with one another. We will do a couple of examples to show you
@@ -396,7 +391,7 @@ LETTERS[1:5]
 letters[-(6:24)]
 ```
 
-### Functions and Expressions {#sub-Functions-and-Expressions}
+### Functions and Expressions {#sub-functions-and-expressions}
 
 A function takes arguments as input and returns an object as
 output. There are functions to do all sorts of things. We show some
@@ -457,7 +452,7 @@ rev.default
 **Some functions are hidden by a namespace** (see An Introduction to
 R @Venables2010), and are not visible on the first
 try. For example, if we try to look at the code for `wilcox.test`
-\index{wilcox.test@\texttt{wilcox.test}} (see Chapter \@ref(cha-Nonparametric-Statistics)) we get the following:
+\index{wilcox.test@\texttt{wilcox.test}} (see Chapter \@ref(cha-nonparametric-statistics)) we get the following:
 
 ```{r, echo=TRUE, results=TRUE} 
 wilcox.test
@@ -607,9 +602,9 @@ considerations.
   \index{sessionInfo@\texttt{sessionInfo}} command collects
   all of this information to be copy-pasted into an email (and the
   Posting Guide requests this information). See Appendix
-  \@ref(cha-R-Session-Information) for an example.
+  \@ref(cha-r-session-information) for an example.
 
-## External Resources {#sec-External-Resources}
+## External Resources {#sec-external-resources}
 
 There is a mountain of information on the Internet about
 R. Below are a few of the important ones.
@@ -645,7 +640,7 @@ entered commands.
   the workspace. If you wish to remove one or more variables, use
   `remove(var1, var2, var3)` \index{remove@\texttt{remove}}, or more
   simply use `rm(var1, var2, var3)`, and to remove all objects use
-  `rm(list = ls())`.
+  `rm(list = ls(all = TRUE))`.
 * Another use of `scan` is when you have a long list of numbers
   (separated by spaces or on different lines) already typed somewhere
   else, say in a text file To enter all the data in one fell swoop,
@@ -670,7 +665,7 @@ entered commands.
   stored in the user's home directory, or anywhere R is
   invoked. This allows for multiple configurations for different
   projects or users. See "Customizing the Environment" of *An
-  Introduction to R* for more details.
+  Introduction to R* BLANK for more details.
 * When exiting R the user is given the option to "save
   the workspace". I recommend that beginners DO NOT save the
   workspace when quitting. If `Yes` is selected, then all of the

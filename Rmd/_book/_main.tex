@@ -1007,7 +1007,7 @@ function (x, y)
     y <- as.vector(y)
     unique(y[match(as.vector(x), y, 0L)])
 }
-<bytecode: 0x2f02dd0>
+<bytecode: 0x2ccce48>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1026,7 +1026,7 @@ instance, typing \texttt{rev} \index{rev@\texttt{rev}} says
 \begin{verbatim}
 function (x) 
 UseMethod("rev")
-<bytecode: 0x1debe40>
+<bytecode: 0x21dce40>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1059,7 +1059,7 @@ does. For example, the \texttt{default} method can be viewed with
 \begin{verbatim}
 function (x) 
 if (length(x)) x[length(x):1L] else x
-<bytecode: 0x2c66790>
+<bytecode: 0x1c2e2f0>
 <environment: namespace:base>
 \end{verbatim}
 
@@ -1078,7 +1078,7 @@ example, if we try to look at the code for \texttt{wilcox.test}
 \begin{verbatim}
 function (x, ...) 
 UseMethod("wilcox.test")
-<bytecode: 0x1cc9df0>
+<bytecode: 0x20badf0>
 <environment: namespace:stats>
 \end{verbatim}
 
@@ -12583,6 +12583,829 @@ and
 are independent.
 \end{xca}
 
+\chapter{Sampling Distributions}\label{cha-sampling-distributions}
+
+This is an important chapter; it is the bridge from probability and
+descriptive statistics that we studied in Chapters
+\ref{cha-describing-data-distributions} through
+\ref{cha-multivariable-distributions} to inferential statistics which
+forms the latter part of this book.
+
+Here is the link: we are presented with a \emph{population} about which
+we would like to learn. And while it would be desirable to examine every
+single member of the population, we find that it is either impossible or
+infeasible to for us to do so, thus, we resort to collecting a
+\emph{sample} instead. We do not lose heart. Our method will suffice,
+provided the sample is \emph{representative} of the population. A good
+way to achieve this is to sample \emph{randomly} from the population.
+
+Supposing for the sake of argument that we have collected a random
+sample, the next task is to make some \emph{sense} out of the data
+because the complete list of sample information is usually cumbersome,
+unwieldy. We summarize the data set with a descriptive \emph{statistic},
+a quantity calculated from the data (we saw many examples of these in
+Chapter \ref{cha-describing-data-distributions}). But our sample was
+random\ldots{} therefore, it stands to reason that our statistic will be
+random, too. How is the statistic distributed?
+
+The probability distribution associated with the population (from which
+we sample) is called the \emph{population distribution}, and the
+probability distribution associated with our statistic is called its
+\emph{sampling distribution}; clearly, the two are interrelated. To
+learn about the population distribution, it is imperative to know
+everything we can about the sampling distribution. Such is the goal of
+this chapter.
+
+We begin by introducing the notion of simple random samples and
+cataloguing some of their more convenient mathematical properties. Next
+we focus on what happens in the special case of sampling from the normal
+distribution (which, again, has several convenient mathematical
+properties), and in particular, we meet the sampling distribution of
+\(\overline{X}\) and \(S^{2}\). Then we explore what happens to
+\(\overline{X}\)'s sampling distribution when the population is not
+normal and prove one of the most remarkable theorems in statistics, the
+Central Limit Theorem (CLT).
+
+With the CLT in hand, we then investigate the sampling distributions of
+several other popular statistics, taking full advantage of those with a
+tractable form. We finish the chapter with an exploration of statistics
+whose sampling distributions are not quite so tractable, and to
+accomplish this goal we will use simulation methods that are grounded in
+all of our work in the previous four chapters.
+
+\textbf{What do I want them to know?}
+
+\begin{itemize}
+\tightlist
+\item
+  the notion of population versus simple random sample, parameter versus
+  statistic, and population distribution versus sampling distribution
+\item
+  the classical sampling distributions of the standard one and two
+  sample statistics
+\item
+  how to generate a simulated sampling distribution when the statistic
+  is crazy
+\item
+  the Central Limit Theorem, period.
+\item
+  some basic concepts related to sampling distribution utility, such as
+  bias and variance
+\end{itemize}
+
+\section{Simple Random Samples}\label{sec-simple-random-samples}
+
+\BeginKnitrBlock{definition}
+\protect\hypertarget{def:unnamed-chunk-341}{}{\label{def:unnamed-chunk-341}}If
+\(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) are independent with
+\(X_{i}\sim f\) for \(i=1,2,\ldots,n\), then we say that \(X_{1}\),
+\(X_{2}\), \ldots{}, \(X_{n}\) are \emph{independent and identically
+distributed} (IID) from the population \(f\) or alternatively we say
+that \(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) are a \emph{simple random
+sample of size} \(n\), denoted \(SRS(n)\), from the population \(f\).
+\EndKnitrBlock{definition}
+
+\bigskip
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:mean-sd-xbar}{}{\label{prp:mean-sd-xbar}}Let
+\(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) be a \(SRS(n)\) from a
+population distribution with mean \(\mu\) and finite standard deviation
+\(\sigma\). Then the mean and standard deviation of \(\overline{X}\) are
+given by the formulas \(\mu_{\overline{X}}=\mu\) and
+\(\sigma_{\overline{X}}=\sigma/\sqrt{n}\).
+\EndKnitrBlock{proposition}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi Plug in \(a_{1}=a_{2}=\cdots=a_{n}=1/n\) in
+Proposition \ref{pro:mean-sd-lin-comb}.
+\EndKnitrBlock{proof}
+
+The next fact will be useful to us when it comes time to prove the
+Central Limit Theorem in Section \ref{sec-central-limit-theorem}.
+
+\bigskip
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:pro-mgf-xbar}{}{\label{prp:pro-mgf-xbar}}Let
+\(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) be a \(SRS(n)\) from a
+population distribution with MGF \(M(t)\). Then the MGF of
+\(\overline{X}\) is given by
+
+\begin{equation}
+M_{\overline{X}}(t)=\left[M\left(\frac{t}{n}\right)\right]^{n}.
+\end{equation}
+\EndKnitrBlock{proposition}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi Go from the definition:
+
+\begin{eqnarray*}
+M_{\overline{X}}(t) & = & \mathbb{E}\,\mathrm{e}^{t\overline{X}},\\
+ & = & \mathbb{E}\,\mathrm{e}^{t(X_{1}+\cdots+X_{n})/n},\\
+ & = & \mathbb{E}\,\mathrm{e}^{tX_{1}/n}\mathrm{e}^{tX_{2}/n}\cdots\mathrm{e}^{tX_{n}/n}.
+\end{eqnarray*}
+
+And because \(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) are independent,
+Proposition \ref{pro:indep-implies-prodexpect} allows us to distribute
+the expectation among each term in the product, which is \[
+\mathbb{E}\mathrm{e}^{tX_{1}/n}\,\mathbb{E}\mathrm{e}^{tX_{2}/n}\cdots\mathbb{E}\mathrm{e}^{tX_{n}/n}.
+\] The last step is to recognize that each term in last product above is
+exactly \(M(t/n)\).
+\EndKnitrBlock{proof}
+
+\section{Sampling from a Normal
+Distribution}\label{sec-sampling-from-normal-dist}
+
+\subsection{The Distribution of the Sample
+Mean}\label{sub-samp-mean-dist-of}
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:unnamed-chunk-344}{}{\label{prp:unnamed-chunk-344}}Let
+\(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) be a \(SRS(n)\) from a
+\(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\) distribution.
+Then the sample mean \(\overline{X}\) has a
+\(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma/\sqrt{n})\)
+sampling distribution.
+\EndKnitrBlock{proposition}
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi The mean and standard deviation of
+\(\overline{X}\) follow directly from Proposition
+\ref{pro:mean-sd-xbar}. To address the shape, first remember from
+Section \ref{sec-the-normal-distribution} that the
+\(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\) MGF is of the
+form \[ M(t)=\exp\left[ \mu t+\sigma^{2}t^{2}/2\right] .  \] Now use
+Proposition \ref{pro:mgf-xbar} to find
+
+\begin{eqnarray*}
+M_{\overline{X}}(t) & = & \left[M\left(\frac{t}{n}\right)\right]^{n},\\
+ & = & \left[\exp\left( \mu(t/n)+\sigma^{2}(t/n)^{2}/2\right) \right]^{n},\\
+ & = & \exp\left( \, n\cdot\left[\mu(t/n)+\sigma^{2}(t/n)^{2}/2\right]\right) ,\\
+ & = & \exp\left( \mu t+(\sigma/\sqrt{n})^{2}t^{2}/2\right),
+\end{eqnarray*}
+
+and we recognize this last quantity as the MGF of a
+\(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma/\sqrt{n})\)
+distribution.
+\EndKnitrBlock{proof}
+
+\subsection{The Distribution of the Sample
+Variance}\label{sub-samp-var-dist}
+
+\BeginKnitrBlock{theorem}
+\protect\hypertarget{thm:thm-xbar-ands}{}{\label{thm:thm-xbar-ands}}Let
+\(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) be a \(SRS(n)\) from a
+\(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\) distribution,
+and let
+
+\begin{equation}
+\overline{X}=\sum_{i=1}^{n}X_{i}\quad \mbox{and}\quad S^{2}=\frac{1}{n-1}\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}.
+\end{equation}
+
+Then
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(\overline{X}\) and \(S^{2}\) are independent, and
+\item
+  The rescaled sample variance
+
+  \begin{equation}
+  \frac{(n-1)}{\sigma^{2}}S^{2}=\frac{\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}}{\sigma^{2}}
+  \end{equation}
+
+  has a \(\mathsf{chisq}(\mathtt{df}=n-1)\) sampling distribution.
+\end{enumerate}
+\EndKnitrBlock{theorem}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi The proof is beyond the scope of the present
+book, but the theorem is simply too important to be omitted. The
+interested reader could consult Casella and Berger
+\autocite{Casella2002}, or Hogg \emph{et al} \autocite{Hogg2005}.
+\EndKnitrBlock{proof}
+
+\subsection{The Distribution of Student's t Statistic
+\{\#sub-student's-t-distribution\}}\label{the-distribution-of-students-t-statistic-sub-students-t-distribution}
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:unnamed-chunk-347}{}{\label{prp:unnamed-chunk-347}}Let
+\(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) be a \(SRS(n)\) from a
+\(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\) distribution.
+Then the quantity
+
+\begin{equation}
+T=\frac{\overline{X}-\mu}{S/\sqrt{n}}
+\end{equation}
+
+has a \(\mathsf{t}(\mathtt{df}=n-1)\) sampling distribution.
+\EndKnitrBlock{proposition}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi Divide the numerator and denominator by
+\(\sigma\) and rewrite \[
+T=\frac{\frac{\overline{X}-\mu}{\sigma/\sqrt{n}}}{S/\sigma}=\frac{\frac{\overline{X}-\mu}{\sigma/\sqrt{n}}}{\sqrt{\left.\frac{(n-1)S^{2}}{\sigma^{2}}\right/
+(n-1)}}.  \] Now let \[
+Z=\frac{\overline{X}-\mu}{\sigma/\sqrt{n}}\quad \mbox{and}\quad
+V=\frac{(n-1)S^{2}}{\sigma^{2}}, \] so that
+
+\begin{equation}
+T=\frac{Z}{\sqrt{V/r}},
+\end{equation}
+
+where \(r=n-1\).
+
+We know from Section \ref{sub-samp-mean-dist-of} that
+\(Z\sim\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=1)\) and we know from
+Section \ref{sub-samp-var-dist} that
+\(V\sim\mathsf{chisq}(\mathtt{df}=n-1)\). Further, since we are sampling
+from a normal distribution, Theorem \ref{thm:xbar-ands} gives that
+\(\overline{X}\) and \(S^{2}\) are independent and by Fact
+\ref{fac-indep-then-function-indep} so are \(Z\) and \(V\). In summary,
+the distribution of \(T\) is the same as the distribution of the
+quantity \(Z/\sqrt{V/r}\), where
+\(Z\sim\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=1)\) and
+\(V\sim\mathsf{chisq}(\mathtt{df}=r)\) are independent. This is in fact
+the definition of Student's \(t\) distribution.
+\EndKnitrBlock{proof}
+
+This distribution was first published by W. S. Gosset (1900) under the
+pseudonym Student, and the distribution has consequently come to be
+known as Student's \(t\) distribution. The PDF of \(T\) can be derived
+explicitly using the techniques of Section
+\ref{sec-functions-of-continuous}; it takes the form
+
+\begin{equation}
+f_{X}(x)=\frac{\Gamma[(r+1)/2]}{\sqrt{r\pi}\ \Gamma(r/2)}\left(1+\frac{x^{2}}{r}\right)^{-(r+1)/2},\quad -\infty < x < \infty.
+\end{equation}
+
+Any random variable \(X\) with the preceding PDF is said to have
+Student's \(t\) distribution with \(r\) \emph{degrees of freedom}, and
+we write \(X\sim\mathsf{t}(\mathtt{df}=r)\). The shape of the PDF is
+similar to the normal, but the tails are considerably heavier. See
+Figure \ref{fig:students-t-dist-vary-df}. As with the normal
+distribution, there are four functions in R associated with the \(t\)
+distribution, namely \texttt{dt}, \texttt{pt},\texttt{qt}, and
+\texttt{rt}, which compute the PDF, CDF, quantile function, and generate
+random variates, respectively.
+
+The code to produce Figure \ref{fig:students-t-dist-vary-df} is
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{curve}\NormalTok{(}\KeywordTok{dt}\NormalTok{(x, }\DataTypeTok{df =} \DecValTok{30}\NormalTok{), }\DataTypeTok{from =} \NormalTok{-}\DecValTok{3}\NormalTok{, }\DataTypeTok{to =} \DecValTok{3}\NormalTok{, }\DataTypeTok{lwd =} \DecValTok{3}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"y"}\NormalTok{)}
+\NormalTok{ind <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\NormalTok{for (i in ind) }\KeywordTok{curve}\NormalTok{(}\KeywordTok{dt}\NormalTok{(x, }\DataTypeTok{df =} \NormalTok{i), -}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DataTypeTok{add =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{_main_files/figure-latex/students-t-dist-vary-df-1.pdf}
+\caption{\label{fig:students-t-dist-vary-df}\small A plot of Student's \(t\)
+distribution for various degrees of freedom.}
+\end{figure}
+
+
+
+
+Similar to that done for the normal we may define
+\(\mathsf{t}_{\alpha}(\mathtt{df}=n-1)\) as the number on the \(x\)-axis
+such that there is exactly \(\alpha\) area under the
+\(\mathsf{t}(\mathtt{df}=n-1)\) curve to its right.
+
+\bigskip
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{ex:unnamed-chunk-349}{}{\label{ex:unnamed-chunk-349}}Find
+\(\mathsf{t}{}_{0.01}(\mathtt{df}=23)\) with the quantile function.
+\EndKnitrBlock{example}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qt}\NormalTok{(}\FloatTok{0.01}\NormalTok{, }\DataTypeTok{df =} \DecValTok{23}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2.499867
+\end{verbatim}
+
+\bigskip
+
+\begin{remark}
+There are a few things to note about the \(\mathtt{t}(\mathtt{df}=r)\)
+distribution.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The \(\mathtt{t}(\mathtt{df}=1)\) distribution is the same as the
+  \(\mathsf{cauchy}(\mathtt{location}=0,\,\mathtt{scale}=1)\)
+  distribution. The Cauchy distribution is rather pathological and is a
+  counterexample to many famous results.
+\item
+  The standard deviation of \(\mathsf{t}(\mathtt{df}=r)\) is undefined
+  (that is, infinite) unless \(r>2\). When \(r\) is more than 2, the
+  standard deviation is always bigger than one, but decreases to 1 as
+  \(r\to\infty\).
+\item
+  As \(r\to\infty\), the \(\mathtt{t}(\mathtt{df}=r)\) distribution
+  approaches the \(\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=1)\)
+  distribution.
+\end{enumerate}
+\end{remark}
+
+\section{The Central Limit Theorem}\label{sec-central-limit-theorem}
+
+In this section we study the distribution of the sample mean when the
+underlying distribution is \emph{not} normal. We saw in Section
+\ref{sec-sampling-from-normal-dist} that when \(X_{1}\), \(X_{2}\),
+\ldots{} , \(X_{n}\) is a \(SRS(n)\) from a
+\(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\) distribution
+then
+\(\overline{X} \sim \mathsf{norm}(\mathtt{mean} = \mu,\,\mathtt{sd} = \sigma/\sqrt{n})\).
+In other words, we may say (owing to Fact
+\ref(fac-lin-trans-norm-is-norm)) when the underlying population is
+normal that the sampling distribution of \(Z\) defined by
+
+\begin{equation}
+Z=\frac{\overline{X}-\mu}{\sigma/\sqrt{n}}
+\end{equation}
+
+is \(\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=1)\).
+
+However, there are many populations that are \emph{not} normal \ldots{}
+and the statistician often finds herself sampling from such populations.
+What can be said in this case? The surprising answer is contained in the
+following theorem.
+
+\bigskip
+
+\BeginKnitrBlock{theorem}[Central Limit Theorem]
+\protect\hypertarget{thm:central-limit-theorem}{}{\label{thm:central-limit-theorem}
+\iffalse (Central Limit Theorem) \fi }Let \(X_{1}\), \(X_{2}\),
+\ldots{}, \(X_{n}\) be a \(SRS(n)\) from a population distribution with
+mean \(\mu\) and finite standard deviation \(\sigma\). Then the sampling
+distribution of
+
+\begin{equation}
+Z=\frac{\overline{X}-\mu}{\sigma/\sqrt{n}}
+\end{equation}
+
+approaches a \(\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=1)\)
+distribution as \(n\to\infty\).
+\EndKnitrBlock{theorem}
+
+\bigskip
+
+\begin{remark}
+We suppose that \(X_{1}\), \(X_{2}\), \ldots{} , \(X_{n}\) are IID, and
+we learned in Section \ref{sec-simple-random-samples} that
+\(\overline{X}\) has mean \(\mu\) and standard deviation
+\(\sigma/\sqrt{n}\), so we already knew that \(Z\) has mean zero and
+standard deviation one. The beauty of the CLT is that it addresses the
+\emph{shape} of \(Z\)'s distribution when the sample size is large.
+\end{remark}
+
+\bigskip
+
+\begin{remark}
+Notice that the shape of the underlying population's distribution is not
+mentioned in Theorem \ref{thm:central-limit-thrm}; indeed, the result is
+true for any population that is well-behaved enough to have a finite
+standard deviation. In particular, if the population is normally
+distributed then we know from Section \ref{sub-samp-mean-dist-of} that
+the distribution of \(\overline{X}\) (and \(Z\) by extension) is
+\emph{exactly} normal, for \emph{every} \(n\).
+\end{remark}
+
+\bigskip
+
+\begin{remark}
+How large is ``sufficiently large''? It is here that the shape of the
+underlying population distribution plays a role. For populations with
+distributions that are approximately symmetric and mound-shaped, the
+samples may need to be only of size four or five, while for highly
+skewed or heavy-tailed populations the samples may need to be much
+larger for the distribution of the sample means to begin to show a
+bell-shape. Regardless, for a given population distribution (with finite
+standard deviation) the approximation tends to be better for larger
+sample sizes.
+\end{remark}
+
+\subsection{How to do it with R}\label{how-to-do-it-with-r-32}
+
+The \texttt{TeachingDemos} package \autocite{TeachingDemos} has
+\texttt{clt.examp} and the \texttt{distrTeach} \autocite{distrTeach}
+package has \texttt{illustrateCLT}. Try the following at the command
+line (output omitted):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{example}\NormalTok{(clt.examp)}
+\end{Highlighting}
+\end{Shaded}
+
+and
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{example}\NormalTok{(illustrateCLT)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{IPSUR} package \autocite{IPSUR} has the functions
+\texttt{clt1}, \texttt{clt2}, and \texttt{clt3} (see Exercise
+\ref{xca-clt123} at the end of this chapter). Its purpose is to
+investigate what happens to the sampling distribution of
+\(\overline{X}\) when the population distribution is mound shaped,
+finite support, and skewed, namely \(\mathsf{t}(\mathtt{df}=3)\),
+\(\mathsf{unif}(\mathtt{a}=0,\,\mathtt{b}=10)\), and
+\(\mathsf{gamma}(\mathtt{shape}=1.21,\,\mathtt{scale}=1/2.37)\),
+respectively.
+
+For example, when the command \texttt{clt1()} is issued a plot window
+opens to show a graph of the PDF of a \(\mathsf{t}(\mathtt{df}=3)\)
+distribution. On the display are shown numerical values of the
+population mean and variance. While the students examine the graph the
+computer is simulating random samples of size \texttt{sample.size\ =\ 2}
+from the population distribution \texttt{rt} a total of
+\texttt{N.iter\ =\ 100000} times, and sample means are calculated of
+each sample. Next follows a histogram of the simulated sample means,
+which closely approximates the sampling distribution of
+\(\overline{X}\), see Section
+\ref{sec-simulated-sampling-distributions}. Also shown are the sample
+mean and sample variance of all of the simulated \(\overline{X}\)
+values. As a final step, when the student clicks the second plot, a
+normal curve with the same mean and variance as the simulated
+\(\overline{X}\) values is superimposed over the histogram. Students
+should compare the population theoretical mean and variance to the
+simulated mean and variance of the sampling distribution. They should
+also compare the shape of the simulated sampling distribution to the
+shape of the normal distribution.
+
+The three separate \texttt{clt1}, \texttt{clt2}, and \texttt{clt3}
+functions were written so that students could compare what happens
+overall when the shape of the population distribution changes.
+
+\section{Sampling Distributions of Two-Sample
+Statistics}\label{sec-samp-dist-two-samp}
+
+There are often two populations under consideration, and it sometimes of
+interest to compare properties between groups. To do so we take
+independent samples from each population and calculate respective sample
+statistics for comparison. In some simple cases the sampling
+distribution of the comparison is known and easy to derive; such cases
+are the subject of the present section.
+
+\subsection{Difference of Independent Sample
+Means}\label{difference-of-independent-sample-means}
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:unnamed-chunk-357}{}{\label{prp:unnamed-chunk-357}}Let
+\(X_{1}\), \(X_{2}\), \ldots{} , \(X_{n_{1}}\) be an \(SRS(n_{1})\) from
+a \(\mathsf{norm}(\mathtt{mean}=\mu_{X},\,\mathtt{sd}=\sigma_{X})\)
+distribution and let \(Y_{1}\), \(Y_{2}\), \ldots{} , \(Y_{n_{2}}\) be
+an \(SRS(n_{2})\) from a
+\(\mathsf{norm}(\mathtt{mean}=\mu_{Y},\,\mathtt{sd}=\sigma_{Y})\)
+distribution. Suppose that \(X_{1}\), \(X_{2}\), \ldots{} ,
+\(X_{n_{1}}\) and \(Y_{1}\), \(Y_{2}\), \ldots{} , \(Y_{n_{2}}\) are
+independent samples. Then the quantity
+
+\begin{equation}
+\label{eq-diff-indep-sample-means}
+\frac{\overline{X}-\overline{Y}-(\mu_{X}-\mu_{Y})}{\sqrt{\left.\sigma_{X}^{2}\right/ n_{1}+\left.\sigma_{Y}^{2}\right/ n_{2}}}
+\end{equation}
+
+has a \(\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=1)\) sampling
+distribution. Equivalently, \(\overline{X}-\overline{Y}\) has a
+\(\mathsf{norm}(\mathtt{mean}=\mu_{X}-\mu_{Y},\,\mathtt{sd}=\sqrt{\left.\sigma_{X}^{2}\right/ n_{1}+\left.\sigma_{Y}^{2}\right/ n_{2}})\)
+sampling distribution.
+\EndKnitrBlock{proposition}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi We know that \(\overline{X}\) is
+\(\mathsf{norm}(\mathtt{mean}=\mu_{X},\,\mathtt{sd}=\sigma_{X}/\sqrt{n_{1}})\)
+and we also know that \(\overline{Y}\) is
+\(\mathsf{norm}(\mathtt{mean}=\mu_{Y},\,\mathtt{sd}=\sigma_{Y}/\sqrt{n_{2}})\).
+And since the samples \(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n_{1}}\) and
+\(Y_{1}\), \(Y_{2}\), \ldots{}, \(Y_{n_{2}}\) are independent, so too
+are \(\overline{X}\) and \(\overline{Y}\). The distribution of their
+difference is thus normal as well, and the mean and standard deviation
+are given by Proposition \ref{pro:mean-sd-lin-comb-two}.
+\EndKnitrBlock{proof}
+
+\bigskip
+
+\begin{remark}
+Even if the distribution of one or both of the samples is not normal,
+the quantity in Equation \eqref{eq-diff-indep-sample-means} will be
+approximately normal provided both sample sizes are large.
+\end{remark}
+
+\bigskip
+
+\begin{remark}
+For the special case of \(\mu_{X}=\mu_{Y}\) we have shown that
+
+\begin{equation}
+\frac{\overline{X} - \overline{Y}}{\sqrt{ \sigma_{X}^{2}/ n_{1} + \sigma_{Y}^{2}/n_{2}}}
+\end{equation}
+
+has a \(\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=1)\) sampling
+distribution, or in other words, \(\overline{X} - \overline{Y}\) has a
+\(\mathsf{norm}(\mathtt{mean} = 0,\,\mathtt{sd} = \sqrt{\sigma_{X}^{2} / n_{1} + \sigma_{Y}^{2} / n_{2}})\)
+sampling distribution. This will be important when it comes time to do
+hypothesis tests; see Section \ref{sec-conf-interv-for-diff-means}.
+\end{remark}
+
+\subsection{Difference of Independent Sample
+Proportions}\label{difference-of-independent-sample-proportions}
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:unnamed-chunk-361}{}{\label{prp:unnamed-chunk-361}}Let
+\(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n_{1}}\) be an \(SRS(n_{1})\) from
+a \(\mathsf{binom}(\mathtt{size}=1,\,\mathtt{prob}=p_{1})\) distribution
+and let \(Y_{1}\), \(Y_{2}\), \ldots{}, \(Y_{n_{2}}\) be an
+\(SRS(n_{2})\) from a
+\(\mathsf{binom}(\mathtt{size}=1,\,\mathtt{prob}=p_{2})\) distribution.
+Suppose that \(X_{1}\), \(X_{2}\), \ldots{} , \(X_{n_{1}}\) and
+\(Y_{1}\), \(Y_{2}\), \ldots{} , \(Y_{n_{2}}\) are independent samples.
+Define
+
+\begin{equation}
+\hat{p}_{1}=\frac{1}{n_{1}}\sum_{i=1}^{n_{1}}X_{i}\quad \mbox{and}\quad \hat{p}_{2}=\frac{1}{n_{2}}\sum_{j=1}^{n_{2}}Y_{j}.
+\end{equation}
+
+Then the sampling distribution of
+
+\begin{equation}
+\frac{\hat{p}_{1}-\hat{p}_{2}-(p_{1}-p_{2})}{\sqrt{\frac{p_{1}(1-p_{1})}{n_{1}}+\frac{p_{2}(1-p_{2})}{n_{2}}}}
+\end{equation}
+
+approaches a \(\mathsf{norm}(\mathtt{mean}=0,\,\mathtt{sd}=1)\)
+distribution as both \(n_{1},\, n_{2}\to\infty\). In other words, the
+sampling distribution of \(\hat{p}_{1}-\hat{p}_{2}\) is approximately
+
+\begin{equation}
+\mathsf{norm}\left(\mathtt{mean}=p_{1}-p_{2},\,\mathtt{sd}=\sqrt{\frac{p_{1}(1-p_{1})}{n_{1}}+\frac{p_{2}(1-p_{2})}{n_{2}}}\right),
+\end{equation}
+
+provided both \(n_{1}\) and \(n_{2}\) are sufficiently large.
+\EndKnitrBlock{proposition}
+
+\bigskip
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi We know that \(\hat{p}_{1}\) is approximately
+normal for \(n_{1}\) sufficiently large by the CLT, and we know that
+\(\hat{p}_{2}\) is approximately normal for \(n_{2}\) sufficiently
+large, also by the CLT. Further, \(\hat{p}_{1}\) and \(\hat{p}_{2}\) are
+independent since they are derived from independent samples. And a
+difference of independent (approximately) normal distributions is
+(approximately) normal\footnote{This does not explicitly follow because
+  of our cavalier use of ``approximately'' in too many places. To be
+  more thorough, however, would require more concepts than we can afford
+  at the moment. The interested reader may consult a more advanced text,
+  specifically the topic of weak convergence, that is, convergence in
+  distribution.}, by Exercise \ref{xca-diff-indep-norm}.
+
+The expressions for the mean and standard deviation follow immediately
+from Proposition \ref{pro:mean-sd-lin-comb-two} combined with the
+formulas for the \(\mathsf{binom}(\mathtt{size}=1,\,\mathtt{prob}=p)\)
+distribution from Chapter \ref{cha-discrete-distributions}.
+\EndKnitrBlock{proof}
+
+\subsection{Ratio of Independent Sample
+Variances}\label{ratio-of-independent-sample-variances}
+
+\BeginKnitrBlock{proposition}
+\protect\hypertarget{prp:unnamed-chunk-363}{}{\label{prp:unnamed-chunk-363}}Let
+\(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n_{1}}\) be an \(SRS(n_{1})\) from
+a \(\mathsf{norm}(\mathtt{mean}=\mu_{X},\,\mathtt{sd}=\sigma_{X})\)
+distribution and let \(Y_{1}\), \(Y_{2}\), \ldots{} , \(Y_{n_{2}}\) be
+an \(SRS(n_{2})\) from a
+\(\mathsf{norm}(\mathtt{mean}=\mu_{Y},\,\mathtt{sd}=\sigma_{Y})\)
+distribution. Suppose that \(X_{1}\), \(X_{2}\), \ldots{} ,
+\(X_{n_{1}}\) and \(Y_{1}\), \(Y_{2}\), \ldots{} , \(Y_{n_{2}}\) are
+independent samples. Then the ratio
+
+\begin{equation}
+F=\frac{\sigma_{Y}^{2}S_{X}^{2}}{\sigma_{X}^{2}S_{Y}^{2}}
+\end{equation}
+
+has an \(\mathsf{f}(\mathtt{df1}=n_{1}-1,\,\mathtt{df2}=n_{2}-1)\)
+sampling distribution.
+\EndKnitrBlock{proposition}
+
+\BeginKnitrBlock{proof}
+\iffalse {Proof. } \fi We know from Theorem \ref{thm:xbar-ands} that
+\((n_{1}-1)S_{X}^{2}/\sigma_{X}^{2}\) is distributed
+\(\mathsf{chisq}(\mathtt{df}=n_{1}-1)\) and
+\((n_{2}-1)S_{Y}^{2}/\sigma_{Y}^{2}\) is distributed
+\(\mathsf{chisq}(\mathtt{df}=n_{2}-1)\). Now write \[
+F=\frac{\sigma_{Y}^{2}S_{X}^{2}}{\sigma_{X}^{2}S_{Y}^{2}}=\frac{\left.(n_{1}-1)S_{X}^{2}\right/
+(n_{1}-1)}{\left.(n_{2}-1)S_{Y}^{2}\right/
+(n_{2}-1)}\cdot\frac{\left.1\right/ \sigma_{X}^{2}}{\left.1\right/
+\sigma_{Y}^{2}}, \] by multiplying and dividing the numerator with
+\(n_{1}-1\) and doing likewise for the denominator with \(n_{2}-1\). Now
+we may regroup the terms into \[
+F=\frac{\left.\frac{(n_{1}-1)S_{X}^{2}}{\sigma_{X}^{2}}\right/
+(n_{1}-1)}{\left.\frac{(n_{2}-1)S_{Y}^{2}}{\sigma_{Y}^{2}}\right/
+(n_{2}-1)}, \] and we recognize \(F\) to be the ratio of independent
+\(\mathsf{chisq}\) distributions, each divided by its respective
+numerator \(\mathtt{df}=n_{1}-1\) and denominator
+\(\mathtt{df}=n_{1}-1\) degrees of freedom. This is, indeed, the
+definition of Snedecor's \(F\) distribution.
+\EndKnitrBlock{proof}
+
+\bigskip
+
+\begin{remark}
+For the special case of \(\sigma_{X}=\sigma_{Y}\) we have shown that
+
+\begin{equation}
+F=\frac{S_{X}^{2}}{S_{Y}^{2}}
+\end{equation}
+
+has an \(\mathsf{f}(\mathtt{df1}=n_{1}-1,\,\mathtt{df2}=n_{2}-1)\)
+sampling distribution. This will be important in Chapters
+\ref{cha-estimation} onward.
+\end{remark}
+
+\section{Simulated Sampling
+Distributions}\label{sec-simulated-sampling-distributions}
+
+Some comparisons are meaningful, but their sampling distribution is not
+quite so tidy to describe analytically. What do we do then?
+
+As it turns out, we do not need to know the exact analytical form of the
+sampling distribution; sometimes it is enough to approximate it with a
+simulated distribution. In this section we will show you how. Note that
+R is particularly well suited to compute simulated sampling
+distributions, much more so than, say, SPSS or SAS.
+
+\subsection{The Interquartile Range}\label{the-interquartile-range}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iqrs <-}\StringTok{ }\KeywordTok{replicate}\NormalTok{(}\DecValTok{100}\NormalTok{, }\KeywordTok{IQR}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+We can look at the mean of the simulated values
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(iqrs)    }\CommentTok{# close to 1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.344881
+\end{verbatim}
+
+and we can see the standard deviation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sd}\NormalTok{(iqrs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.1605655
+\end{verbatim}
+
+Now let's take a look at a plot of the simulated values
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(iqrs, }\DataTypeTok{breaks =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{_main_files/figure-latex/simulated-iqr-1.pdf}
+\caption{\label{fig:simulated-iqr}\small A plot of simulated IQRs.}
+\end{figure}
+
+
+
+\subsection{The Median Absolute
+Deviation}\label{the-median-absolute-deviation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mads <-}\StringTok{ }\KeywordTok{replicate}\NormalTok{(}\DecValTok{100}\NormalTok{, }\KeywordTok{mad}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+We can look at the mean of the simulated values
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(mads)    }\CommentTok{# close to 1.349}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.9937769
+\end{verbatim}
+
+and we can see the standard deviation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sd}\NormalTok{(mads)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.1011322
+\end{verbatim}
+
+Now let's take a look at a plot of the simulated values
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(mads, }\DataTypeTok{breaks =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{_main_files/figure-latex/simulated-mads-1.pdf}
+\caption{\label{fig:simulated-mads}(cap-simulated-mads)}
+\end{figure}
+
+
+
+\section{Exercises}\label{exercises-6}
+
+\BeginKnitrBlock{xca}
+Suppose that we observe a random sample \(X_{1}\), \(X_{2}\), \ldots{} ,
+\(X_{n}\) of size \(n = \) \texttt{r\ n} from a
+\(\mathsf{norm}(\mathtt{mean}= `r mu`)\) distribution.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What is the mean of \(\overline{X}\)?
+\item
+  What is the standard deviation of \(\overline{X}\)?
+\item
+  What is the distribution of \(\overline{X}\)? (approximately)
+\item
+  Find \(\mathbb{P}(a< \overline{X} \leq b)\)
+\item
+  Find \(\mathbb{P}(\overline{X} > c)\).
+\end{enumerate}
+\EndKnitrBlock{xca}
+
+\bigskip
+
+\begin{xca}
+In this exercise we will investigate how the shape of the population
+distribution affects the time until the distribution of \(\overline{X}\)
+is acceptably normal.
+\end{xca}
+
+\bigskip
+
+\begin{xca}
+Let \(X_{1}\),\ldots{}, \(X_{25}\) be a random sample from a
+\(\mathsf{norm}(\mathtt{mean}=37,\,\mathtt{sd}=45)\) distribution, and
+let \(\overline{X}\) be the sample mean of these \(n=25\) observations.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  How is \(\overline{X}\) distributed?
+  \(\mathsf{norm}(\mathtt{mean}=37,\,\mathtt{sd}=45/\sqrt{25})\)
+\item
+  Find \(\mathbb{P}(\overline{X} > 43.1)\). And that's all she wrote.
+\end{enumerate}
+\end{xca}
+
 \chapter{Estimation}\label{cha-estimation}
 
 We will discuss two branches of estimation procedures: point estimation
@@ -12827,7 +13650,7 @@ X_{1},\, X_{2},\,\ldots,X_{n}\mbox{ which are IID \(f(x| \theta )\).}
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-343}{}{\label{def:unnamed-chunk-343}}Given
+\protect\hypertarget{def:unnamed-chunk-379}{}{\label{def:unnamed-chunk-379}}Given
 the observed data \(x_{1}\), \(x_{2}\),\ldots{}, \(x_{n}\), the
 \emph{likelihood function} \(L\) is defined by \[
 L(\theta)=\prod_{i=1}^{n}f(x_{i}|\theta),\quad \theta\in\Theta.  \]
@@ -12842,7 +13665,7 @@ or the Second Derivative Test \(\left(L''(\hat{\theta})<0\right)\).
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-344}{}{\label{def:unnamed-chunk-344}}A
+\protect\hypertarget{def:unnamed-chunk-380}{}{\label{def:unnamed-chunk-380}}A
 value \(\theta\) that maximizes \(L\) is called a \emph{maximum
 likelihood estimator} (MLE) and is denoted \(\hat{\theta}\). It is a
 function of the sample,
@@ -12899,7 +13722,7 @@ estimator is exactly right.
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-346}{}{\label{def:unnamed-chunk-346}}Let
+\protect\hypertarget{def:unnamed-chunk-382}{}{\label{def:unnamed-chunk-382}}Let
 \(s(X_{1},X_{2},\ldots,X_{n})\) be a statistic which estimates
 \(\theta\). If \[ \mathbb{E} s(X_{1},X_{2},\ldots,X_{n})=\theta, \] then
 the statistic \(s(X_{1},X_{2},\ldots,X_{n})\) is said to be an
@@ -12956,7 +13779,7 @@ would \emph{underestimate} the true value of \(\sigma^{2}\). We use
 \(n-1\) so that, on the average, our estimator of \(\sigma^{2}\) will be
 exactly right.
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-32}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-33}
 
 R can be used to find maximum likelihood estimators in a lot of diverse
 settings. We will discuss only the most basic here and will leave the
@@ -13040,7 +13863,7 @@ For multiparameter problems we may use a similar approach by way of the
 \bigskip
 
 \BeginKnitrBlock{example}[Plant Growth]
-\protect\hypertarget{ex:unnamed-chunk-350}{}{\label{ex:unnamed-chunk-350}
+\protect\hypertarget{ex:unnamed-chunk-386}{}{\label{ex:unnamed-chunk-386}
 \iffalse (Plant Growth) \fi }We will investigate the \texttt{weight}
 variable of the \texttt{PlantGrowth} data. We will suppose that the
 weights constitute a random observations \(X_{1}\), \(X_{2}\), \ldots{}
@@ -13175,7 +13998,7 @@ But now consider the following string of equivalent inequalities: \[
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-354}{}{\label{def:unnamed-chunk-354}}The
+\protect\hypertarget{def:unnamed-chunk-390}{}{\label{def:unnamed-chunk-390}}The
 interval
 
 \begin{equation}
@@ -13380,7 +14203,7 @@ BLANK
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-361}{}{\label{ex:unnamed-chunk-361}}Give
+\protect\hypertarget{ex:unnamed-chunk-397}{}{\label{ex:unnamed-chunk-397}}Give
 some data with \(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) an \(SRS(n)\)
 from a \(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\)
 distribution. Maybe small sample?
@@ -13500,14 +14323,14 @@ and satisfy
 BLANK
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-364}{}{\label{ex:unnamed-chunk-364}}Small
+\protect\hypertarget{ex:unnamed-chunk-400}{}{\label{ex:unnamed-chunk-400}}Small
 sample, some data with \(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) an
 \(SRS(n)\) from a
 \(\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\) distribution.
 PANIC
 \EndKnitrBlock{example}
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-33}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-34}
 
 We can do Example \ref{ex:plant-one-samp-z-int} with the following code.
 
@@ -13661,7 +14484,7 @@ Unfortunately, most of the time the values of \(\sigma_{X}\) and
   \end{itemize}
 \end{itemize}
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-34}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-35}
 
 The basic function is \texttt{t.test} which has a \texttt{var.equal}
 argument that may be set to \texttt{TRUE} or \texttt{FALSE}. The
@@ -13786,7 +14609,7 @@ restricted to the interval \([0,1]\), so we can truncate our confidence
 interval to those values on either side.
 \end{remark}
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-35}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-36}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -13849,7 +14672,7 @@ BLANK
 
 I am thinking one and two sample problems here.
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-36}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-37}
 
 BLANK
 
@@ -13859,7 +14682,7 @@ package \autocite{TeachingDemos} and \texttt{var.test} in base R
 
 \section{Fitting Distributions}\label{sec-fitting-distributions}
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-37}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-38}
 
 BLANK
 
@@ -13900,7 +14723,7 @@ equation and solve for \(n\).
 BLANK
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-373}{}{\label{ex:unnamed-chunk-373}}Given
+\protect\hypertarget{ex:unnamed-chunk-409}{}{\label{ex:unnamed-chunk-409}}Given
 a situation, given \(\sigma\), given \(E\), we would like to know how
 big \(n\) has to be to ensure that \(\overline{X}\pm5\) is a 95\%
 confidence interval for \(\mu\).
@@ -13981,7 +14804,7 @@ If we do not have a good value for the estimate \(p^{\ast}\) then we may
 use \(p^{\ast}=1/2\).
 \end{remark}
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-38}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-39}
 
 BLANK
 
@@ -13993,7 +14816,7 @@ I am thinking about \texttt{power.t.test}, \texttt{power.prop.test},
 
 Mention \texttt{mle} from the \texttt{stats4} package \autocite{stats4}.
 
-\section{Exercises}\label{exercises-6}
+\section{Exercises}\label{exercises-7}
 
 \begin{xca}
 Let \(X_{1}\), \(X_{2}\), \ldots{}, \(X_{n}\) be an \(SRS(n)\) from a
@@ -14308,7 +15131,7 @@ sample.}\tabularnewline
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-383}{}{\label{ex:unnamed-chunk-383}}Find
+\protect\hypertarget{ex:unnamed-chunk-419}{}{\label{ex:unnamed-chunk-419}}Find
 1. The null and alternative hypotheses, 2. Check your assumptions, 3.
 Define a critical region with an \(\alpha=0.05\) significance level, 4.
 Calculate the value of the test statistic and state your conclusion.
@@ -14454,7 +15277,7 @@ name: it is called the \emph{p-value} of the test.
 \bigskip
 
 \BeginKnitrBlock{definition}
-\protect\hypertarget{def:unnamed-chunk-388}{}{\label{def:unnamed-chunk-388}}The
+\protect\hypertarget{def:unnamed-chunk-424}{}{\label{def:unnamed-chunk-424}}The
 \emph{p-value}, or \emph{observed significance level}, of a hypothesis
 test is the probability when the null hypothesis is true of obtaining
 the observed value of the test statistic (such as \(\hat{p}\)) or values
@@ -14469,7 +15292,7 @@ hypothesis\footnote{Bickel and Doksum \autocite{Bickel2001} state the
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-389}{}{\label{ex:unnamed-chunk-389}}Calculate
+\protect\hypertarget{ex:unnamed-chunk-425}{}{\label{ex:unnamed-chunk-425}}Calculate
 the \(p\)-value for the test in Examples \ref{ex:prop-test-pvalue-A} and
 \ref{ex:prop-test-pvalue-B}.
 \EndKnitrBlock{example}
@@ -14561,7 +15384,7 @@ sample.}\tabularnewline
 
 BLANK Example
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-39}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-40}
 
 The following does the test.
 
@@ -14690,7 +15513,7 @@ If \(\sigma\) is unknown but \(n\) is large then we can use the
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-395}{}{\label{ex:unnamed-chunk-395}}In
+\protect\hypertarget{ex:unnamed-chunk-431}{}{\label{ex:unnamed-chunk-431}}In
 this example we
 
 \begin{enumerate}
@@ -14717,7 +15540,7 @@ estimator \(\hat{\theta}\) then \(\sigma_{\hat{\theta}}\) is called the
 \(\sigma_{\hat{\theta}}\) with \(\hat{\sigma_{\hat{\theta}}}\).
 \end{remark}
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-40}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-41}
 
 I am thinking \texttt{z.test} \index{z.test@\texttt{z.test}} in
 \texttt{TeachingDemos}, \texttt{t.test} \index{t.test@\texttt{t.test}}
@@ -14769,12 +15592,6 @@ mean of x
  1.208197 
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(}\KeywordTok{t.test}\NormalTok{(x, }\DataTypeTok{mu =} \DecValTok{0}\NormalTok{, }\DataTypeTok{conf.level =} \FloatTok{0.90}\NormalTok{, }\DataTypeTok{alternative =} \StringTok{"greater"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{figure}[htbp]
 \centering
 \includegraphics{_main_files/figure-latex/ttest-plot-1.pdf}
@@ -14805,7 +15622,7 @@ We know that under \(H_{0}\), \[ X^{2} = \frac{(n -
 here.
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-399}{}{\label{ex:unnamed-chunk-399}}Give
+\protect\hypertarget{ex:unnamed-chunk-435}{}{\label{ex:unnamed-chunk-435}}Give
 some data and a hypothesis. BLANK
 
 \begin{itemize}
@@ -14817,7 +15634,7 @@ some data and a hypothesis. BLANK
 \end{itemize}
 \EndKnitrBlock{example}
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-41}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-42}
 
 I am thinking about \texttt{sigma.test}
 \index{sigma.test@\texttt{sigma.test}} in the \texttt{TeachingDemos}
@@ -14985,7 +15802,7 @@ t-test.}\tabularnewline
 \bottomrule
 \end{longtable}
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-42}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-43}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -15012,7 +15829,7 @@ mean of the differences
 \subsection{Kolmogorov-Smirnov Goodness-of-Fit
 Test}\label{sub-kolmogorov-smirnov-goodness-of-fit-test}
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-43}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-44}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -15062,7 +15879,7 @@ guessed it): Shapiro and Wilk \autocite{Wilk1965}. In contrast to most
 other test statistics we know, we reject \(H_{0}\) if \(W\) is too
 \emph{small}.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-44}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-45}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -15080,7 +15897,7 @@ W = 0.96359, p-value = 0.7545
 
 \section{Analysis of Variance}\label{sec-analysis-of-variance}
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-45}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-46}
 
 I am thinking
 
@@ -15246,7 +16063,7 @@ The power function of a test for a parameter \(\theta\) is \[
   error rate grows as the sample size increases.
 \end{enumerate}
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-46}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-47}
 
 I am thinking about \texttt{replicate}
 \index{replicate@\texttt{replicate}} here, and also \texttt{power.examp}
@@ -15296,7 +16113,7 @@ investigate the effect each of the aforementioned parameters has on the
 statistical power. Note that you need the \texttt{tkrplot} package
 \autocite{tkrplot} for \texttt{run.power.examp}.
 
-\section{Exercises}\label{exercises-7}
+\section{Exercises}\label{exercises-8}
 
 \chapter{Simple Linear Regression}\label{cha-simple-linear-regression}
 
@@ -15453,7 +16270,7 @@ increases\footnote{In practical terms, this constant variance assumption
 \bigskip
 
 \BeginKnitrBlock{example}[Speed and stopping distance of cars]
-\protect\hypertarget{ex:unnamed-chunk-418}{}{\label{ex:unnamed-chunk-418}
+\protect\hypertarget{ex:unnamed-chunk-454}{}{\label{ex:unnamed-chunk-454}
 \iffalse (Speed and stopping distance of cars) \fi }We will use the data
 frame \texttt{cars} \index{Data
 sets!cars@\texttt{cars}} from the \texttt{datasets} package
@@ -15638,7 +16455,7 @@ Also, notice the similarity between Equation
 \eqref{eq-population-slope-slr}.
 \end{rem}
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-47}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-48}
 
 Here we go. R will calculate the linear regression line with the
 \texttt{lm} function. We will store the result in an object which we
@@ -15803,7 +16620,7 @@ estimates are usually worthless. \emph{Do not extrapolate} unless there
 are compelling external reasons, and even then, temper it with a good
 deal of caution.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-48}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-49}
 
 The fitted values are automatically computed as a byproduct of the model
 fitting procedure and are already stored as a component of the
@@ -15881,7 +16698,7 @@ and we estimate \(\sigma\) with the \emph{standard error}
   \ref{cha-Describing-Data-Distributions}. Other notation the reader may
   encounter is the lowercase \(s^{2}\) or the bulky \(MSE\).}.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-49}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-50}
 
 The residuals for the model may be obtained with the \texttt{residuals}
 function; we only show the first few entries in the interest of space:
@@ -16010,7 +16827,7 @@ has a \(\mathsf{t}(\mathtt{df}=n-2)\) distribution and a
 b_{0}\pm\mathsf{t}_{\alpha/2}(\mathtt{df}=n-1)\, S_{b_{0}}.
 \end{equation}
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-50}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-51}
 
 Let us take a look at the output from \texttt{summary(cars.lm)}:
 
@@ -16129,7 +16946,7 @@ We notice that the prediction interval in Equation
 Equation \eqref{eq-SLR-conf-int-formula}, as we expected at the
 beginning of the section.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-51}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-52}
 
 Confidence and prediction intervals are calculated in R with the
 \texttt{predict} \index{predict@\texttt{predict}} function, which we
@@ -16140,7 +16957,7 @@ argument. The general syntax follows.
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-434}{}{\label{ex:unnamed-chunk-434}}We
+\protect\hypertarget{ex:unnamed-chunk-470}{}{\label{ex:unnamed-chunk-470}}We
 will find confidence and prediction intervals for the stopping distance
 of a car travelling 5, 6, and 21 mph (note from the graph that there are
 no collected data for these speeds). We have computed \texttt{cars.lm}
@@ -16195,7 +17012,7 @@ The type of interval is dictated by the \texttt{interval} argument
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-440}{}{\label{ex:unnamed-chunk-440}}Using
+\protect\hypertarget{ex:unnamed-chunk-476}{}{\label{ex:unnamed-chunk-476}}Using
 the \texttt{cars} data,
 \EndKnitrBlock{example}
 
@@ -16297,7 +17114,7 @@ alternative \(H_{1}:\beta_{0}\neq0\) with the statistic
 \ref{sub-slr-interval-est-params}. The test is conducted the same way as
 for \(\beta_{1}\).
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-52}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-53}
 
 Let us take another look at the output from \texttt{summary(cars.lm)}:
 
@@ -16424,7 +17241,7 @@ sign of the slope estimate \(b_{1}\). That is, if the regression line
 \(\hat{\mu}(x)\) has positive slope, then \(r=\sqrt{r^{2}}\). Likewise,
 if the slope of \(\hat{\mu}(x)\) is negative, then \(r=-\sqrt{r^{2}}\).
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-53}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-54}
 
 The primary method to display partitioned sums of squared errors is with
 an \emph{ANOVA table}. The command in R to produce such a table is
@@ -16527,7 +17344,7 @@ important role in the multiple linear regression model which we will
 study in Chapter \ref{cha-multiple-linear-regression}. See Section
 \ref{sub-mlr-overall-f-test} for details.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-54}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-55}
 
 The overall \(F\) statistic and \(p\)-value are displayed in the bottom
 line of the \texttt{summary(cars.lm)} output. It is also shown in the
@@ -17047,7 +17864,7 @@ called the \emph{Bonferroni approach} and can be overly conservative for
 large data sets. The responsible statistician should look at the data
 and use his/her best judgement, in every case.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-55}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-56}
 
 We can calculate the standardized residuals with the \texttt{rstandard}
 function. The input is the \texttt{lm} object, which is
@@ -17246,7 +18063,7 @@ To assess the significance of \(D\), we compare to quantiles of an
 of thumb is to classify observations falling higher than the
 \(50^{\mathrm{th}}\) percentile as being extreme.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-56}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-57}
 
 We can calculate the Cook's Distances with the \texttt{cooks.distance}
 function.
@@ -17383,7 +18200,7 @@ shown in the bottom right corner of Figure
 \ref{fig:diagnostic-plots-cars}). Observations 1 and 2 fall on the far
 right side of the plot, near the horizontal axis.
 
-\section{Exercises}\label{exercises-8}
+\section{Exercises}\label{exercises-9}
 
 \bigskip
 
@@ -17525,7 +18342,7 @@ Y_{i}=\beta_{0}+\beta_{1}x_{1i}+\beta_{2}x_{2i}+\cdots+\beta_{p}x_{pi}+\epsilon_
 \bigskip
 
 \BeginKnitrBlock{example}[Girth, Height, and Volume for Black Cherry trees]
-\protect\hypertarget{ex:unnamed-chunk-467}{}{\label{ex:unnamed-chunk-467}
+\protect\hypertarget{ex:unnamed-chunk-503}{}{\label{ex:unnamed-chunk-503}
 \iffalse (Girth, Height, and Volume for Black Cherry trees)
 \fi }\index{Data sets!trees@\texttt{trees}} Measurements were made of
 the girth, height, and volume of timber in 31 felled black cherry trees.
@@ -17733,7 +18550,7 @@ the critical value is a minimum. We omit the details and refer the
 interested reader to \autocite{Rao1999}.
 \EndKnitrBlock{rem}
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-57}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-58}
 
 We do all of the above just as we would in simple linear regression. The
 powerhouse is the \texttt{lm} \index{lm@\texttt{lm}} function.
@@ -17864,7 +18681,7 @@ which is just a fancy way to write
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-474}{}{\label{ex:unnamed-chunk-474}}If
+\protect\hypertarget{ex:unnamed-chunk-510}{}{\label{ex:unnamed-chunk-510}}If
 we wanted to predict the average volume of black cherry trees that have
 \texttt{Girth\ =\ 15} in and are \texttt{Height\ =\ 77} ft tall then we
 would use the estimate
@@ -17879,7 +18696,7 @@ We would use the same estimate \(\hat{Y}=35.6\) to predict the measured
 \texttt{Volume} of another black cherry tree -- yet to be observed --
 that has \texttt{Girth\ =\ 15} in and is \texttt{Height\ =\ 77} ft tall.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-58}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-59}
 
 The fitted values are stored inside \texttt{trees.lm} and may be
 accessed with the \texttt{fitted} function. We only show the first five
@@ -17999,7 +18816,7 @@ S^{2}=\frac{SSE}{n-(p+1)}.
 That would be a good guess. The \emph{residual standard error} is
 \(S=\sqrt{S^{2}}\).
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-59}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-60}
 
 The residuals are also stored with \texttt{trees.lm} and may be accessed
 with the \texttt{residuals} function. We only show the first five
@@ -18100,7 +18917,7 @@ The degrees of freedom for the Student's \(t\) distribution\footnote{We
   proofs await in later classes. See C.R. Rao for more.} are the same as
 the denominator of \(S^{2}\).
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-60}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-61}
 
 To get confidence intervals for the parameters we need only use
 \texttt{confint} \index{confint@\texttt{confint}}:
@@ -18172,7 +18989,7 @@ given by
 The prediction intervals are wider than the confidence intervals, just
 as in Section \ref{sub-slr-interval-est-regline}.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-61}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-62}
 
 The syntax is identical to that used in SLR, with the proviso that we
 need to specify values of the independent variables in the data frame
@@ -18314,7 +19131,7 @@ substantially, or if one changes dramatically when an explanatory
 variable is added, then (s)he should take a closer look at the
 explanatory variables in the model.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-62}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-63}
 
 For the \texttt{trees} data, we can get \(R^{2}\) and
 \(\overline{R}^{2}\) from the \texttt{summary} output or access the
@@ -18364,7 +19181,7 @@ shown that \(F\sim\mathsf{f}(\mathtt{df1}=p,\,\mathtt{df2}=n-p-1)\). We
 reject \(H_{0}\) when \(F\) is large, that is, when the explained
 variation is large relative to the unexplained variation.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-63}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-64}
 
 The overall \(F\) statistic and its associated \emph{p}-value is listed
 at the bottom of the \texttt{summary} output, or we can access it
@@ -18432,7 +19249,7 @@ the null hypothesis \(H_{0}:\beta_{i}=0\) the statistic
 \(t_{i}=b_{i}/S_{b_{i}}\) has a \(\mathsf{t}(\mathtt{df}=n-p-1)\)
 distribution.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-64}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-65}
 
 The Student's \(t\) tests for significance of the individual explanatory
 variables are shown in the \texttt{summary} output.
@@ -18543,7 +19360,7 @@ model. That is, we replace the \(x_{i}\)'s with \(x_{i}-\overline{x}\)
   orthogonal polynomials in action can be run with
   \texttt{example(cars)}.}.
 
-\subsubsection{How to do it with R}\label{how-to-do-it-with-r-65}
+\subsubsection{How to do it with R}\label{how-to-do-it-with-r-66}
 
 There are multiple ways to fit a quadratic model to the variables
 \texttt{Volume} and \texttt{Girth} using R.
@@ -18573,7 +19390,7 @@ There are multiple ways to fit a quadratic model to the variables
 \bigskip
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{ex:unnamed-chunk-493}{}{\label{ex:unnamed-chunk-493}}We
+\protect\hypertarget{ex:unnamed-chunk-529}{}{\label{ex:unnamed-chunk-529}}We
 will fit the quadratic model to the \texttt{trees} data and display the
 results with \texttt{summary}, being careful to rescale the data before
 fitting the model. We may rescale the \texttt{Girth} variable to have
@@ -18793,7 +19610,7 @@ one for short trees. The regression lines have the same slope but they
 have different \(y\) intercepts (which are exactly \(|\beta_{2}|\) far
 apart).
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-66}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-67}
 
 The important thing is to double check that the qualitative variable in
 question is stored as a factor. The way to check is with the
@@ -18992,7 +19809,7 @@ that the partial \(F\) statistic has an
 calculate the \(p\)-value of the observed partial \(F\) statistic and
 reject \(H_{0}\) if the \(p\)-value is small.
 
-\subsection{How to do it with R}\label{how-to-do-it-with-r-67}
+\subsection{How to do it with R}\label{how-to-do-it-with-r-68}
 
 The key ingredient above is that the two competing models are
 \emph{nested} in the sense that the reduced model is entirely contained
@@ -19004,7 +19821,7 @@ model and the reduced model then compare the answers with the
 \bigskip
 
 \BeginKnitrBlock{example}[The Trees data]
-\protect\hypertarget{ex:unnamed-chunk-504}{}{\label{ex:unnamed-chunk-504}
+\protect\hypertarget{ex:unnamed-chunk-540}{}{\label{ex:unnamed-chunk-540}
 \iffalse (The Trees data) \fi }For the \texttt{trees} data, let us fit a
 polynomial regression model and for the sake of argument we will ignore
 our own good advice and fail to rescale the explanatory variables.
@@ -19445,7 +20262,7 @@ Criterion}\label{akaikes-information-criterion}
 AIC = -2\ln L + 2(p + 1)
 \]
 
-\section{Exercises}\label{exercises-9}
+\section{Exercises}\label{exercises-10}
 
 \textbf{Exercise.} Use Equations \eqref{eq-mlr-sse-matrix},
 \eqref{eq-mlr-ssto-matrix}, and \eqref{eq-mlr-ssr-matrix} to prove the

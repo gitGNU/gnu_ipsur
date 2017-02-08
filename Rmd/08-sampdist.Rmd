@@ -114,6 +114,8 @@ Plug in \(a_{1}=a_{2}=\cdots=a_{n}=1/n\) in Proposition
 The next fact will be useful to us when it comes time to prove the
 Central Limit Theorem in Section \@ref(sec-central-limit-theorem).
 
+\bigskip
+
 ```{proposition, label="pro-mgf-xbar"}
 Let \(X_{1}\), \(X_{2}\), ..., \(X_{n}\) be a
 \(SRS(n)\) from a population distribution with MGF \(M(t)\). Then the
@@ -154,7 +156,6 @@ distribution. Then the sample mean \(\overline{X}\) has a
 sampling distribution.
 ```
 
-\bigskip
 
 ```{proof}
 The mean and standard deviation of \(\overline{X}\) follow directly
@@ -264,7 +265,7 @@ there are four functions in R associated with the \(t\)
 distribution, namely `dt`, `pt`,`qt`, and `rt`, which compute the PDF,
 CDF, quantile function, and generate random variates, respectively.
 
-The code to produce Figure \@ref(fig-students-t-dist-vary-df) is
+The code to produce Figure \@ref(fig:students-t-dist-vary-df) is
 
 ```{r, label="students-t-dist-vary-df",fig.cap='(ref:cap-students-t-dist-vary-df)'}
 curve(dt(x, df = 30), from = -3, to = 3, lwd = 3, ylab = "y")
@@ -369,7 +370,7 @@ of \(\overline{X}\) (and \(Z\) by extension) is *exactly* normal, for
 *every* \(n\).
 ```
 
-\block
+\bigskip
 
 ```{block, type="remark"}
 How large is "sufficiently large"? It is here that the shape of the
@@ -568,8 +569,6 @@ has an \(\mathsf{f}(\mathtt{df1}=n_{1}-1,\,\mathtt{df2}=n_{2}-1)\)
 sampling distribution.
 ```
 
-\bigskip
-
 ```{proof}
 We know from Theorem \@ref(thm:xbar-ands) that
 \((n_{1}-1)S_{X}^{2}/\sigma_{X}^{2}\) is distributed
@@ -676,10 +675,10 @@ n <- sample(10:30, size=10, replace = TRUE)
 mu <- round(rnorm(10, mean = 20))
 ```
 
-```{block, type="xca"}
+```{block2, type="xca"}
 Suppose that we observe a random sample \(X_{1}\), \(X_{2}\), ... ,
-\(X_{n}\) of size SRS( n = `r n[1]`) from a 
-\(\mathsf{norm}(\mathtt{mean}= `r mu[1]`)\) distribution.
+\(X_{n}\) of size \(n = \) `r n` from a 
+\(\mathsf{norm}(\mathtt{mean}= `r mu`)\) distribution.
 
 1. What is the mean of \(\overline{X}\)?
 2. What is the standard deviation of \(\overline{X}\)?

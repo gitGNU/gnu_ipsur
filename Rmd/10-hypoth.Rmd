@@ -97,11 +97,9 @@ back and read this introduction again. All of the mathematical jargon
 that follows is connected to the above paragraphs. In the meantime, I
 will get you started:
 
-* **Null hypothesis:**  it is an ordinary deck of playing cards,
-     shuffled thoroughly.
-* **Alternative hypothesis:**  either it is a trick deck of cards, or
-     the instructor did some fancy shufflework.
-* **Observed data:** a sequence of draws from the deck, five reds in a row.
+* **Null hypothesis:** it is an ordinary deck of playing cards, shuffled thoroughly.
+* **Alternative hypothesis:** something funny is going on. Either it is a trick deck of cards, or the instructor is doing some fancy shufflework.
+* **Observed data:** the sequence of draws from the deck, five reds in a row.
 
 If it were truly an ordinary, well-shuffled deck of cards, the
 probability of observing zero blacks out of a sample of size five
@@ -112,7 +110,6 @@ would be
 dhyper(0, m = 26, n = 26, k = 5)
 ```
 
-
 There are two very important final thoughts. First, everybody gets a
 cookie in the end. Second, the students invariably (and aggressively)
 attempt to get me to open up the deck and reveal the true nature of
@@ -120,7 +117,7 @@ the cards. I never do.
 
 ## Tests for Proportions {#sec-tests-for-proportions}
 
-```{example, label="widget-machine}
+```{example, label="widget-machine"}
 We have a machine that makes widgets. 
 
 * Under normal operation, about 0.10 of the widgets produced are
@@ -229,7 +226,7 @@ large,
 \end{equation}
 approximately, and the approximation gets better as the sample size gets bigger. Another way to write this is 
 \begin{equation}
-Z = \frac{\hat{p} - p_{0}}{sqrt{p_{0}(1 - p_{0})/n}}  \sim \mathsf{norm}(\mathtt{mean} = 0, \mathtt{sd} = 1).
+Z = \frac{\hat{p} - p_{0}}{\sqrt{p_{0}(1 - p_{0})/n}}  \sim \mathsf{norm}(\mathtt{mean} = 0, \mathtt{sd} = 1).
 \end{equation}
 
 (ref:tab-ztest-one-sample-prop)
@@ -239,7 +236,7 @@ Z = \frac{\hat{p} - p_{0}}{sqrt{p_{0}(1 - p_{0})/n}}  \sim \mathsf{norm}(\mathtt
 |-------------------+----------------------+-----------------------------------|
 | \(p = p_{0}\)     | \(p > p_{0}\)        | \(z > z_{\alpha}\)                |
 | \(p = p_{0}\)     | \(p < p_{0}\)        | \(z < -z_{\alpha}\)               |
-| \(p = p_{0}\)     | \(p \neq p_{0}\)     | \(\vert z \vert > z_{\alpha/2}\) |
+| \(p = p_{0}\)     | \(p \neq p_{0}\)     | \(\vert z \vert > z_{\alpha/2}\)  |
 
 Table: Hypothesis tests, population proportion, large sample.
 
@@ -247,21 +244,20 @@ Table: Hypothesis tests, population proportion, large sample.
 
 * A simple random sample from a Bernoulli population
 * The sample size \(n\) is large
-     * need at least 15 successes and at least 15 failures
+* need at least 15 successes and at least 15 failures
+
+\bigskip
 
 ```{example}
-Find
-
-1. The null and alternative hypotheses.
-2. Check your assumptions.
-3. Define a critical region with an \(\alpha=0.05\) significance
-   level.
-4. Calculate the value of the test statistic and state your
-   conclusion.
+Find 1. The null and alternative hypotheses, 2. Check your assumptions, 
+3. Define a critical region with an \(\alpha=0.05\) significance level,
+4. Calculate the value of the test statistic and state your conclusion.
+   
 ```
 
+\bigskip
 
-```{example, label="prop-test-pvalue-A"}
+```{example, label="prop-test-pvalue-a"}
 Suppose \(p = \mathrm{the\ proportion\ of\
 students}\) who are admitted to the graduate school of the University
 of California at Berkeley, and suppose that a public relations officer
@@ -300,7 +296,7 @@ Now we calculate the value of the test statistic.
 
 ```{r, echo=TRUE} 
 phat <- 1755/(1755 + 2771)
-(phat - 0.4)/sqrt(0.4 # 0.6/(1755 + 2771)) 
+(phat - 0.4)/sqrt(0.4 * 0.6/(1755 + 2771)) 
 ```
 
 Our test statistic is not less than \(-2.32\), so it does not fall
@@ -311,8 +307,8 @@ with the officer's claim at the \(\alpha = 0.01\) significance level.
 
 \bigskip
 
-```{example, label="prop-test-pvalue-B"} 
-We are going to do Example \@ref(ex:prop-test-pvalue-A) all over
+```{example, label="prop-test-pvalue-b"} 
+We are going to do Example \@ref(ex:prop-test-pvalue-a) all over
 again. Everything will be exactly the same except for one
 change. Suppose we choose significance level \(\alpha = 0.05\) instead
 of \(\alpha = 0.01\). Are the 1973 data consistent with the officer's
@@ -362,7 +358,7 @@ more extreme -- meaning, in the direction of the alternative
 hypothesis[^hypoth03].
 ```
 
-[^hypoth03]: Bickel and Doksum \cite{Bickel2001} state the
+[^hypoth03]: Bickel and Doksum [@Bickel2001] state the
 definition particularly well: the \(p\)-value is "the smallest level
 of significance \(\alpha\) at which an experimenter using the test
 statistic \(T\) would reject \(H_{0}\) on the basis of the observed
@@ -406,6 +402,8 @@ Thus, another way to phrase our significance test procedure is: we
 will reject \(H_{0}\) at the \(\alpha\)-level of significance if the
 \(p\)-value is less than \(\alpha\).
 
+\bigskip
+
 ```{block, type="remark"}
 If we have two populations with proportions \(p_{1}\) and \(p_{2}\)
 then we can test the null hypothesis \(H_{0}:\,p_{1} = p_{2}\). In
@@ -433,7 +431,7 @@ that which follows,
 | \(p_{1} = p_{2}\) | \(p_{1} - p_{2} < 0\)    | \(z < -z_{\alpha}\)               |
 | \(p_{1} = p_{2}\) | \(p_{1} - p_{2} \neq 0\) | \(\vert z \vert > z_{\alpha/2}\) |
 
-Table: Hypothesis tests, difference in population proportions, large sample]: Hypothesis tests, difference in population proportions, large sample.
+Table: Hypothesis tests, difference in population proportions, large sample.
 
 
 BLANK Example
@@ -456,7 +454,7 @@ Do the following to make the plot.
 \bigskip
 
 ```{block, type="remark"}
-*Remark*: In the above we set `correct = FALSE` to tell the computer
+In the above we set `correct = FALSE` to tell the computer
 that we did not want to use Yates' continuity correction (reference
 BLANK).  It is customary to use Yates when the expected frequency of
 successes is less than 10. (reference BLANK) You can use it all of the
@@ -525,10 +523,14 @@ Table: Hypothesis tests, population mean, large sample.
 
 Table: Hypothesis tests, population mean, small sample.
 
+\bigskip
+
 ```{block, type="remark"}
 If \(\sigma\) is unknown but \(n\) is large then we can use the
 \(z\)-test.
 ```
+
+\bigskip
 
 ```{example}
 In this example we
@@ -542,16 +544,12 @@ In this example we
 
 
 ```{block, type="remark"}
-
-* Another name for a \(p\)-value is *tail-end probability*. We reject
-  \(H_{0}\) when the \(p\)-value is small.
-* The quantity \(\sigma/\sqrt{n}\), when \(\sigma\) is known, is
-  called the *standard error of the sample mean*. In general, if we
-  have an estimator \(\hat{\theta}\) then \(\sigma_{\hat{\theta}}\) is
-  called the *standard error* of \(\hat{\theta}\). We usually need to
-  estimate \(\sigma_{\hat{\theta}}\) with
-  \(\hat{\sigma_{\hat{\theta}}}\).
-
+Another name for a \(p\)-value is *tail-end probability*. We reject \(H_{0}\) when the \(p\)-value is small. The quantity \(\sigma/\sqrt{n}\), when \(\sigma\) is known, is
+called the *standard error of the sample mean*. In general, if we
+have an estimator \(\hat{\theta}\) then \(\sigma_{\hat{\theta}}\) is
+called the *standard error* of \(\hat{\theta}\). We usually need to
+estimate \(\sigma_{\hat{\theta}}\) with
+\(\hat{\sigma_{\hat{\theta}}}\).
 ```
 
 
@@ -567,7 +565,7 @@ z.test(x, mu = 1, sd = 3, conf.level = 0.90)
 ```
 
 
-The `RcmdrPlugin.IPSUR` package \cite{RcmdrPlugin.IPSUR} does not have
+The `RcmdrPlugin.IPSUR` package [@RcmdrPlugin.IPSUR] does not have
 a menu for `z.test` yet.
 
 ```{r, echo=TRUE} 
@@ -604,7 +602,7 @@ Give some data and a hypothesis. BLANK
 
 I am thinking about `sigma.test`
 \index{sigma.test@\texttt{sigma.test}} in the
-`TeachingDemos` package \cite{TeachingDemos}.
+`TeachingDemos` package [@TeachingDemos].
 
 ```{r, echo=TRUE} 
 sigma.test(women$height, sigma = 8)
@@ -612,7 +610,6 @@ sigma.test(women$height, sigma = 8)
 
 
 ## Two-Sample Tests for Means and Variances {#sec-two-sample-tests-for-means}
-
 
 The basic idea for this section is the following. We have
 \(X\sim\mathsf{norm}(\mathtt{mean} = \mu_{X},\,\mathtt{sd} =
@@ -653,6 +650,8 @@ Z = \frac{\overline{X} - \overline{Y}}{\sqrt{\sigma_{X}^{2}/n + \sigma_{Y}^{2}/m
 the result will have a \(\mathsf{norm}(\mathtt{mean} = 0,\,\mathtt{sd}
 = 1)\) distribution when \(H_{0}:\,\mu_{X} = \mu_{Y}\) is true.
 ```
+
+\bigskip
 
 ```{block, type="remark"}
 Even if the values of \(\sigma_{X}\) and \(\sigma_{Y}\) are not known,
@@ -722,7 +721,7 @@ t.test(extra ~ group, data = sleep, paired = TRUE)
 ```
 
 
-## Other Hypothesis Tests {#sec-other-hypothesis-tests
+## Other Hypothesis Tests {#sec-other-hypothesis-tests}
 
 
 ### Kolmogorov-Smirnov Goodness-of-Fit Test {#sub-kolmogorov-smirnov-goodness-of-fit-test}
@@ -761,7 +760,7 @@ respectively, of the order statistics from an \(\mathsf{mvnorm}
 \left(\mathtt{mean} = \mathbf{0},\,\mathtt{sigma} =
 \mathbf{I}\right)\) distribution.  This test statistic \(W\) was
 published in 1965 by (you guessed it): Shapiro and
-Wilk\cite{Wilk1965}.  In contrast to most other test statistics we
+Wilk [@Wilk1965].  In contrast to most other test statistics we
 know, we reject \(H_{0}\) if \(W\) is too *small*.
 
 #### How to do it with R
@@ -772,7 +771,7 @@ with(women, shapiro.test(height))
 
 
 ## Analysis of Variance {#sec-analysis-of-variance}
-:END:
+
 
 ### How to do it with R
 
@@ -853,14 +852,14 @@ Here are some properties of power functions:
 
 I am thinking about `replicate` \index{replicate@\texttt{replicate}}
 here, and also `power.examp` \index{power.examp@\texttt{power.examp}}
-from the `TeachingDemos` package \cite{TeachingDemos}. There is an
-even better plot in upcoming work from the `HH` package \cite{HH}.
+from the `TeachingDemos` package [@TeachingDemos]. There is an
+even better plot in upcoming work from the `HH` package [@HH].
 
 ```{r, label="power-examp",fig.cap='(ref:cap-fig-power-examp)'}
 power.examp()
 ```
 
-(ref:cap-power-examp) \small A plot of significance level and power. This graph was generated by the `power.examp` function from the `TeachingDemos` package. The plot corresponds to the hypothesis test \(H_{0}:\,\mu=\mu_{0}\) versus \(H_{1}:\,\mu=\mu_{1}\) (where \(\mu_{0}=0\) and \(\mu_{1}=1\), by default) based on a single observation \(X\sim\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\). The top graph is of the \(H_{0}\) density while the bottom is of the \(H_{1}\) density. The significance level is set at \(\alpha=0.05\), the sample size is \(n=1\), and the standard deviation is \(\sigma=1\). The pink area is the significance level, and the critical value \(z_{0.05}\approx1.645\) is marked at the left boundary -- this defines the rejection region. When \(H_{0}\) is true, the probability of falling in the rejection region is exactly \(\alpha=0.05\). The same rejection region is marked on the bottom graph, and the probability of falling in it (when \(H_{1}\)  is true) is the blue area shown at the top of the display to be approximately \(0.26\). This probability represents the *power* to detect a non-null mean value of \(\mu=1\). With the command the `run.power.examp()` at the command line the same plot opens, but in addition, there are sliders available that allow the user to interactively change the sample size \(n\), the standard deviation \(\sigma\), the true difference between the means \(\mu_{1}-\mu_{0}\), and the significance level \(\alpha\). By playing around the student can investigate the effect each of the aforementioned parameters has on the statistical power. Note that you need the `tkrplot` package \cite{tkrplot} for `run.power.examp`.
+(ref:cap-power-examp) \small A plot of significance level and power. This graph was generated by the `power.examp` function from the `TeachingDemos` package. The plot corresponds to the hypothesis test \(H_{0}:\,\mu=\mu_{0}\) versus \(H_{1}:\,\mu=\mu_{1}\) (where \(\mu_{0}=0\) and \(\mu_{1}=1\), by default) based on a single observation \(X\sim\mathsf{norm}(\mathtt{mean}=\mu,\,\mathtt{sd}=\sigma)\). The top graph is of the \(H_{0}\) density while the bottom is of the \(H_{1}\) density. The significance level is set at \(\alpha=0.05\), the sample size is \(n=1\), and the standard deviation is \(\sigma=1\). The pink area is the significance level, and the critical value \(z_{0.05}\approx1.645\) is marked at the left boundary -- this defines the rejection region. When \(H_{0}\) is true, the probability of falling in the rejection region is exactly \(\alpha=0.05\). The same rejection region is marked on the bottom graph, and the probability of falling in it (when \(H_{1}\)  is true) is the blue area shown at the top of the display to be approximately \(0.26\). This probability represents the *power* to detect a non-null mean value of \(\mu=1\). With the command the `run.power.examp()` at the command line the same plot opens, but in addition, there are sliders available that allow the user to interactively change the sample size \(n\), the standard deviation \(\sigma\), the true difference between the means \(\mu_{1}-\mu_{0}\), and the significance level \(\alpha\). By playing around the student can investigate the effect each of the aforementioned parameters has on the statistical power. Note that you need the `tkrplot` package [@tkrplot] for `run.power.examp`.
 
 
 ## Exercises

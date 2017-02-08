@@ -22,6 +22,12 @@
 #    along with IPSUR.  If not, see <http://www.gnu.org/licenses/>.
 ```
 
+```{r, echo=FALSE, include=FALSE}
+# This chapter's package dependencies
+library(boot)
+library(coin)
+```
+
 Computers have changed the face of statistics. Their quick
 computational speed and flawless accuracy, coupled with large data
 sets acquired by the researcher, make them indispensable for many
@@ -56,7 +62,7 @@ edition that integrates R into the narrative.
      confidence level or other consideration. For example, we may find
      ourselves saying things like, "With 95% confidence, the true
      population mean is greater than zero".
-* **Problem:** :: Unfortunately, in most cases the sampling distribution is
+* **Problem:** Unfortunately, in most cases the sampling distribution is
              *unknown*. Thus, in the past, in efforts to say something
              useful, statisticians have been obligated to place some
              restrictive assumptions on the underlying population. For
@@ -66,13 +72,13 @@ edition that integrates R into the narrative.
              a smaller standard deviation). It is then easy to draw
              conclusions, make inferences, and go on about our
              business.
-* **Alternative:** :: We don't know what the underlying population
+* **Alternative:** We don't know what the underlying population
                  distributions is, so let us *estimate* it, just like
                  we would with any other parameter. The statistic we
                  use is the *empirical CDF*, that is, the function
                  that places mass \(1/n\) at each of the observed data
                  points \(x_{1},\ldots,x_{n}\) (see Section
-                 [[#sec-empirical-distribution]]). As the sample size
+                 \@ref(sec-empirical-distribution)). As the sample size
                  increases, we would expect the approximation to get
                  better and better (with IID observations, it does,
                  and there is a wonderful theorem by Glivenko and
@@ -111,14 +117,16 @@ methods has given us:
                  procedures. One no longer needs to memorize long
                  complicated formulas and algorithms.
 
-#+BEGIN_rem
+\bigskip
+
+```{block, type="remark"}
 Due to the special structure of the empirical CDF, to get an IID
 sample we just need to take a random sample of size \(n\), with
 replacement, from the observed data \(x_{1},\ldots,x_{n}\). Repeats
 are expected and acceptable. Since we already sampled to get the
 original data, the term *resampling* is used to describe the
 procedure.
-#+END_rem
+
 
 ### General bootstrap procedure.
 
@@ -126,6 +134,7 @@ The above discussion leads us to the following general procedure to
 approximate the sampling distribution of a statistic
 \(S=S(x_{1},x_{2},\ldots,x_{n})\) based on an observed simple random
 sample \(\mathbf{x}=(x_{1},x_{2},\ldots,x_{n})\) of size \(n\):
+
 1. Create many many samples \(\mathbf{x}_{1}^{\ast}, \ldots,
    \mathbf{x}_{M}^{\ast}\), called *resamples*, by sampling with
    replacement from the data.
@@ -146,15 +155,18 @@ distribution to estimate properties of the statistic. We will
 illustrate the bootstrap procedure in the special case that the
 statistic \(S\) is a standard error.
 
-# +BEGIN_exampletoo
-<<exa-Bootstrap-se-mean>> *Standard error of the mean.# In this
+\bigskip
+
+```{example, label="bootstrap-se-mean-examp", name="Standard error of the mean"}
+In this
 example we illustrate the bootstrap by estimating the standard error
 of the sample meanand we will do it in the special case that the
 underlying population is
 \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=1)\).
+```
 
 Of course, we do not really need a bootstrap distribution here because
-from Section [[#sec-sampling-from-normal-dist]] we know that
+from Section \@ref(sec-sampling-from-normal-dist) we know that
 \(\overline{X}\sim\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=1/\sqrt{n})\),
 but we proceed anyway to investigate how the bootstrap performs when
 we know what the answer should be ahead of time.
@@ -172,16 +184,15 @@ xbarstar <- sapply(resamps, mean, simplify = TRUE)
 ```
 
 A histogram of the 1000 values of \(\overline{x}\) is shown in Figure
-[[fig-Bootstrap-se-mean]], and was produced by the following code.
+\@ref(fig-bootstrap-se-mean), and was produced by the following code.
 
 
-```{r}
+```{r, label="bootstrap-se-mean", fig.cap='(ref:cap-bootstrap-se-mean)'}
 hist(xbarstar, breaks = 40, prob = TRUE)
 curve(dnorm(x, 3, 0.2), add = TRUE) # overlay true normal density
 ```
 
-
-#+CAPTION[Bootstrapping the standard error of the mean, simulated data]: \small The original data were 25 observations generated from a \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=1)\) distribution. We next resampled to get 1000 resamples, each of size 25, and calculated the sample mean for each resample. A histogram of the 1000 values of \(\overline{x}\) is shown above. Also shown (with a solid line) is the true sampling distribution of \(\overline{X}\), which is a \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=0.2)\) distribution. Note that the histogram is centered at the sample mean of the original data, while the true sampling distribution is centered at the true value of \(\mu=3\). The shape and spread of the histogram is similar to the shape and spread of the true sampling distribution.
+(ref:cap-bootstrap-se-mean) \small Bootstrapping the standard error of the mean, simulated data. The original data were 25 observations generated from a \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=1)\) distribution. We next resampled to get 1000 resamples, each of size 25, and calculated the sample mean for each resample. A histogram of the 1000 values of \(\overline{x}\) is shown above. Also shown (with a solid line) is the true sampling distribution of \(\overline{X}\), which is a \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=0.2)\) distribution. Note that the histogram is centered at the sample mean of the original data, while the true sampling distribution is centered at the true value of \(\mu=3\). The shape and spread of the histogram is similar to the shape and spread of the true sampling distribution.
 
 
 We have overlain what we know to be the true sampling distribution of
@@ -202,15 +213,12 @@ mean(srs)
 mean(xbarstar) - mean(srs)
 ```
 
-# +END_exampletoo
-
-
 Notice how close the two values are. The difference between them is an
 estimate of how biased the original statistic is, the so-called
 *bootstrap estimate of bias*. Since the estimate is so small we would
 expect our original statistic (\(\overline{X}\)) to have small bias,
 but this is no surprise to us because we already knew from Section
-[[#sec-simple-random-samples]] that \(\overline{X}\) is an unbiased estimator
+\@ref(sec-simple-random-samples) that \(\overline{X}\) is an unbiased estimator
 of the population mean.
 
 Now back to our original problem, we would like to estimate the
@@ -229,7 +237,9 @@ We know from theory that the true standard error is
 \(1/\sqrt{25}=0.20\). Our bootstrap estimate is not very far from the
 theoretical value.
 
-#+BEGIN_rem
+\bigskip
+
+```{block, type="remark"}
 What would happen if we take more resamples? Instead of 1000
 resamples, we could increase to, say, 2000, 3000, or even
 4000... would it help? The answer is both yes and no. Keep in mind
@@ -243,11 +253,12 @@ We only took an original sample of size \(n=25\), and resampling more
 and more would never generate more information about the population
 than was already there. In this sense, the statistician is limited by
 the information contained in the original sample.
-#+END_rem
+```
 
-#+ATTR_LATEX: :options [\textbf{Standard error of the median}]
-# +BEGIN_exampletoo
-<<exa-Bootstrap-se-median>> We look at one where we do not know the
+\bigskip
+
+```{example, label="bootstrap-se-median", name="Standard error of the median"}
+We look at one where we do not know the
 answer ahead of time. This example uses the `rivers`
 \index{Data sets!rivers@\texttt{rivers}} data set. Recall
 the stemplot on page \vpageref{ite-stemplot-rivers} that we made for
@@ -256,6 +267,7 @@ estimate of center would be the sample median. Unfortunately, its
 sampling distribution falls out of our reach. We use the bootstrap to
 help us with this problem, and the modifications to the last example
 are trivial.
+```
 
 ```{r, echo=TRUE} 
 resamps <- replicate(1000, sample(rivers, 141, TRUE), simplify = FALSE)
@@ -263,18 +275,14 @@ medstar <- sapply(resamps, median, simplify = TRUE)
 sd(medstar)
 ```
 
-
-#+NAME: Bootstrapping-se-median
-#+BEGIN_SRC R :exports both :results graphics :file fig/resamp-Bootstrapping-se-median.ps
+```{r, label="bootstrapping-se-median", fig.cap='(ref:cap-bootstrapping-se-median)'}
 hist(medstar, breaks = 40, prob = TRUE)
 ```
 
-#+NAME: fig-Bootstrapping-se-median
-#+CAPTION[Bootstrapping the standard error of the median for the `rivers` data]: \small Bootstrapping the standard error of the median for the `rivers` data.
+(ref:cap-bootstrapping-se-median) \small Bootstrapping the standard error of the median for the `rivers` data.
 
-
-The graph is shown in Figure [[fig-Bootstrapping-se-median]], and was produced
-by the following code.
+The graph is shown in Figure \@ref(fig:bootstrapping-se-median), and
+was produced by the following code.
 
 ```{r, echo=TRUE, eval=FALSE}
 hist(medstar, breaks = 40, prob = TRUE)
@@ -286,32 +294,31 @@ mean(medstar)
 mean(medstar) - median(rivers)
 ```
 
+\bigskip
 
-#+ATTR_LATEX: :options [\textbf{The boot package in R}]
-# +BEGIN_exampletoo
+```{example, name="The `boot` package in R"}
 It turns out that there are many bootstrap procedures and commands
 already built into base R, in the `boot`
 package. Further, inside the `boot` package [@boot] there is
 even a function called `boot`
 \index{boot@\texttt{boot}}. The basic syntax is of the form:
 `boot(data, statistic, R)`.
+```
 
-# +END_exampletoo
 
 Here, `data` is a vector (or matrix) containing the data to be
 resampled, `statistic` is a defined function, *of two arguments*, that
 tells which statistic should be computed, and the parameter
 R specifies how many resamples should be taken.
 
-For the standard error of the mean (Example [[exa-Bootstrap-se-mean]]):
+For the standard error of the mean (Example \@ref(ex:bootstrap-se-mean)):
 
 ```{r, echo=TRUE} 
 mean_fun <- function(x, indices) mean(x[indices])
 boot(data = srs, statistic = mean_fun, R = 1000)
 ```
 
-For the standard error of the median (Example
-[[exa-Bootstrap-se-median]]):
+For the standard error of the median (Example \@ref(ex:bootstrap-se-median)):
 
 ```{r, echo=TRUE} 
 median_fun <- function(x, indices) median(x[indices])
@@ -324,7 +331,9 @@ be preferred since it invisibly returns much more information (which
 we will use later) than our naive script and it is much quicker in its
 computations.
 
-#+BEGIN_rem
+\bigskip
+
+```{block, type="remark"}
 Some things to keep in mind about the bootstrap:
 
 * For many statistics, the bootstrap distribution closely resembles
@@ -351,7 +360,7 @@ Some things to keep in mind about the bootstrap:
   resampling. One should think of the bootstrap as just another
   estimation method, nothing more, nothing less.
 
-#+END_rem
+```
 
 ## Bootstrap Confidence Intervals {#sec-bootstrap-confidence-intervals}
 
@@ -377,23 +386,29 @@ created to do just this. Note that in order to use the function
 a variable, for example, `data.boot`. We then plug `data.boot` into
 the function `boot.ci`.
 
-#+ATTR_LATEX: :options [\textbf{Percentile interval for the expected value of the median}]
-# +BEGIN_exampletoo
-<<exa-percentile-interval-median-first>> We will try the naive
+\bigskip
+
+```{example, label="percentile-interval-median-first", name="Percentile interval for the expected value of the median"}
+We will try the naive
 approach where we generate the resamples and calculate the percentile
 interval by hand.
+```
+
 
 ```{r, echo=TRUE} 
-btsamps <- replicate(2000, sample(stack.loss, 21, TRUE), simplify = FALSE)
+btsamps <- replicate(2000, sample(stack.loss, 21, TRUE), 
+                     simplify = FALSE)
 thetast <- sapply(btsamps, median, simplify = TRUE)
 mean(thetast)
 median(stack.loss)
 quantile(thetast, c(0.025, 0.975))
 ```
 
-#+ATTR_LATEX: :options [\textbf{Confidence interval for expected value of the median, second try}]
-# +BEGIN_exampletoo
+\bigskip
+
+```{example, name="Confidence interval for expected value of the median, second try"}
 Now we will do it the right way with the `boot` function.
+```
 
 ```{r, echo=TRUE} 
 med_fun <- function(x, ind) median(x[ind])
@@ -402,7 +417,7 @@ boot.ci(med_boot, type = c("perc", "norm", "bca"))
 ```
 
 
-### Student's \(t\) intervals ("normal intervals")
+### Student's t intervals ("normal intervals")
 
 The idea is to use confidence intervals that we already know and let
 the bootstrap help us when we get into trouble. We know that a
@@ -427,8 +442,9 @@ interval
  will have approximately \(100(1-\alpha)\%\) confidence of containing
  \(\mathbb{E}(\mathrm{statistic})\).
 
-# +BEGIN_exampletoo
+\bigskip
 
+```{example}
 We will use the t-interval method to find the bootstrap CI for the
 median. We have looked at the bootstrap distribution; it appears to be
 symmetric and approximately mound shaped. Further, we may check that
@@ -436,12 +452,14 @@ the bias is approximately 40, which on the scale of these data is
 practically negligible. Thus, we may consider looking at the
 \(t\)-intervals. Note that, since our sample is so large, instead of
 \(t\)-intervals we will essentially be using \(z\)-intervals.
-# +END_exampletoo
+```
 
 We see that, considering the scale of the data, the confidence
 intervals compare with each other quite well.
 
-#+BEGIN_rem
+\bigskip
+
+```{block, type="remark"}
 We have seen two methods for bootstrapping confidence intervals for a
 statistic. Which method should we use? If the bias of the bootstrap
 distribution is small and if the distribution is close to normal, then
@@ -449,7 +467,7 @@ the percentile and \(t\)-intervals will closely agree. If the
 intervals are noticeably different, then it should be considered
 evidence that the normality and bias conditions are not met. In this
 case, *neither* interval should be used.
-#+END_rem
+```
 
 
 * \(BC_{a}\): bias-corrected and accelerated
@@ -470,6 +488,7 @@ The classical two-sample problem can be stated as follows: given two
 groups of interest, we would like to know whether these two groups are
 significantly different from one another or whether the groups are
 reasonably similar. The standard way to decide is to
+
 1. Go collect some information from the two groups and calculate an
    associated statistic, for example,
    \(\overline{X}_{1}-\overline{X}_{2}\).
@@ -482,43 +501,13 @@ reasonably similar. The standard way to decide is to
    hence provides evidence *against* the null hypothesis that the
    population distributions are the same.
 
-Of course, we usually compute a *p-value*, defined to be the
+Of course, we usually compute a *p*-value, defined to be the
 probability of the observed value of the statistic or more extreme
 when the null hypothesis is true. Small \(p\)-values are evidence
 against the null hypothesis. It is not immediately obvious how to use
 resampling methods here, so we discuss an example.
 
-# +BEGIN_exampletoo
- 
-A study concerned differing dosages of the antiretroviral drug
-AZT. The common dosage is 300mg daily. Higher doses cause more side
-affects, but are they significantly higher? We examine for a 600mg
-dose. The data are as follows: We compare the scores from the two
-groups by computing the difference in their sample means. The 300mg
-data were entered in x1 and the 600mg data were entered into x2. The
-observed difference was
-
-| 300mg  | 284 | 279 | 289 | 292 | 287 | 295 | 285 | 279 | 306 | 298 |
-| 600mg  | 298 | 307 | 297 | 279 | 291 | 335 | 299 | 300 | 306 | 291 |
-The average amounts can be found:
-: > mean(x1)
-: [1] 289.4
-: > mean(x2)
-: [1] 300.3
-
-with an observed difference of `mean(x2) - mean(x1) = 10.9`. As
-expected, the 600 mg measurements seem to have a higher average, and
-we might be interested in trying to decide if the average amounts are
-*significantly* different. The null hypothesis should be that there is
-no difference in the amounts, that is, the groups are more or less the
-same. If the null hypothesis were true, then the two groups would
-indeed be the same, or just one big group. In that case, the observed
-difference in the sample means just reflects the random assignment
-into the arbitrary `x1` and `x2` categories. It is now clear how we
-may resample, consistent with the null hypothesis.
-# +END_exampletoo
-
-### Procedure:
+#### Procedure
 
 1. Randomly resample 10 scores from the combined scores of `x1` and
    `x2`, and assign then to the `x1` group. The rest will then be in
@@ -530,7 +519,9 @@ may resample, consistent with the null hypothesis.
    \(p\)-value. If the \(p\)-value is small, then we consider that
    evidence against the hypothesis that the groups are the same.
 
-#+BEGIN_rem
+\bigskip
+
+```{block, type="remark"}
 In calculating the permutation test *p-value*, the formula is
 essentially the proportion of resample statistics that are greater
 than or equal to the observed value. Of course, this is merely an
@@ -538,7 +529,7 @@ than or equal to the observed value. Of course, this is merely an
 \(+1\) to both the numerator and denominator of the proportion
 improves the performance of the estimated \(p\)-value, and this
 adjustment is implemented in the `ts.perm` function.
-#+END_rem
+```
 
 ```{r, echo=TRUE} 
 oneway_test(len ~ supp, data = ToothGrowth)
@@ -547,21 +538,22 @@ oneway_test(len ~ supp, data = ToothGrowth)
 
 ### Comparison with the Two Sample t test
 
-We know from Chapter [[#cha-Hypothesis-Testing]] to use the two-sample
+We know from Chapter \@ref(cha-hypothesis-testing) to use the two-sample
 \(t\)-test to tell whether there is an improvement as a result of
 taking the intervention class. Note that the \(t\)-test assumes normal
 underlying populations, with unknown variance, and small sample
 \(n=10\). What does the \(t\)-test say? Below is the output.
 
 ```{r, echo=TRUE} 
-t.test(len ~ supp, data = ToothGrowth, 
-       alt = "greater", var.equal = TRUE)
+t.test(len ~ supp, data = ToothGrowth, alt = "greater", 
+       var.equal = TRUE)
 ```
 
 
-```{r, echo=FALSE, include=FALSE}
+```{r}
 A <- show(oneway_test(len ~ supp, data = ToothGrowth))
-B <- t.test(len ~ supp, data = ToothGrowth, alt = "greater", var.equal = TRUE)
+B <- t.test(len ~ supp, data = ToothGrowth, alt = "greater", 
+            var.equal = TRUE)
 ```
 
 The \(p\)-value for the \(t\)-test was `r round(B$p.value, 3)`, while
@@ -576,13 +568,15 @@ small sample scenarios, the permutation test is to be preferred. In
 particular, if accuracy is very important then we should use the
 permutation test.
 
-#+BEGIN_rem
+\bigskip
+
+```{block, type="remark"}
 Here are some things about permutation tests to keep in mind.
 
 * While the permutation test does not require normality of the
   populations (as contrasted with the \(t\)-test), nevertheless it
   still requires that the two groups are exchangeable; see Section
-  [[#sec-Exchangeable-Random-Variables]]. In particular, this means that they
+  \@ref(sec-exchangeable-random-variables). In particular, this means that they
   must be identically distributed under the null hypothesis. They must
   have not only the same means, but they must also have the same
   spread, shape, and everything else. This assumption may or may not
@@ -611,7 +605,8 @@ Here are some things about permutation tests to keep in mind.
   \(p\) then the standard error of the estimated \(p\)-value is
   \(\sqrt{p(1-p)/R}\). You can choose \(R\) to get whatever accuracy
   desired.
-#+END_rem
+
+```
 
 * Other possible testing designs:
     * Matched Pairs Designs. 

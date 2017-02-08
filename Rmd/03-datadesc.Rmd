@@ -156,7 +156,7 @@ integers, and since they represent counts this is a good example of
 discrete quantitative data. We will take a closer look in the
 following sections.
 
-### Displaying Quantitative Data {#sub-fisplaying-quantitative-data}
+### Displaying Quantitative Data {#sub-displaying-quantitative-data}
 
 One of the first things to do when confronted by quantitative data (or
 any data, for that matter) is to make some sort of visual display to
@@ -392,7 +392,7 @@ plot(LakeHuron, type = "h")
 The plots show an overall decreasing trend to the observations, and
 there appears to be some seasonal variation that increases over time.
 
-```{r, echo=FALSE, fig.cap='(ref:cap-lakehuron)'}
+```{r, echo=FALSE, fig.cap='(ref:cap-lakehuron)',fig.height=8}
 par(mfrow = c(3,1))
 plot(LakeHuron, cex.lab = cexlab)
 plot(LakeHuron, type = "p", cex.lab = cexlab)
@@ -1278,7 +1278,7 @@ to be left skewed with four extreme values to the left and one extreme
 value to the right. The sample median is approximately 37 (it turns
 out to be 36.6).
 
-### Hinges and the Five Number Summary {#sub-hinges-and-5NS}
+### Hinges and the Five Number Summary {#sub-hinges-and-5ns}
 
 Given a data set \(x_{1}\), \(x_{2}\), ..., \(x_{n}\), the hinges are
 found by the following method:

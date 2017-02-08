@@ -1,0 +1,12 @@
+# (APPENDIX) Appendix {-}
+
+# R Session Information {#cha-r-session-information}
+
+If you ever try to communicate with someone about an error you are having with R, 
+then you should include your session information in the message. Here is how to 
+do that, and below is what the output looks like.
+
+```{r, echo=TRUE, results=TRUE} 
+sessionInfo()
+```
+

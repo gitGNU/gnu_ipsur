@@ -1822,7 +1822,7 @@ and notice that \(A\cap B\) and \(A^{c}\cap B\) are disjoint. Therefore
 \bigskip
 
 ```{example}
-We saw the `RcmdrTestDrive` data set in Chapter \@ref(cha-introduction-to-R)
+We saw the `RcmdrTestDrive` data set in Chapter \@ref(cha-introduction-to-r)
 in which a two-way table of the smoking status versus the gender was
 ```
 

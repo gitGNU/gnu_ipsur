@@ -22,6 +22,12 @@
 #    along with IPSUR.  If not, see <http://www.gnu.org/licenses/>.
 ```
 
+```{r, echo=FALSE, include=FALSE}
+# This chapter's package dependencies
+library(boot)
+library(coin)
+```
+
 Computers have changed the face of statistics. Their quick
 computational speed and flawless accuracy, coupled with large data
 sets acquired by the researcher, make them indispensable for many
@@ -128,6 +134,7 @@ The above discussion leads us to the following general procedure to
 approximate the sampling distribution of a statistic
 \(S=S(x_{1},x_{2},\ldots,x_{n})\) based on an observed simple random
 sample \(\mathbf{x}=(x_{1},x_{2},\ldots,x_{n})\) of size \(n\):
+
 1. Create many many samples \(\mathbf{x}_{1}^{\ast}, \ldots,
    \mathbf{x}_{M}^{\ast}\), called *resamples*, by sampling with
    replacement from the data.
@@ -150,7 +157,7 @@ statistic \(S\) is a standard error.
 
 \bigskip
 
-```{example, label="bootstrap-se-mean", name="Standard error of the mean"}
+```{example, label="bootstrap-se-mean-examp", name="Standard error of the mean"}
 In this
 example we illustrate the bootstrap by estimating the standard error
 of the sample meanand we will do it in the special case that the
@@ -180,12 +187,12 @@ A histogram of the 1000 values of \(\overline{x}\) is shown in Figure
 \@ref(fig-bootstrap-se-mean), and was produced by the following code.
 
 
-```{r, label="bootgraph", fig.cap='(ref:cap-bootgraph)'}
+```{r, label="bootstrap-se-mean", fig.cap='(ref:cap-bootstrap-se-mean)'}
 hist(xbarstar, breaks = 40, prob = TRUE)
 curve(dnorm(x, 3, 0.2), add = TRUE) # overlay true normal density
 ```
 
-(ref:cap-bootgraph) \small Bootstrapping the standard error of the mean, simulated data. The original data were 25 observations generated from a \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=1)\) distribution. We next resampled to get 1000 resamples, each of size 25, and calculated the sample mean for each resample. A histogram of the 1000 values of \(\overline{x}\) is shown above. Also shown (with a solid line) is the true sampling distribution of \(\overline{X}\), which is a \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=0.2)\) distribution. Note that the histogram is centered at the sample mean of the original data, while the true sampling distribution is centered at the true value of \(\mu=3\). The shape and spread of the histogram is similar to the shape and spread of the true sampling distribution.
+(ref:cap-bootstrap-se-mean) \small Bootstrapping the standard error of the mean, simulated data. The original data were 25 observations generated from a \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=1)\) distribution. We next resampled to get 1000 resamples, each of size 25, and calculated the sample mean for each resample. A histogram of the 1000 values of \(\overline{x}\) is shown above. Also shown (with a solid line) is the true sampling distribution of \(\overline{X}\), which is a \(\mathsf{norm}(\mathtt{mean}=3,\,\mathtt{sd}=0.2)\) distribution. Note that the histogram is centered at the sample mean of the original data, while the true sampling distribution is centered at the true value of \(\mu=3\). The shape and spread of the histogram is similar to the shape and spread of the true sampling distribution.
 
 
 We have overlain what we know to be the true sampling distribution of
@@ -268,7 +275,7 @@ medstar <- sapply(resamps, median, simplify = TRUE)
 sd(medstar)
 ```
 
-```{r, label="bootstrapping-se-median", fig.cap='(ref:cap-bootstrapping-se-median)'
+```{r, label="bootstrapping-se-median", fig.cap='(ref:cap-bootstrapping-se-median)'}
 hist(medstar, breaks = 40, prob = TRUE)
 ```
 
@@ -289,7 +296,7 @@ mean(medstar) - median(rivers)
 
 \bigskip
 
-```{example, name="The `boot` package in R""}
+```{example, name="The `boot` package in R"}
 It turns out that there are many bootstrap procedures and commands
 already built into base R, in the `boot`
 package. Further, inside the `boot` package [@boot] there is
@@ -387,8 +394,10 @@ approach where we generate the resamples and calculate the percentile
 interval by hand.
 ```
 
+
 ```{r, echo=TRUE} 
-btsamps <- replicate(2000, sample(stack.loss, 21, TRUE), simplify = FALSE)
+btsamps <- replicate(2000, sample(stack.loss, 21, TRUE), 
+                     simplify = FALSE)
 thetast <- sapply(btsamps, median, simplify = TRUE)
 mean(thetast)
 median(stack.loss)
@@ -479,6 +488,7 @@ The classical two-sample problem can be stated as follows: given two
 groups of interest, we would like to know whether these two groups are
 significantly different from one another or whether the groups are
 reasonably similar. The standard way to decide is to
+
 1. Go collect some information from the two groups and calculate an
    associated statistic, for example,
    \(\overline{X}_{1}-\overline{X}_{2}\).
@@ -491,13 +501,13 @@ reasonably similar. The standard way to decide is to
    hence provides evidence *against* the null hypothesis that the
    population distributions are the same.
 
-Of course, we usually compute a *p-value*, defined to be the
+Of course, we usually compute a *p*-value, defined to be the
 probability of the observed value of the statistic or more extreme
 when the null hypothesis is true. Small \(p\)-values are evidence
 against the null hypothesis. It is not immediately obvious how to use
 resampling methods here, so we discuss an example.
 
-### Procedure:
+#### Procedure
 
 1. Randomly resample 10 scores from the combined scores of `x1` and
    `x2`, and assign then to the `x1` group. The rest will then be in
@@ -535,14 +545,15 @@ underlying populations, with unknown variance, and small sample
 \(n=10\). What does the \(t\)-test say? Below is the output.
 
 ```{r, echo=TRUE} 
-t.test(len ~ supp, data = ToothGrowth, 
-       alt = "greater", var.equal = TRUE)
+t.test(len ~ supp, data = ToothGrowth, alt = "greater", 
+       var.equal = TRUE)
 ```
 
 
-```{r, echo=FALSE, include=FALSE}
+```{r}
 A <- show(oneway_test(len ~ supp, data = ToothGrowth))
-B <- t.test(len ~ supp, data = ToothGrowth, alt = "greater", var.equal = TRUE)
+B <- t.test(len ~ supp, data = ToothGrowth, alt = "greater", 
+            var.equal = TRUE)
 ```
 
 The \(p\)-value for the \(t\)-test was `r round(B$p.value, 3)`, while

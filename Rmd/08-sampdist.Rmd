@@ -208,7 +208,7 @@ consult Casella and Berger [@Casella2002], or Hogg *et al*
 ```
 
 
-### The Distribution of Student's t Statistic {#sub-student's-t-distribution}
+### The Distribution of Student's t Statistic {#sub-students-t-distribution}
 
 
 ```{proposition}
@@ -248,7 +248,7 @@ quantity \(Z/\sqrt{V/r}\), where
 fact the definition of Student's \(t\) distribution.
 ```
 
-This distribution was first published by W. S. Gosset (1900) under the
+This distribution was first published by W. S. Gosset [@Student1908] under the
 pseudonym Student, and the distribution has consequently come to be
 known as Student's \(t\) distribution. The PDF of \(T\) can be derived
 explicitly using the techniques of Section 

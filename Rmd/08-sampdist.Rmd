@@ -660,7 +660,7 @@ sd(mads)
 
 Now let's take a look at a plot of the simulated values
 
-```{r, label="simulated-mads",fig.cap='(cap-simulated-mads)'}
+```{r, label="simulated-mads",fig.cap='(ref:cap-simulated-mads)'}
 hist(mads, breaks = 20)
 ```
 

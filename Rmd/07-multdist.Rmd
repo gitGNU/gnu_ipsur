@@ -1034,7 +1034,7 @@ package [@emdbook]. It looks like this:
 library("emdbook"); library("mvtnorm") # note: the order matters
 mu <- c(0,0); sigma <- diag(2)
 f <- function(x,y) dmvnorm(c(x,y), mean = mu, sigma = sigma)
-curve3d(f(x,y), from = c(-3,-3), to = c(3,3), theta = -30, phi = 30)
+curve3d(f(x,y), from=c(-3,-3), to=c(3,3), theta=-30, phi=30)
 ```
 
 The code above is slightly shorter than that using `persp` and is

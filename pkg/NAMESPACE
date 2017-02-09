@@ -5,5 +5,4 @@ exportPattern(".")
 
 #
 importFrom("stats", "rbinom", "xtabs")
-importFrom("utils", "URLencode", "browseURL")
-
+importFrom("utils", "vignette")

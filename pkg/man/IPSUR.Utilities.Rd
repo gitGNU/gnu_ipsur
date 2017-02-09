@@ -7,11 +7,10 @@
   These functions support using the IPSUR package.
 }
 
-\usage{read(topic, pkg = "IPSUR") }
+\usage{read(x)}
 
 \arguments{
-  \item{topic}{the name of a PDF in the doc directory, quoted or not.}
-  \item{pkg}{the package where the PDF lives}
+  \item{x}{the name of a PDF in the doc directory, quoted or not.}
 }
 
 \details{

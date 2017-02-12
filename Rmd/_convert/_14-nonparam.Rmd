@@ -36,3 +36,34 @@ library("IPSUR")
 read(IPSUR)
 ```
 
+
+
+
+### How to do it with R
+
+We need data, and for this example we will use the `InsectSprays` data, which lists the `count` of insects in agricultural experimental units treated with six different `spray` insecticides.
+
+```{r}
+head(InsectSprays)
+```
+
+There are twelve observations per `spray` (small samples) and a `count` variable is certainly nonnormal, though it in principle it could be approximately normal (but in this case isn't).
+
+```{r}
+boxplot(count ~ spray, data = InsectSprays, horizontal = TRUE)
+```
+
+The data are definitely nonnormal, but unfortunately it is clear that the variances are not the same in each group (recall: we are assuming that the groups differ only in location).  We might try a transformation to stabilize the variance, and the square root is a good guess.
+
+```{r}
+boxplot(sqrt(count) ~ spray, data = InsectSprays, horizontal = TRUE)
+```
+
+This looks a lot better.  We perform the test with the `kruskal.test` function.  The *p*-value returned is based on the asymptotic chi-squared distribution.
+
+```{r}
+kruskal.test(sqrt(count) ~ spray, data = InsectSprays)
+```
+
+Here we reject the null hypothesis that all sprays have identical treatment effect on `sqrt(count)`.  
+

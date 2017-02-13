@@ -223,7 +223,7 @@ We may collapse the two matrices from Figure
 values \((u,v)\). The result is shown in Table
 \@ref(fig:max-sum-two-dice-joint).
 
-```{r, echo=FALSE, label="max-sum-two-dice-joint",fig.cap='(ref:cap-max-sum-two-dice)'}
+```{r, echo=FALSE, label="max-sum-two-dice-joint",fig.cap='(ref:cap-max-sum-two-dice-joint)'}
 labs <- with(A, paste("(", U, ",", V, ")", sep = ""))
 p3 <- ggplot(A, aes(x = X1, y = X2, label = labs))
 p3 + geom_text(size = 6) + xlab("First roll") + ylab("Second roll") + 

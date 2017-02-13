@@ -4,7 +4,7 @@ author: "G. Jay Kerns"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: ["IPSUR.bib", "Rpackages.bib"]
+bibliography: ["tex/IPSUR.bib", "tex/Rpackages.bib"]
 link-citations: true
 description: "This is an Introduction to Probability and Statistics Using R."
 ---

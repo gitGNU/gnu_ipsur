@@ -1,8 +1,8 @@
 bookdown::pdf_book:
   includes:
-    in_header: preamble.tex
-    before_body: ["frontmatter.tex", "preface-third.tex"]
-    after_body: backmatter.tex
+    in_header: tex/preamble.tex
+    before_body: ["tex/frontmatter.tex", "tex/preface-third.tex"]
+    after_body: tex/backmatter.tex
   latex_engine: pdflatex
   dev: "cairo_pdf"
   toc: no

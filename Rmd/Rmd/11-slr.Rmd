@@ -332,9 +332,9 @@ data and then follow with a call to the `abline` function. The inputs
 to `abline` are the coefficients of `cars.lm`; see Figure
 \@ref(fig:carline).
 
-```{r,label="carline",fig.cap='(ref:carline)'}
-plot(dist ~ speed, data = cars, pch = 16)
-abline(coef(cars))
+```{r,label="carline",fig.cap='(ref:cap-carline)'}
+plot(dist ~ speed, data = cars)
+abline(coef(cars.lm))
 ```
 
 (ref:cap-carline) \small A scatterplot with an added regression line for the `cars` data.

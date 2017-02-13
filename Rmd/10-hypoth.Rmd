@@ -666,14 +666,14 @@ In this example we
 ```
 
 
-```{block, type="remark"}
-Another name for a \(p\)-value is *tail-end probability*. We reject \(H_{0}\) when the \(p\)-value is small. The quantity \(\sigma/\sqrt{n}\), when \(\sigma\) is known, is
-called the *standard error of the sample mean*. In general, if we
-have an estimator \(\hat{\theta}\) then \(\sigma_{\hat{\theta}}\) is
+
+
+The quantity \(\sigma/\sqrt{n}\), when \(\sigma\) is known, is
+called the *standard error of the sample mean*. In general, if we have an estimator \(\hat{\theta}\) then \(\sigma_{\hat{\theta}}\) is
 called the *standard error* of \(\hat{\theta}\). We usually need to
 estimate \(\sigma_{\hat{\theta}}\) with
-\(\hat{\sigma_{\hat{\theta}}}\).
-```
+\(\widehat{\sigma_{\hat{\theta}}}\).
+
 
 
 #### How to do it with R

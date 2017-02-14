@@ -30,17 +30,17 @@ genLogRegData <- function(xdata,
   tmp <- as.matrix(xdata) %*% beta
   probs <- exp(tmp)/(1 + exp(tmp))
   y <- apply(probs, 1, function(p){rbinom(1, size = 1, prob = p)})
-  xdata[ , yname] <- y
-  xdata
+  resdata <- cbind(xdata, y)
+  as.data.frame(resdata)
 }
 
-# 
-# params <- c(1,2,3,4)
-# require(MASS)
-# xmean <- Null(params)[ , 1]
-# X = genXdata(10, mu = m, roundto = 2)
-# genLogRegData(X, beta = params)
-# 
+
+#params <- c(1,2,3,4)
+#require(MASS)
+#xmean <- Null(params)[ , 1]
+#X = genXdata(10, mu = xmean, roundto = 2)
+#genLogRegData(X, beta = params)
+
 
 ######################################################3
 # contingency tables

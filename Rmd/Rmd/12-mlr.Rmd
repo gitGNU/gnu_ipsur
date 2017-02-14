@@ -1,4 +1,4 @@
-# Multiple Linear Regression {#cha-multiple-linear-regressionl}
+# Multiple Linear Regression {#cha-multiple-linear-regression}
 
 ```{r, echo=FALSE, eval=FALSE}
 #    IPSUR: Introduction to Probability and Statistics Using R

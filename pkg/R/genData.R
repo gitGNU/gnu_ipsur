@@ -31,7 +31,7 @@ genLogRegData <- function(xdata,
   probs <- exp(tmp)/(1 + exp(tmp))
   y <- apply(probs, 1, function(p){rbinom(1, size = 1, prob = p)})
   resdata <- cbind(xdata, y)
-  as.data.frame(resdata)
+  as.data.frame(resdata, col.names = c(names(xdata), yname))
 }
 
 
@@ -121,28 +121,13 @@ gen2wayTable <- function(n = sample(100:500, size = 1),
                           nfixed = FALSE,
                           addmargins = TRUE,
                           as.df = FALSE, untable = TRUE){
-  pmatrix <- pmatrix/sum(pmatrix)
-  f <- function(x) rbinom(1, size = n, prob = x)
-  
-  flag <- FALSE
-  while(!flag){
-    tmp <- matrix(sapply(pmatrix, f, simplify = "array"), nrow = nrow(pmatrix)) 
-    if (sum(tmp) >= n) flag <- TRUE  # generated enough
-  }
-  
+  probs <- as.numeric(pmatrix)
+  x <- factor(sample(1:length(probs), size = n, replace = TRUE, prob = probs),
+              levels = 1:length(probs))
+  tmp <- matrix(as.integer(table(x)), nrow = nrow(pmatrix))
   dimnames(tmp) <- dmnames
   tmp <- as.table(tmp)
-  
-  if (nfixed && (sum(tmp) > n)){
-    # gotta get rid of extra rows
-    tmp <- as.data.frame(tmp)
-    tmp <- with(tmp, reshape::untable(tmp, Freq))
-    tmp[ , "Freq"] <- NULL
-    tmp <- tmp[sample(1:dim(tmp)[1], size = n, replace = FALSE),]
-    rownames(tmp) <- 1:n
-    tmp <- xtabs(formula = ~., data = tmp)
-  }
-  
+
   if (as.df){
     tmp <- as.data.frame(tmp)
     if (untable){

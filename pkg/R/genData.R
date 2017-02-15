@@ -1,7 +1,8 @@
 ####################################
 # Functions to generate data
-# for exercises or quizzes
+# for pedagogical purposes
 
+#######################################################
 # continuous X data
 
 genXdata <- function(n, nvar = 1,
@@ -55,26 +56,12 @@ genIndepTable <- function(n = sample(100:500, size = 1),
   prow <- prow/sum(prow)
   pcol <- pcol/sum(pcol)
   pmatrix <- outer(prow, pcol)
-  f <- function(x) rbinom(1, size = n, prob = x)
-  
-  flag <- FALSE
-  while(!flag){
-    tmp <- matrix(sapply(pmatrix, f, simplify = "array"), nrow = length(prow)) 
-    if (sum(tmp) >= n) flag <- TRUE  # generated enough
-  }
-  
+  probs <- as.numeric(pmatrix)
+  x <- factor(sample(1:length(probs), size = n, replace = TRUE, prob = probs),
+              levels = 1:length(probs))
+  tmp <- matrix(as.integer(table(x)), nrow = length(prow))
   dimnames(tmp) <- dmnames
   tmp <- as.table(tmp)
-  
-  if (nfixed && (sum(tmp) > n)){
-    # gotta get rid of extra rows
-    tmp <- as.data.frame(tmp)
-    tmp <- with(tmp, reshape::untable(tmp, Freq))
-    tmp[ , "Freq"] <- NULL
-    tmp <- tmp[sample(1:dim(tmp)[1], size = n, replace = FALSE),]
-    rownames(tmp) <- 1:n
-    tmp <- xtabs(formula = ~., data = tmp)
-  }
 
   if (as.df){
     tmp <- as.data.frame(tmp)

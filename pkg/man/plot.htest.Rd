@@ -3,7 +3,7 @@
 
 \title{Plotting Hypothesis Tests}
 \description{
-  This function allows the user to plot a saved hypothesis test object, including normal curves, critical values, shading, and p-values.  It requires the HH package and the \code{normal.and.t.dist} function written by Dr. Richard Heiberger.  Please note that a much better version of this function is currently under development.
+  Plot saved hypothesis test objects, including normal curves, critical values, shading, and p-values.  It requires the HH package and the \code{normal.and.t.dist} function written by Dr. Richard Heiberger.  Please note that a much better version of this function is currently under development.
 }
 
 \usage{
@@ -28,4 +28,7 @@ This is a plot method for hypothesis tests or confidence intervals which uses th
 
 \seealso{\code{\link[HH]{normal.and.t.dist}}}
 
+\examples{
+plot(t.test(rnorm(10)))
+}
 \keyword{misc} 

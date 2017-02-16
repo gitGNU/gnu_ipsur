@@ -6,3 +6,6 @@ exportPattern(".")
 #
 importFrom("stats", "rbinom", "xtabs")
 importFrom("utils", "vignette")
+
+#
+S3method(plot, htest)

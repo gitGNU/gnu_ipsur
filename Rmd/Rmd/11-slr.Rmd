@@ -353,7 +353,7 @@ Using the regression line for the
 `cars` data:
 ```
 
-1. What is the meaning of \(\mu(60) = \beta_{0} + \beta_{1}(8)\)?
+1. What is the meaning of \(\mu(8) = \beta_{0} + \beta_{1}(8)\)?
    This represents the average stopping distance (in feet) for a car
    going 8 mph.
 2. Interpret the slope \(\beta_{1}\). The true slope \(\beta_{1}\)
@@ -363,7 +363,7 @@ Using the regression line for the
    to stop for each additional mph increase in speed.
 3. Interpret the intercept \(\beta_{0}\). This would represent the
    mean stopping distance for a car traveling 0 mph (which our
-   regression line estimates to be \(`r tmpcoef[1]`. Of
+   regression line estimates to be \(`r tmpcoef[1]`\). Of
    course, this interpretation does not make any sense for this
    example, because a car travelling 0 mph takes 0 ft to stop (it was
    not moving in the first place)! What went wrong? Looking at the
